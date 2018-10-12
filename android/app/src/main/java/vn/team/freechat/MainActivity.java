@@ -30,8 +30,8 @@ public class MainActivity
     private Button loginButtonView;
     private ConnectionController connectionController;
 
-    private String host = "192.168.1.13";
-//    private String host = "192.168.51.103";
+//    private String host = "192.168.1.13";
+    private String host = "192.168.51.103";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
