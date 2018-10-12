@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.tvd12</groupId>
+		<artifactId>ezyfox-server</artifactId>
+		<version>0.0.2</version>
+	</parent>
+	
+	<groupId>vn.team</groupId>
+	<artifactId>freechat</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	
+	<name>freechat</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<directory.apps>apps</directory.apps>
+		<directory.entries>entries</directory.entries>
+		<directory.common>common</directory.common>
+		<core.version>1.0.0</core.version>
+		<bean.version>1.0.0</bean.version>
+		<binding.version>1.0.0</binding.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.tvd12</groupId>
+			<artifactId>ezyfox-server-core</artifactId>
+			<version>${core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.tvd12</groupId>
+			<artifactId>ezyfox-bean</artifactId>
+			<version>${bean.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.tvd12</groupId>
+			<artifactId>ezyfox-binding</artifactId>
+			<version>${binding.version}</version>
+		</dependency>
+	</dependencies>
+	<profiles>
+		<profile>
+			<id>export</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>install</phase>
+								<configuration>
+									<tasks>
+										<ant antfile="${project.basedir}/build.xml"/>
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	 <modules>
+	 	<module>freechat-plugin</module>
+	 	<module>freechat-api</module>
+		<module>freechat-entry</module>
+		<module>freechat-common</module>
+	 </modules>
+</project>

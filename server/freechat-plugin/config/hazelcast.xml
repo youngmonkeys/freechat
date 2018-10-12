@@ -1,0 +1,30 @@
+<hazelcast
+	xsi:schemaLocation="http://www.hazelcast.com/schema/config
+  		http://www.hazelcast.com/schema/config/hazelcast-config-3.7.xsd"
+	xmlns="http://www.hazelcast.com/schema/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<management-center enabled="true">http://localhost:8080/mancenter</management-center>
+	
+	 <group>
+        <name>freechat</name>
+        <password>yeU\K$-8?=2BeV9Z</password>
+    </group>
+
+	<serialization>
+		<serializers>
+		</serializers>
+	</serialization>
+
+	<properties>
+		<property name="hazelcast.icmp.enabled">true</property>
+		<property name="hazelcast.logging.type">slf4j</property>
+	</properties>
+
+	<network>
+		<port>1996</port>
+		<join>
+			<multicast enabled="true" />
+		</join>
+	</network>
+
+</hazelcast>
