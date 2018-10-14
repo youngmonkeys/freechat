@@ -1,0 +1,19 @@
+body {
+    font-family: "OpenSans", sans-serif;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #1C2B36;
+    position: relative;
+    background: #F0F3F4;
+    background-image: url(../images/bg/city.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+html, body {
+    height: 95%;
+}

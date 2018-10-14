@@ -1,0 +1,32 @@
+.footer-container {
+    width: 100%;
+    margin: 0;
+    padding: 15px 12px;
+    font-family: "OpenSans_SemiBold", sans-serif;
+    font-size: 11px;
+    line-height: 1.8;
+    color: #666;
+    text-align: left;
+    position: relative;
+    z-index: 1040;
+    background-color: #fff;
+    border-bottom: 1px solid none;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.footer-container:before,
+.footer-container:after {
+    content: "";
+    display: table
+}
+
+.footer-container:after {
+    clear: both
+}
+
+.footer-container a {
+    color: #1C2B36;
+    border-bottom: 1px dotted #1C2B36
+}

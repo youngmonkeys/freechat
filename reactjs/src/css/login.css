@@ -1,0 +1,13 @@
+.login-div {
+    max-width: 30%;
+    margin: 10px auto 30px;
+    
+}
+
+.login-title {
+    text-align: center
+}
+
+.login-options .checkbox label {
+    color: white;
+}

@@ -1,0 +1,142 @@
+#addContactsModel .modal-content {
+    border-radius: 0px;
+    border: 0px;
+}
+#addContactsModel .modal-header {
+    background: #1C2B36;
+    max-height: 45px;
+    align-items: center;
+    border-radius: 0px;
+    border: 0px;
+    width: 100%;
+}
+#addContactsModel .modal-header > h4 {
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+}
+#addContactsModel .modal-header .mclose {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: rgb(255, 255, 255);
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    background: transparent;
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+    border: 0;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+#addContactsModel .modal-header .mclose:hover {
+    color: lightskyblue;
+    text-shadow: 0px 2px white;
+}
+#addContactsModel .modal-header .btn {
+    font-size: 12px;
+    border-radius: 1.25rem;
+}
+#addContactsModel .modal-footer {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+}
+#addContactsModel .modal-footer h3 {
+    color: darkgray;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+#addContactsModel .avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+#addContactsModel .form-control:focus {
+    outline: 0 !important;
+    border-color: initial;
+    box-shadow: none;
+}
+#addContactsModel .no-gutters {
+    margin-left: -16px;
+    margin-right: -16px;
+}
+#addContactsModel .suggested-contacts {
+    width: 100%;
+}
+#addContactsModel .suggested-contacts .items {
+    width: 100%;
+    overflow-y: scroll;
+    max-height: 120px;
+}
+#addContactsModel ::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+#addContactsModel ::-webkit-scrollbar-track {
+    background: rgb(0,0,0) transparent;
+    border: 4px solid transparent;
+    background-clip: content-box;
+}
+#addContactsModel ::-webkit-scrollbar-thumb {
+    background: rgb(25,25,25);
+    border: 1px solid rgb(0,0,0);
+}
+#addContactsModel .suggested-contact {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 5px;
+}
+#addContactsModel .suggested-contact .left-side {
+    display: flex;
+}
+#addContactsModel .suggested-contact .left-side .info {
+    display: flex;
+    flex-direction: column;
+}
+#addContactsModel .suggested-contact .left-side .info p {
+    margin: 0px;
+}
+#addContactsModel .suggested-contact .left-side .info p:first-child {
+    font-weight: bold;
+}
+#addContactsModel .suggested-contact .right-side {
+    align-self: center;
+}
+#addContactsModel .selected-contacts {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-flow: column;
+}
+#addContactsModel .selected-members {
+    width: 100%;
+    display: flex;
+}
+#addContactsModel .selected-contact {
+    display: flex;
+    flex-flow: column;
+    width: 60px;
+    align-items: center;
+}
+#addContactsModel .selected-contact .avatar {
+    margin-right: 0px;
+}
+#addContactsModel .selected-contact p {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: clip;
+    max-width: 55px;
+    margin: 0px;
+}
+#addContactsModel .searched-contacts {
+    margin-bottom: 20px;
+}
+#addContactsModel .modal-body .btn {
+    font-size: 16px;
+}
