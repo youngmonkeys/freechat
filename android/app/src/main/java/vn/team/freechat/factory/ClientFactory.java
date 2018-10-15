@@ -55,7 +55,8 @@ public class ClientFactory {
                 .zoneName("freechat")
                 .build();
         final EzyClients clients = EzyClients.getInstance();
-        final EzyClient client = clients.newDefaultClient(config);
+        EzyClient oldClient = clients.getDefaultClient();
+        final EzyClient client = oldClient != null ? oldClient : clients.newDefaultClient(config);
         final EzySetup setup = client.get(EzySetup.class);
         setup.addEventHandler(EzyEventType.CONNECTION_SUCCESS, new EzyConnectionSuccessHandler() {
             @Override
