@@ -20,7 +20,7 @@ import vn.team.freechat.repo.ChatContactRepo;
 @EzyClientRequestListener(command = CHAT_GET_CONTACTS)
 public class ChatGetContactsHandler 
 		extends ChatClientRequestHandler
-		implements EzyDataBinding{
+		implements EzyDataBinding {
 	
 	private int skip;
 	private int limit;
