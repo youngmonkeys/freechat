@@ -13,14 +13,12 @@ import com.tvd12.ezyfoxserver.client.request.EzyLoginRequest;
 import com.tvd12.ezyfoxserver.client.request.EzyRequest;
 
 import tvd12.com.ezyfoxserver.client.R;
-import vn.team.freechat.controller.ConnectionController;
 import vn.team.freechat.factory.ClientFactory;
-import vn.team.freechat.view.ConnectionView;
-import vn.team.freechat.view.LoadingView;
+import vn.team.freechat.mvc.Controller;
+import vn.team.freechat.mvc.IView;
+import vn.team.freechat.mvc.Mvc;
 
-public class MainActivity
-        extends AppCompatActivity
-        implements ConnectionView, LoadingView {
+public class MainActivity extends AppCompatActivity {
 
     private EzyClient client;
 
@@ -28,7 +26,7 @@ public class MainActivity
     private EditText usernameView;
     private EditText passwordView;
     private Button loginButtonView;
-    private ConnectionController connectionController;
+    private Controller connectionController;
 
 //    private String host = "192.168.1.13";
     private String host = "192.168.51.103";
@@ -45,15 +43,45 @@ public class MainActivity
     @Override
     protected void onStart() {
         super.onStart();
-        connectionController.setConnectionView(this);
-        connectionController.setLoadingView(this);
+        connectionController.addView("show-loading", new IView() {
+            @Override
+            public void update(Object data) {
+                loadingView.setVisibility(View.VISIBLE);
+            }
+        });
+        connectionController.addView("hide-loading", new IView() {
+            @Override
+            public void update(Object data) {
+                loadingView.setVisibility(View.GONE);
+            }
+        });
+        connectionController.addView("show-lost-ping", new IView() {
+            @Override
+            public void update(Object data) {
+                showLostPing((Integer)data);
+            }
+        });
+        connectionController.addView("show-try-connect", new IView() {
+            @Override
+            public void update(Object data) {
+                showTryConnect((Integer)data);
+            }
+        });
+        connectionController.addView("show-contacts", new IView() {
+            @Override
+            public void update(Object data) {
+                startMessageActivity();
+            }
+        });
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        hideLoadingView();
-        connectionController.setConnectionView(null);
+        loadingView.setVisibility(View.GONE);
+        connectionController.removeView("show-contacts");
+        connectionController.removeView("show-lost-ping");
+        connectionController.removeView("show-try-connect");
     }
 
     private void initViews() {
@@ -65,7 +93,7 @@ public class MainActivity
 
     private void initComponents() {
         Mvc mvc = Mvc.getInstance();
-        connectionController = mvc.getConnectionController();
+        connectionController = mvc.getController("connection");
     }
 
     private void setViewControllers() {
@@ -75,40 +103,23 @@ public class MainActivity
                 ClientFactory factory = ClientFactory.getInstance();
                 client = factory.newClient(newLoginRequest());
                 client.connect(host, 3005);
-                showLoadingView();
+                loadingView.setVisibility(View.VISIBLE);
             }
         });
     }
 
-    @Override
-    public void showContactView() {
-        startMessageActivity();
-    }
-
-    @Override
-    public void showLostPing(int count) {
+    private void showLostPing(int count) {
         Toast toast = Toast.makeText(this,
                 "ping to server lost, count: " + count,
                 Toast.LENGTH_LONG);
         toast.show();
     }
 
-    @Override
-    public void showTryConnect(int count) {
+    private void showTryConnect(int count) {
         Toast toast = Toast.makeText(this,
                 "try connect: " + count,
                 Toast.LENGTH_LONG);
         toast.show();
-    }
-
-    @Override
-    public void showLoadingView() {
-        loadingView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoadingView() {
-        loadingView.setVisibility(View.GONE);
     }
 
     private EzyRequest newLoginRequest() {

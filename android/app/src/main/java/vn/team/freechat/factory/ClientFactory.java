@@ -24,11 +24,10 @@ import com.tvd12.ezyfoxserver.client.handler.EzyLoginSuccessHandler;
 import com.tvd12.ezyfoxserver.client.request.EzyAccessAppRequest;
 import com.tvd12.ezyfoxserver.client.request.EzyRequest;
 
-import vn.team.freechat.Mvc;
+import vn.team.freechat.data.MessageReceived;
+import vn.team.freechat.mvc.Controller;
+import vn.team.freechat.mvc.Mvc;
 import vn.team.freechat.contant.Commands;
-import vn.team.freechat.controller.ConnectionController;
-import vn.team.freechat.controller.ContactController;
-import vn.team.freechat.controller.MessageController;
 import vn.team.freechat.handler.HandshakeHandler;
 
 /**
@@ -48,9 +47,9 @@ public class ClientFactory {
     }
 
     public EzyClient newClient(EzyRequest loginRequest) {
-        final ConnectionController connectionController = mvc.getConnectionController();
-        final ContactController contactController = mvc.getContactController();
-        final MessageController messageController = mvc.getMessageController();
+        final Controller connectionController = mvc.getController("connection");
+        final Controller contactController = mvc.getController("contact");
+        final Controller messageController = mvc.getController("message");
         final EzyClientConfig config = EzyClientConfig.builder()
                 .zoneName("freechat")
                 .build();
@@ -61,14 +60,14 @@ public class ClientFactory {
         setup.addEventHandler(EzyEventType.CONNECTION_SUCCESS, new EzyConnectionSuccessHandler() {
             @Override
             protected void postHandle() {
-                connectionController.handleConnectSuccessfully();
+                connectionController.updateView("hide-loading");
             }
         });
         setup.addEventHandler(EzyEventType.CONNECTION_FAILURE, new EzyConnectionFailureHandler());
         setup.addEventHandler(EzyEventType.DISCONNECTION, new EzyDisconnectionHandler() {
             @Override
             protected void preHandle(EzyDisconnectionEvent event) {
-                connectionController.handleServerNotResponding();
+                connectionController.updateView("show-loading");
             }
         });
         setup.addDataHandler(EzyCommand.HANDSHAKE, new HandshakeHandler(loginRequest));
@@ -82,20 +81,20 @@ public class ClientFactory {
         setup.addDataHandler(EzyCommand.APP_ACCESS, new EzyAccessAppHandler() {
             @Override
             protected void postHandle(EzyApp app, EzyArray data) {
-                connectionController.handleAppAccessSuccessFully();
+                connectionController.updateView("show-contacts");
             }
         });
         setup.addEventHandler(EzyEventType.LOST_PING, new EzyEventHandler<EzyLostPingEvent>() {
             @Override
             public void handle(EzyLostPingEvent event) {
-                connectionController.handleLostPing(event.getCount());
+                connectionController.updateView("show-lost-ping", event.getCount());
             }
         });
 
         setup.addEventHandler(EzyEventType.TRY_CONNECT, new EzyEventHandler<EzyTryConnectEvent>() {
             @Override
             public void handle(EzyTryConnectEvent event) {
-                connectionController.handleTryConnect(event.getCount());
+                connectionController.updateView("show-try-connect", event.getCount());
             }
         });
 
@@ -104,21 +103,22 @@ public class ClientFactory {
         appSetup.addDataHandler("5", new EzyAppDataHandler<EzyObject>() {
             @Override
             public void handle(EzyApp app, EzyObject data) {
-                contactController.handleGetContactsResponse(data);
+                EzyArray usernames = data.get("contacts");
+                contactController.updateView("add-contacts", usernames);
             }
         });
         appSetup.addDataHandler(Commands.CHAT_SYSTEM_MESSAGE, new EzyAppDataHandler<EzyObject>() {
             @Override
             public void handle(EzyApp app, EzyObject data) {
                 data.put("from", "System");
-                messageController.handReceivedMessage(data);
+                messageController.updateView("add-message", MessageReceived.create(data));
             }
         });
 
         appSetup.addDataHandler(Commands.CHAT_USER_MESSAGE, new EzyAppDataHandler<EzyObject>() {
             @Override
             public void handle(EzyApp app, EzyObject data) {
-                messageController.handReceivedMessage(data);
+                messageController.updateView("add-message", MessageReceived.create(data));
             }
         });
         return client;

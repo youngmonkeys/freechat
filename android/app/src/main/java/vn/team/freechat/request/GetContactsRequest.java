@@ -7,8 +7,9 @@ import com.tvd12.ezyfoxserver.client.request.EzyRequest;
 import vn.team.freechat.contant.Commands;
 
 /**
- * Created by tavandung12 on 10/3/18.
- */
+ * Created by Dung Ta Van on 11/3/18.
+ * Copyright © 2018 Young Monkeys. All rights reserved.
+ **/
 
 public class GetContactsRequest implements EzyRequest {
 

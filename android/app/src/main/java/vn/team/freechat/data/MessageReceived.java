@@ -23,6 +23,12 @@ public class MessageReceived extends Message {
         this.from = from;
     }
 
+    public static MessageReceived create(EzyObject data) {
+        MessageReceived answer = new MessageReceived();
+        answer.deserialize(data);
+        return answer;
+    }
+
     @Override
     public void deserialize(EzyObject data) {
         super.deserialize(data);

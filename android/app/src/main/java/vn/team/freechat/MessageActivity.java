@@ -13,40 +13,33 @@ import com.tvd12.ezyfoxserver.client.request.EzyRequest;
 import tvd12.com.ezyfoxserver.client.R;
 import vn.team.freechat.adapter.MessageListAdapter;
 import vn.team.freechat.adapter.MessageListAdapters;
-import vn.team.freechat.controller.ConnectionController;
-import vn.team.freechat.controller.MessageController;
 import vn.team.freechat.data.Message;
 import vn.team.freechat.data.MessageReceived;
 import vn.team.freechat.data.MessageSent;
+import vn.team.freechat.mvc.Controller;
+import vn.team.freechat.mvc.IView;
+import vn.team.freechat.mvc.Mvc;
 import vn.team.freechat.request.SendSystemMessageRequest;
 import vn.team.freechat.request.SendUserMessageRequest;
-import vn.team.freechat.view.LoadingView;
-import vn.team.freechat.view.MessageView;
 
 /**
  * Created by tavandung12 on 10/5/18.
  */
 
-public class MessageActivity
-        extends AppActivity
-        implements MessageView, LoadingView {
+public class MessageActivity extends AppActivity {
 
     private String targetContact;
-    private MessageController messageController;
-    private ConnectionController connectionController;
+    private Controller messageController;
+    private Controller connectionController;
 
     private View loadingView;
     private View backButtonView;
-    private View headerView;
-    private View targetBoxView;
     private TextView targetNameView;
     private TextView targetLastMessageView;
-    private View chatboxView;
     private EditText messageInputView;
     private ImageButton sendButtonView;
     private RecyclerView messageListView;
     private MessageListAdapter messageListAdapter;
-    private LinearLayoutManager messageListLayoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,33 +54,49 @@ public class MessageActivity
     @Override
     protected void onStart() {
         super.onStart();
-        messageController.setMessageView(this);
-        connectionController.setLoadingView(this);
+        connectionController.addView("show-loading", new IView() {
+            @Override
+            public void update(Object data) {
+                loadingView.setVisibility(View.VISIBLE);
+            }
+        });
+        connectionController.addView("hide-loading", new IView() {
+            @Override
+            public void update(Object data) {
+                loadingView.setVisibility(View.GONE);
+            }
+        });
+        messageController.addView("add-message", new IView() {
+            @Override
+            public void update(Object data) {
+                addMessage((MessageReceived)data);
+            }
+        });
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        hideLoadingView();
-        messageController.setMessageView(null);
+        loadingView.setVisibility(View.GONE);
+        messageController.removeView("add-message");
     }
 
     private void initComponents() {
-        targetContact = getIntent().getStringExtra("targetContact");
         Mvc mvc = Mvc.getInstance();
-        messageController = mvc.getMessageController();
-        connectionController = mvc.getConnectionController();
+        targetContact = getIntent().getStringExtra("targetContact");
+        messageController = mvc.getController("message");
+        connectionController = mvc.getController("connection");
     }
 
     private void initViews() {
         loadingView = findViewById(R.id.loading);
-        headerView = findViewById(R.id.header);
+        View headerView = findViewById(R.id.header);
         backButtonView = headerView.findViewById(R.id.back);
-        targetBoxView = headerView.findViewById(R.id.targetBox);
+        View targetBoxView = headerView.findViewById(R.id.targetBox);
         targetNameView = targetBoxView.findViewById(R.id.targetName);
         targetLastMessageView = targetBoxView.findViewById(R.id.lastMessage);
         messageListView = findViewById(R.id.messageList);
-        chatboxView = findViewById(R.id.chatbox);
+        View chatboxView = findViewById(R.id.chatbox);
         messageInputView = chatboxView.findViewById(R.id.messageInput);
         sendButtonView = chatboxView.findViewById(R.id.sendButton);
         targetNameView.setText(targetContact);
@@ -96,7 +105,7 @@ public class MessageActivity
         MessageListAdapters adapters = MessageListAdapters.getInstance();
         messageListAdapter = adapters.getAdapter(this, targetContact);
         messageListView.setAdapter(messageListAdapter);
-        messageListLayoutManager = newMessageListLayoutManager();
+        LinearLayoutManager messageListLayoutManager = newMessageListLayoutManager();
         messageListView.setLayoutManager(messageListLayoutManager);
     }
 
@@ -115,8 +124,8 @@ public class MessageActivity
         sendButtonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EzyRequest request;
                 String messageText = messageInputView.getText().toString();
-                EzyRequest request = null;
                 if(targetContact.equalsIgnoreCase("System"))
                     request = new SendSystemMessageRequest(messageText);
                 else
@@ -129,8 +138,7 @@ public class MessageActivity
         });
     }
 
-    @Override
-    public void addMessage(MessageReceived message) {
+    private void addMessage(MessageReceived message) {
         addMessageItem(message);
         targetLastMessageView.setText(message.getMessage());
     }
@@ -139,16 +147,6 @@ public class MessageActivity
         messageListAdapter.addItem(message);
         messageListAdapter.notifyDataSetChanged();
         messageListView.smoothScrollToPosition(messageListAdapter.getItemCount());
-    }
-
-    @Override
-    public void showLoadingView() {
-        loadingView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoadingView() {
-        loadingView.setVisibility(View.GONE);
     }
 
     private void backToContactView() {
