@@ -14,24 +14,21 @@ import java.util.List;
 
 import tvd12.com.ezyfoxserver.client.R;
 import vn.team.freechat.adapter.ContactListAdapter;
-import vn.team.freechat.controller.ConnectionController;
-import vn.team.freechat.controller.ContactController;
 import vn.team.freechat.model.ContactListItemModel;
+import vn.team.freechat.mvc.Controller;
+import vn.team.freechat.mvc.IView;
+import vn.team.freechat.mvc.Mvc;
 import vn.team.freechat.request.GetContactsRequest;
-import vn.team.freechat.view.ContactView;
-import vn.team.freechat.view.LoadingView;
 
 /**
  * Created by tavandung12 on 10/1/18.
  */
 
-public class ContactActivity
-        extends AppActivity
-        implements ContactView, LoadingView {
+public class ContactActivity extends AppActivity {
 
     private String username;
-    private ContactController contactController;
-    private ConnectionController connectionController;
+    private Controller contactController;
+    private Controller connectionController;
 
     private View loadingView;
     private View profileBox;
@@ -54,22 +51,38 @@ public class ContactActivity
     @Override
     protected void onStart() {
         super.onStart();
-        contactController.setContactView(this);
-        connectionController.setLoadingView(this);
+        connectionController.addView("show-loading", new IView() {
+            @Override
+            public void update(Object data) {
+                loadingView.setVisibility(View.VISIBLE);
+            }
+        });
+        connectionController.addView("hide-loading", new IView() {
+            @Override
+            public void update(Object data) {
+                loadingView.setVisibility(View.GONE);
+            }
+        });
+        contactController.addView("add-contacts", new IView() {
+            @Override
+            public void update(Object data) {
+                addContacts((EzyArray)data);
+            }
+        });
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        hideLoadingView();
-        contactController.setContactView(null);
+        loadingView.setVisibility(View.GONE);
+        contactController.removeView("add-actions");
     }
 
     private void initComponents() {
-        username = getIntent().getStringExtra("username");
         Mvc mvc = Mvc.getInstance();
-        contactController = mvc.getContactController();
-        connectionController = mvc.getConnectionController();
+        username = getIntent().getStringExtra("username");
+        contactController = mvc.getController("contact");
+        connectionController = mvc.getController("connection");
     }
 
     private void initViews() {
@@ -91,24 +104,13 @@ public class ContactActivity
         contactListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showLoadingView();
+                loadingView.setVisibility(View.VISIBLE);
                 onContactItemClick(view);
             }
         });
     }
 
-    @Override
-    public void showLoadingView() {
-        loadingView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoadingView() {
-        loadingView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void addContacts(EzyArray usernames) {
+    private void addContacts(EzyArray usernames) {
         List<ContactListItemModel> models = new ArrayList<>();
         for(int i = 0 ; i < usernames.size() ; i++)
             models.add(new ContactListItemModel(usernames.get(i, String.class), ""));
