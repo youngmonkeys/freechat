@@ -32,6 +32,7 @@ public class ChatUserLoginController extends EzyAbstractPluginEventController<Ez
 		getLogger().info("handle user {} login in vn-freechatvn", event.getUsername());
 		checkPassword(event.getPassword());
 		checkUser(event.getUsername(), event.getPassword());
+		event.setStreamingEnable(true);
 		getLogger().info("username and password match, accept user: {}", event.getUsername());
 	}
 
