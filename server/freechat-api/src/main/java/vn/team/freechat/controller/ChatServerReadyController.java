@@ -8,7 +8,7 @@ import com.tvd12.ezyfoxserver.event.EzyServerReadyEvent;
 
 @EzySingleton
 @EzyServerEventHandler(event = "SERVER_READY")
-public class EzyChatServerReadyController 
+public class ChatServerReadyController 
 		extends EzyAbstractAppEventController<EzyServerReadyEvent> {
 
 	@Override
