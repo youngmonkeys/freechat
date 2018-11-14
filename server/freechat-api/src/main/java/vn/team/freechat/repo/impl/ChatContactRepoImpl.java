@@ -4,16 +4,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.mongodb.morphia.Key;
-import org.mongodb.morphia.query.FindOptions;
-import org.mongodb.morphia.query.Query;
-
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.morphia.repository.EzyDatastoreRepository;
 
 import vn.team.freechat.data.ChatContact;
 import vn.team.freechat.data.ChatContactId;
 import vn.team.freechat.repo.ChatContactRepo;
+import xyz.morphia.Key;
+import xyz.morphia.query.FindOptions;
+import xyz.morphia.query.Query;
 
 @EzySingleton("contactRepo")
 public class ChatContactRepoImpl

@@ -1,9 +1,6 @@
 package vn.team.freechat.data;
 
 
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
-
 import com.tvd12.ezyfox.binding.annotation.EzyObjectBinding;
 import com.tvd12.ezyfox.binding.annotation.EzyValue;
 
@@ -12,6 +9,8 @@ import lombok.Setter;
 import lombok.ToString;
 import vn.team.freechat.common.data.ChatData;
 import vn.team.freechat.constant.ChatEntities;
+import xyz.morphia.annotations.Entity;
+import xyz.morphia.annotations.Id;
 
 @Setter
 @Getter

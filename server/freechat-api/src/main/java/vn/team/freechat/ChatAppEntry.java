@@ -4,8 +4,6 @@ import static com.tvd12.ezyfox.util.EzyAutoImplAnnotations.getBeanName;
 
 import java.util.Map;
 
-import org.mongodb.morphia.Datastore;
-
 import com.hazelcast.core.HazelcastInstance;
 import com.mongodb.MongoClient;
 import com.tvd12.ezyfox.bean.EzyBeanContextBuilder;
@@ -21,6 +19,7 @@ import com.tvd12.properties.file.mapping.PropertiesMapper;
 import com.tvd12.properties.file.reader.BaseFileReader;
 
 import vn.team.freechat.config.ChatAppConfig;
+import xyz.morphia.Datastore;
 
 public class ChatAppEntry extends EzySimpleAppEntry {
 
