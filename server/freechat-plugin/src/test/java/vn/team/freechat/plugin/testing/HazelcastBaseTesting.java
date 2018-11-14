@@ -2,7 +2,6 @@ package vn.team.freechat.plugin.testing;
 
 import java.io.InputStream;
 
-import org.mongodb.morphia.Datastore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +15,7 @@ import com.tvd12.ezyfox.morphia.EzyDataStoreBuilder;
 import com.tvd12.test.base.BaseTest;
 
 import vn.team.freechat.common.creator.ChatHazelcastCreator;
+import xyz.morphia.Datastore;
 
 public abstract class HazelcastBaseTesting extends BaseTest {
 

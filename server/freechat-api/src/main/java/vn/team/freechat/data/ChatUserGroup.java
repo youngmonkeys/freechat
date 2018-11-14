@@ -2,9 +2,6 @@ package vn.team.freechat.data;
 
 import java.io.Serializable;
 
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import vn.team.freechat.common.data.ChatData;
 import vn.team.freechat.constant.ChatEntities;
+import xyz.morphia.annotations.Entity;
+import xyz.morphia.annotations.Id;
 
 @Setter
 @Getter

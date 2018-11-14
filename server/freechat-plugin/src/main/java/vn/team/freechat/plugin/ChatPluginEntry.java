@@ -8,8 +8,6 @@ import static com.tvd12.ezyfox.util.EzyAutoImplAnnotations.getBeanName;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import org.mongodb.morphia.Datastore;
-
 import com.hazelcast.core.HazelcastInstance;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
@@ -29,6 +27,7 @@ import com.tvd12.properties.file.reader.BaseFileReader;
 import vn.team.freechat.common.creator.ChatHazelcastCreator;
 import vn.team.freechat.common.creator.ChatMongoCreator;
 import vn.team.freechat.plugin.config.ChatPluginConfig;
+import xyz.morphia.Datastore;
 
 /**
  * @author tavandung12

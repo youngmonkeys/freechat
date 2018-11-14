@@ -1,7 +1,5 @@
 package vn.team.freechat.common.creator;
 
-import org.mongodb.morphia.Datastore;
-
 import com.hazelcast.config.Config;
 import com.hazelcast.core.HazelcastInstance;
 import com.mongodb.client.MongoDatabase;
@@ -10,6 +8,8 @@ import com.tvd12.ezyfox.hazelcast.EzyMongoDatastoreHazelcastFactory;
 import com.tvd12.ezyfox.hazelcast.mapstore.EzyMapstoresFetcher;
 import com.tvd12.ezyfox.hazelcast.mapstore.EzySimpleMapstoresFetcher;
 import com.tvd12.ezyfox.hazelcast.util.EzyHazelcastConfigs;
+
+import xyz.morphia.Datastore;
 
 public class ChatHazelcastCreator implements EzyCreation<HazelcastInstance> {
 
