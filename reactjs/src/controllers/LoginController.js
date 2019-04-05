@@ -10,7 +10,7 @@ class LoginController {
         var clientFactory = new ClientFactory();
         clientFactory.setCredentials(data.username, data.password);
         var client = clientFactory.createClient();
-        client.connect("ws://localhost:2208/ws");
+        client.connect("wss://ws.tvd12.com/ws");
     }
 
 }
