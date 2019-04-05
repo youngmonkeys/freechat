@@ -20,6 +20,7 @@ class App extends Component {
   constructor() {
     super(...arguments);
     this.authenticated = false;
+    Ezy.Logger.debug = () => true;
     this.clients = Ezy.Clients.getInstance();
   }
 

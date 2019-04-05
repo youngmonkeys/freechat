@@ -16,14 +16,14 @@
 	</serialization>
 
 	<properties>
-		<property name="hazelcast.icmp.enabled">true</property>
+		<property name="hazelcast.icmp.enabled">false</property>
 		<property name="hazelcast.logging.type">slf4j</property>
 	</properties>
 
 	<network>
 		<port>1996</port>
 		<join>
-			<multicast enabled="true" />
+			<multicast enabled="false" />
 		</join>
 	</network>
 
