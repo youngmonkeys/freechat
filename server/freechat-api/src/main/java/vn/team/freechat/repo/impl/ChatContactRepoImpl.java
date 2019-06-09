@@ -7,12 +7,13 @@ import java.util.Set;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.morphia.repository.EzyDatastoreRepository;
 
+import dev.morphia.Key;
+import dev.morphia.query.FindOptions;
+import dev.morphia.query.Query;
+import dev.morphia.query.internal.MorphiaCursor;
 import vn.team.freechat.data.ChatContact;
 import vn.team.freechat.data.ChatContactId;
 import vn.team.freechat.repo.ChatContactRepo;
-import xyz.morphia.Key;
-import xyz.morphia.query.FindOptions;
-import xyz.morphia.query.Query;
 
 @EzySingleton("contactRepo")
 public class ChatContactRepoImpl
@@ -48,7 +49,8 @@ public class ChatContactRepoImpl
 		FindOptions opts = new FindOptions()
 				.skip(skip)
 				.limit(limit);
-		List<ChatContact> list = query.asList(opts);
+		MorphiaCursor<ChatContact> cursor = query.find(opts);
+		List<ChatContact> list = cursor.toList();
 		Set<String> answer = new HashSet<>();
 		for(ChatContact contact : list) {
 			String user1st = contact.getId().getUser1st();

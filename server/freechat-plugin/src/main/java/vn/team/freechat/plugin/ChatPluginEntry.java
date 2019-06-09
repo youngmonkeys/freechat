@@ -24,10 +24,10 @@ import com.tvd12.ezyfoxserver.support.factory.EzyPluginResponseFactory;
 import com.tvd12.properties.file.mapping.PropertiesMapper;
 import com.tvd12.properties.file.reader.BaseFileReader;
 
+import dev.morphia.Datastore;
 import vn.team.freechat.common.creator.ChatHazelcastCreator;
 import vn.team.freechat.common.creator.ChatMongoCreator;
 import vn.team.freechat.plugin.config.ChatPluginConfig;
-import xyz.morphia.Datastore;
 
 /**
  * @author tavandung12

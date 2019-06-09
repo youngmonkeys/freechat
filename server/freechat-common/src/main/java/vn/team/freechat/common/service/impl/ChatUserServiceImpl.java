@@ -8,7 +8,6 @@ import com.tvd12.ezyfox.function.EzyApply;
 
 import lombok.Setter;
 import vn.team.freechat.common.constant.ChatEntities;
-import vn.team.freechat.common.constant.ChatLockKeys;
 import vn.team.freechat.common.data.ChatNewUser;
 import vn.team.freechat.common.data.ChatUser;
 import vn.team.freechat.common.repo.ChatUserRepo;
@@ -40,15 +39,13 @@ public class ChatUserServiceImpl
 		ChatUser user = getUser(username);
 		if(user != null) 
 			return new ChatNewUser(user, false);
-		return lockUpdateAndGet(getNewLockKey(username), () -> {
-			ChatUser cuser = getUser(username);
-			if(cuser != null) 
-				return new ChatNewUser(user, false);
-			ChatUser nuser = newUser(username);
-			applier.apply(nuser);
-			map.set(username, nuser);
-			return new ChatNewUser(nuser, true);
-		});
+		ChatUser cuser = getUser(username);
+		if(cuser != null) 
+			return new ChatNewUser(user, false);
+		ChatUser nuser = newUser(username);
+		applier.apply(nuser);
+		map.set(username, nuser);
+		return new ChatNewUser(nuser, true);
 	}
 	
 	@Override
@@ -66,10 +63,5 @@ public class ChatUserServiceImpl
 	@Override
 	protected String getMapName() {
 		return ChatEntities.CHAT_USER;
-	}
-	
-	private String getNewLockKey(String username) {
-		String lockKey = username + ChatLockKeys.NEW_USER_SUFFIX;
-		return lockKey;
 	}
 }

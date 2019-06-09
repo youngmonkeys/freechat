@@ -9,7 +9,7 @@ import com.tvd12.ezyfox.hazelcast.mapstore.EzyMapstoresFetcher;
 import com.tvd12.ezyfox.hazelcast.mapstore.EzySimpleMapstoresFetcher;
 import com.tvd12.ezyfox.hazelcast.util.EzyHazelcastConfigs;
 
-import xyz.morphia.Datastore;
+import dev.morphia.Datastore;
 
 public class ChatHazelcastCreator implements EzyCreation<HazelcastInstance> {
 

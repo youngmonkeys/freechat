@@ -18,8 +18,8 @@ import com.tvd12.ezyfoxserver.support.factory.EzyAppResponseFactory;
 import com.tvd12.properties.file.mapping.PropertiesMapper;
 import com.tvd12.properties.file.reader.BaseFileReader;
 
+import dev.morphia.Datastore;
 import vn.team.freechat.config.ChatAppConfig;
-import xyz.morphia.Datastore;
 
 public class ChatAppEntry extends EzySimpleAppEntry {
 

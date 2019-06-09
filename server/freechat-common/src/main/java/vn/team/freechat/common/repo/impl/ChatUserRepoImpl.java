@@ -5,10 +5,11 @@ import java.util.List;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.morphia.repository.EzyDatastoreRepository;
 
+import dev.morphia.query.FindOptions;
+import dev.morphia.query.Query;
+import dev.morphia.query.internal.MorphiaCursor;
 import vn.team.freechat.common.data.ChatUser;
 import vn.team.freechat.common.repo.ChatUserRepo;
-import xyz.morphia.query.FindOptions;
-import xyz.morphia.query.Query;
 
 @EzySingleton("userRepo")
 public class ChatUserRepoImpl
@@ -27,7 +28,9 @@ public class ChatUserRepoImpl
 		FindOptions opts = new FindOptions()
 				.skip(skip)
 				.limit(limit);
-		return query.asList(opts);
+		MorphiaCursor<ChatUser> cursor = query.find(opts);
+		List<ChatUser> list = cursor.toList();
+		return list;
 	}
 	
 	@Override

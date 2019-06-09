@@ -4,12 +4,12 @@ import com.tvd12.ezyfox.binding.EzyAccessType;
 import com.tvd12.ezyfox.binding.annotation.EzyObjectBinding;
 import com.tvd12.ezyfox.binding.annotation.EzyValue;
 
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import vn.team.freechat.common.constant.ChatEntities;
-import xyz.morphia.annotations.Entity;
-import xyz.morphia.annotations.Id;
 
 @Setter
 @Getter

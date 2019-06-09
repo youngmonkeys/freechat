@@ -1,12 +1,12 @@
 package vn.team.freechat.data;
 
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import vn.team.freechat.common.data.ChatData;
 import vn.team.freechat.constant.ChatEntities;
-import xyz.morphia.annotations.Entity;
-import xyz.morphia.annotations.Id;
 
 @Setter
 @Getter

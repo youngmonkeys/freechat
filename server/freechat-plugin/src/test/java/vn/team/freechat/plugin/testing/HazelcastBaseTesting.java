@@ -14,8 +14,8 @@ import com.tvd12.ezyfox.mongodb.loader.EzyInputStreamMongoClientLoader;
 import com.tvd12.ezyfox.morphia.EzyDataStoreBuilder;
 import com.tvd12.test.base.BaseTest;
 
+import dev.morphia.Datastore;
 import vn.team.freechat.common.creator.ChatHazelcastCreator;
-import xyz.morphia.Datastore;
 
 public abstract class HazelcastBaseTesting extends BaseTest {
 
