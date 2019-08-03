@@ -2,6 +2,7 @@ package vn.team.freechat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -29,11 +30,15 @@ public class MainActivity extends AppCompatActivity {
     private Controller connectionController;
 
 //    private String host = "192.168.1.13";
-    private String host = "192.168.51.103";
+    private String host = "ws.tvd12.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll()
+                .build();
+        StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
         initViews();
         initComponents();

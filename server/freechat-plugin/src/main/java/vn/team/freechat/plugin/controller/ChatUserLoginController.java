@@ -1,10 +1,9 @@
 package vn.team.freechat.plugin.controller;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.core.annotation.EzyServerEventHandler;
+import com.tvd12.ezyfox.io.EzyStrings;
 import com.tvd12.ezyfoxserver.constant.EzyEventNames;
 import com.tvd12.ezyfoxserver.constant.EzyLoginError;
 import com.tvd12.ezyfoxserver.context.EzyPluginContext;
@@ -37,7 +36,7 @@ public class ChatUserLoginController extends EzyAbstractPluginEventController<Ez
 	}
 
 	private void checkPassword(String password) {
-		if(StringUtils.isEmpty(password))
+		if(EzyStrings.isNoContent(password))
 			throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
 	}
 	

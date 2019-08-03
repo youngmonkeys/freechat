@@ -72,8 +72,9 @@ public class ClientFactory {
         });
         setup.addDataHandler(EzyCommand.HANDSHAKE, new HandshakeHandler(loginRequest));
         setup.addDataHandler(EzyCommand.LOGIN, new EzyLoginSuccessHandler() {
+
             @Override
-            protected void handleLoginSuccess(EzyData responseData) {
+            protected void handleLoginSuccess(EzyArray joinedApps, EzyData responseData) {
                 EzyRequest request = new EzyAccessAppRequest("freechat");
                 client.send(request);
             }
