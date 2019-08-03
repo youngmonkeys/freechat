@@ -62,7 +62,7 @@ class ClientFactory {
     }
 
     inner class ExLoginSuccessHandler : EzyLoginSuccessHandler() {
-        override fun handleLoginSuccess(responseData: EzyData?) {
+        override fun handleLoginSuccess( responseData: EzyData?) {
             val request = EzyAccessAppRequest("freechat")
             client.send(request)
         }
