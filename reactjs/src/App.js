@@ -1,4 +1,5 @@
-import Ezy from './lib/ezyfox-server-es6-client';
+// import Ezy from '../lib/ezyfox-server-es6-client'
+import Ezy from 'ezyfox-es6-client';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import './css/font-awesome-4.7.0/css/font-awesome.min.css';

@@ -13,6 +13,7 @@ import com.tvd12.ezyfoxserver.entity.EzyUser;
 
 import lombok.Setter;
 import vn.team.freechat.common.service.ChatUserService;
+import vn.team.freechat.service.ChatBotQuestionService;
 
 @EzyPrototype
 @EzyClientRequestListener(CHAT_SYSTEM_MESSAGE)
@@ -28,6 +29,9 @@ public class ChatSystemMessageHandler
 	
 	@EzyAutoBind
 	private ChatUserService userService;
+	
+	@EzyAutoBind
+	private ChatBotQuestionService chatBotQuestionService;
 
 	@Override
 	protected void execute() throws EzyBadRequestException {
@@ -35,10 +39,11 @@ public class ChatSystemMessageHandler
 	}
 	
 	private void response(EzyUser user) {
+		String question = chatBotQuestionService.randomQuestion();
 		responseFactory.newObjectResponse()
 			.command(CHAT_SYSTEM_MESSAGE)
 			.user(user)
-			.param("message", message + "#System")
+			.param("message", question)
 			.execute();
 	}
 

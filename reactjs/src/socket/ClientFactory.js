@@ -1,4 +1,5 @@
-import Ezy from '../lib/ezyfox-server-es6-client'
+// import Ezy from '../lib/ezyfox-server-es6-client'
+import Ezy from 'ezyfox-es6-client';
 import Mvc from '../Mvc';
 
 class ClientFactory {

@@ -27,7 +27,7 @@ class ExHandshakeHandler : EzyHandshakeHandler {
 };
 
 class ExLoginSuccessHandler : EzyLoginSuccessHandler {
-    override func handleLoginSuccess(data: NSObject) {
+    override func handleLoginSuccess(joinedApps: NSArray, responseData: NSObject) {
         let array = NSMutableArray()
         array.add("freechat")
         array.add(NSDictionary())
@@ -70,13 +70,17 @@ class ViewController: UIViewController {
         mvc?.addController(name: "contact", controller: Controller())
         let clients = EzyClients.getInstance()!;
         let config = NSMutableDictionary()
+        config["clientName"] = "first";
         config["zoneName"] = "freechat"
         client = clients.newDefaultClient(config: config)
         let setup = client!.setup!
+            .addEventHandler(eventType: EzyEventType.CONNECTION_SUCCESS, handler: EzyConnectionSuccessHandler())
+            .addEventHandler(eventType: EzyEventType.CONNECTION_FAILURE, handler: EzyConnectionFailureHandler())
             .addDataHandler(cmd: EzyCommand.LOGIN, handler: ExLoginSuccessHandler())
             .addDataHandler(cmd: EzyCommand.APP_ACCESS, handler: ExAppAccessHandler())
         _ = setup.setupApp(appName: "freechat")
             .addDataHandler(cmd: "5", handler: ExFirstAppResponseHandler())
+        Thread.current.name = "main";
         clients.processEvents()
     }
     
@@ -86,7 +90,8 @@ class ViewController: UIViewController {
         let handshaker = ExHandshakeHandler(username: username, password: password)
         _ = client!.setup!
             .addDataHandler(cmd: EzyCommand.HANDSHAKE, handler: handshaker)
-        let host = "192.168.1.13"
+//        let host = "192.168.1.13"
+        let host = "ws.tvd12.com"
         client!.connect(host: host, port: 3005)
     }
 }
