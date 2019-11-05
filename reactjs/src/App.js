@@ -1,4 +1,4 @@
-// import Ezy from '../lib/ezyfox-server-es6-client'
+// import Ezy from './lib/ezyfox-server-es6-client'
 import Ezy from 'ezyfox-es6-client';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
