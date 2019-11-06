@@ -12,7 +12,11 @@ import './css/main-nav.css';
 import './css/main-container.css';
 import './css/footer-container.css';
 import './css/login.css';
+import './css/add-contact.css';
 import './App.css';
+
+import Mvc from './Mvc'
+import SocketProxy from './socket/SocketProxy'
 
 import LoginView from './views/LoginView'
 import MessageView from './views/MessageView'
@@ -21,8 +25,23 @@ class App extends Component {
   constructor() {
     super(...arguments);
     this.authenticated = false;
+
+    // setup ezyfox
     Ezy.Logger.debug = () => true;
     this.clients = Ezy.Clients.getInstance();
+
+    // setup mvc
+    this.mvc = Mvc.getInstance();
+    this.mvc.newController("app");
+    this.mvc.newController("contact");
+    this.mvc.newController("disconnect");
+    this.mvc.newController("login");
+    this.mvc.newController("message");
+    this.mvc.newController("myProfile");
+
+    // setup socket
+    this.socketProxy = SocketProxy.getInstance();
+    this.socketProxy.setup();
   }
 
   componentWillMount() {

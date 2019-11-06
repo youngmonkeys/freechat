@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter } from 'reactstrap';
 import Mvc from '../Mvc';
+import SocketRequest from '../socket/SocketRequest'
 
 class SuggestedContactItemView extends React.Component {
     constructor(props) {
@@ -110,17 +111,25 @@ class AddContactView extends React.Component {
         this.toggle = this.toggle.bind(this);
         this.onDone = this.onDone.bind(this);
         this.parent.toggleAddContactView = this.toggle;
-        this.controller = Mvc.getInstance().controller;
-        this.contactController = this.controller.contactController;
-        this.contactController.updateSuggestionView = (users) => {
+
+        let mvc = Mvc.getInstance();
+        this.contactController = mvc.getController("contact");
+    }
+
+    componentDidMount() {
+        this.contactController.addDefaultView("suggestion", (users) => {
             this.setState({suggestedContacts : users});
-        };
+        });
+    }
+
+    componentWillUnmount() {
+        this.contactController.removeDefaultView("suggestion");
     }
   
     toggle() {
         const willShow = !this.state.show;
         if(willShow) {
-            this.contactController.handleSuggestionContacts();
+            SocketRequest.requestSuggestionContacts();
         }
         else {
             this.suggestedContacts = {};
@@ -138,7 +147,7 @@ class AddContactView extends React.Component {
     }
 
     onDone() {
-        this.contactController.handleAddContacts(Array.from(this.selectedContacts));
+        SocketRequest.requestAddContacts(Array.from(this.selectedContacts));
         this.toggle();
     }
   

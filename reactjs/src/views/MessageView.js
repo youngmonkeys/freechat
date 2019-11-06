@@ -1,9 +1,9 @@
 import * as React from 'react';
-import $ from 'jquery'
 import Mvc from '../Mvc';
 import MessageScript from './js/Message';
 import AddContactView from './AddContactView';
-import '../css/add-contact.css';
+import SocketProxy from '../socket/SocketProxy';
+import SocketRequest from '../socket/SocketRequest'
 
 class MessageItemView extends React.Component {
     constructor(props) {
@@ -162,9 +162,10 @@ class MyShortProfileView extends React.Component {
     constructor(props) {
         super(props);
         this.parent = props.parent;
-        this.controller = Mvc.getInstance().controller;
-        this.myProfileController = this.controller.myProfileController;
-        const me = this.myProfileController.getMyLocalProfile();
+        let mvc = Mvc.getInstance();
+        this.myProfileController = mvc.getController("myProfile");
+        let client = SocketProxy.getInstance().getClient();
+        let me = client.me;
         this.data = {
             username : me.name
         };
@@ -221,38 +222,43 @@ class MessageView extends React.Component {
             targetContact : "System",
             messagess : {"System" : [{value: "message 1st", reply: false}, {value: "message 2nd", reply: true}]},
         };
-        this.initProperties();
-        const controller = Mvc.getInstance().controller;
-        this.messageController = controller.messageController;
-        this.messageController.updateViewBySystemMessage = (msg) => {
-            console.log("add rev system message now");
-            this.addReceivedSystemMessage(msg);
-        };
-        this.messageController.updateViewByUserMessage = (msg) => {
-            console.log("add user system message now");
-            this.addReceivedUserMessage(msg);
-        };
-        this.contactController = controller.contactController;
-        this.contactController.updateContactView = (newContacts) => {
-            this.addContacts(newContacts);
-        };
-        var disconnectController = controller.disconnectController;
-        disconnectController.updateView = (reason) => {
-            console.log("disconnected, redirect to login view");
-            this.props.history.push("/login");
-        };
-    }
-
-    initProperties() {
+        
         this.contactDict = {};
         const {contacts} = this.state;
         contacts.forEach((contact) => {
             this.contactDict[contact.username] = contact;
         });
+
+        let mvc = Mvc.getInstance();
+        this.messageController = mvc.getController("message");
+        this.contactController = mvc.getController("contact");        
+        this.disconnectController = mvc.getController("disconnect");
     }
 
     componentDidMount() {
-        this.contactController.handleGetContacts(0, 50);
+        this.messageController.addDefaultView("systemMessage", (msg) => {
+            console.log("add rev system message now");
+            this.addReceivedSystemMessage(msg);
+        });
+        this.messageController.addDefaultView("userMessage", (msg) => {
+            console.log("add user system message now");
+            this.addReceivedUserMessage(msg);
+        });
+        this.contactController.addDefaultView("newContacts", (newContacts) => {
+            this.addContacts(newContacts);
+        });
+        this.disconnectController.addDefaultView("disconnect", (reason) => {
+            console.log("disconnected, redirect to login view");
+            this.props.history.push("/login");
+        });
+
+        SocketRequest.requestGetContacts(0, 50);
+    }
+
+    componentWillUnmount() {
+        this.messageController.removeAllViews();
+        this.disconnectController.removeAllViews();
+        this.contactController.removeDefaultView("newContacts");
     }
 
     addContacts(newContacts) {
@@ -293,7 +299,7 @@ class MessageView extends React.Component {
 
     sendMessage(msg) {
         const { targetContact } = this.state;
-        this.messageController.sendMessageRequest(targetContact, msg);
+        SocketRequest.sendMessageRequest(targetContact, msg);
     }
 
     addSentMessage(msg) {
