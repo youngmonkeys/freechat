@@ -16,6 +16,7 @@ import tvd12.com.ezyfoxserver.client.R;
 import vn.team.freechat.adapter.ContactListAdapter;
 import vn.team.freechat.model.ContactListItemModel;
 import vn.team.freechat.mvc.Controller;
+import vn.team.freechat.mvc.IController;
 import vn.team.freechat.mvc.IView;
 import vn.team.freechat.mvc.Mvc;
 import vn.team.freechat.request.GetContactsRequest;
@@ -27,8 +28,8 @@ import vn.team.freechat.request.GetContactsRequest;
 public class ContactActivity extends AppActivity {
 
     private String username;
-    private Controller contactController;
-    private Controller connectionController;
+    private IController contactController;
+    private IController connectionController;
 
     private View loadingView;
     private View profileBox;

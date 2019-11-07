@@ -14,8 +14,8 @@ import com.tvd12.ezyfoxserver.client.request.EzyLoginRequest;
 import com.tvd12.ezyfoxserver.client.request.EzyRequest;
 
 import tvd12.com.ezyfoxserver.client.R;
-import vn.team.freechat.factory.ClientFactory;
-import vn.team.freechat.mvc.Controller;
+import vn.team.freechat.socket.ClientFactory;
+import vn.team.freechat.mvc.IController;
 import vn.team.freechat.mvc.IView;
 import vn.team.freechat.mvc.Mvc;
 
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText usernameView;
     private EditText passwordView;
     private Button loginButtonView;
-    private Controller connectionController;
+    private IController connectionController;
 
 //    private String host = "192.168.1.13";
     private String host = "ws.tvd12.com";

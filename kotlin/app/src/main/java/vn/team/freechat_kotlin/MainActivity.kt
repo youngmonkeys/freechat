@@ -2,6 +2,7 @@ package vn.team.freechat_kotlin
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.StrictMode
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
@@ -22,11 +23,15 @@ class MainActivity : AppCompatActivity() {
     private var loginButtonView: Button? = null
     private var connectionController: Controller? = null
 
-    private val host = "192.168.1.13"
+    private val host = "ws.tvd12.com"
 //    private val host = "192.168.51.103"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val policy = StrictMode.ThreadPolicy.Builder()
+                .permitAll()
+                .build()
+        StrictMode.setThreadPolicy(policy)
         setContentView(R.layout.activity_main)
         initViews()
         initComponents()

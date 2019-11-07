@@ -10,9 +10,11 @@ import java.util.Map;
 public final class Mvc {
 
     private static final Mvc INSTANCE = new Mvc();
-    private final Map<String, Controller> controllers;
+    private final IModel model;
+    private final Map<String, IController> controllers;
 
     private Mvc() {
+        this.model = new Model();
         this.controllers = new HashMap<>();
         this.addController("connection");
         this.addController("contact");
@@ -23,18 +25,22 @@ public final class Mvc {
         return INSTANCE;
     }
 
-    public Controller addController(String action) {
+    public IModel getModel() {
+        return model;
+    }
+
+    public IController addController(String action) {
         Controller controller = new Controller();
         addController(action, controller);
         return controller;
     }
 
-    public void addController(String action, Controller controller) {
+    public void addController(String action, IController controller) {
         controllers.put(action, controller);
     }
 
-    public Controller getController(String action) {
-        Controller controller = controllers.get(action);
+    public IController getController(String action) {
+        IController controller = controllers.get(action);
         return controller;
     }
 

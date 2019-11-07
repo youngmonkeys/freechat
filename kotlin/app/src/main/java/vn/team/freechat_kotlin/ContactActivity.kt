@@ -95,8 +95,8 @@ class ContactActivity : AppActivity() {
     private fun addContacts(usernames: EzyArray) {
         val models = ArrayList<ContactListItemModel>()
         if(usernames.isEmpty) return
-        for (i in 0..usernames.size())
-            models.add(ContactListItemModel(usernames.get(i, String::class.java), ""))
+        for (i in 1..usernames.size())
+            models.add(ContactListItemModel(usernames.get(i - 1, String::class.java), ""))
         contactListAdapter?.addItemModels(models)
         contactListAdapter?.notifyDataSetChanged()
     }

@@ -2,7 +2,7 @@ package vn.team.freechat_kotlin.factory
 
 import com.tvd12.ezyfoxserver.client.EzyClient
 import com.tvd12.ezyfoxserver.client.EzyClients
-import com.tvd12.ezyfoxserver.client.command.EzySetup
+import com.tvd12.ezyfoxserver.client.setup.EzySetup
 import com.tvd12.ezyfoxserver.client.config.EzyClientConfig
 import com.tvd12.ezyfoxserver.client.constant.EzyCommand
 import com.tvd12.ezyfoxserver.client.entity.EzyApp
@@ -62,13 +62,13 @@ class ClientFactory {
     }
 
     inner class ExLoginSuccessHandler : EzyLoginSuccessHandler() {
-        override fun handleLoginSuccess( responseData: EzyData?) {
+        override fun handleLoginSuccess(responseData: EzyData?) {
             val request = EzyAccessAppRequest("freechat")
             client.send(request)
         }
     }
 
-    inner class ExAccessAppHandler : EzyAccessAppHandler() {
+    inner class ExAccessAppHandler : EzyAppAccessHandler() {
         override fun postHandle(app: EzyApp, data: EzyArray) {
             val controller = mvc.getController("connection")
             controller.updateViews("show-contacts", null)
@@ -121,7 +121,7 @@ class ClientFactory {
                 .build()
         val clients = EzyClients.getInstance()
         val client = clients.defaultClient ?: clients.newDefaultClient(config)
-        val setup = client.get(EzySetup::class.java)
+        val setup = client.setup()
         setup.addEventHandler(EzyEventType.CONNECTION_SUCCESS, ExConnectionSuccessHandler())
         setup.addEventHandler(EzyEventType.CONNECTION_FAILURE, EzyConnectionFailureHandler())
         setup.addEventHandler(EzyEventType.DISCONNECTION, ExDisconnectionHandler())

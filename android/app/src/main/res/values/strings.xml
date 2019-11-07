@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Free chat</string>
+    <string name="app_name">Freechat</string>
     <string name="username">username</string>
     <string name="password">password</string>
     <string name="Login">Login</string>

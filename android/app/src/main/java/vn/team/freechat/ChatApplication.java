@@ -3,7 +3,7 @@ package vn.team.freechat;
 import android.app.Application;
 
 import com.tvd12.ezyfoxserver.client.socket.EzyMainEventsLoop;
-import com.tvd12.ezyfoxserver.client.util.EzyLogger;
+import com.tvd12.ezyfoxserver.client.logger.EzyLogger;
 
 /**
  * Created by Dung Ta Van on 8/3/19.

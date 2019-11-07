@@ -17,6 +17,7 @@ import vn.team.freechat.data.Message;
 import vn.team.freechat.data.MessageReceived;
 import vn.team.freechat.data.MessageSent;
 import vn.team.freechat.mvc.Controller;
+import vn.team.freechat.mvc.IController;
 import vn.team.freechat.mvc.IView;
 import vn.team.freechat.mvc.Mvc;
 import vn.team.freechat.request.SendSystemMessageRequest;
@@ -29,8 +30,8 @@ import vn.team.freechat.request.SendUserMessageRequest;
 public class MessageActivity extends AppActivity {
 
     private String targetContact;
-    private Controller messageController;
-    private Controller connectionController;
+    private IController messageController;
+    private IController connectionController;
 
     private View loadingView;
     private View backButtonView;

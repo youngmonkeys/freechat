@@ -1,9 +1,10 @@
-package vn.team.freechat.factory;
+package vn.team.freechat.socket;
 
 import com.tvd12.ezyfoxserver.client.EzyClient;
 import com.tvd12.ezyfoxserver.client.EzyClients;
-import com.tvd12.ezyfoxserver.client.command.EzyAppSetup;
-import com.tvd12.ezyfoxserver.client.command.EzySetup;
+import com.tvd12.ezyfoxserver.client.handler.EzyLoginErrorHandler;
+import com.tvd12.ezyfoxserver.client.setup.EzyAppSetup;
+import com.tvd12.ezyfoxserver.client.setup.EzySetup;
 import com.tvd12.ezyfoxserver.client.config.EzyClientConfig;
 import com.tvd12.ezyfoxserver.client.constant.EzyCommand;
 import com.tvd12.ezyfoxserver.client.entity.EzyApp;
@@ -14,7 +15,7 @@ import com.tvd12.ezyfoxserver.client.event.EzyDisconnectionEvent;
 import com.tvd12.ezyfoxserver.client.event.EzyEventType;
 import com.tvd12.ezyfoxserver.client.event.EzyLostPingEvent;
 import com.tvd12.ezyfoxserver.client.event.EzyTryConnectEvent;
-import com.tvd12.ezyfoxserver.client.handler.EzyAccessAppHandler;
+import com.tvd12.ezyfoxserver.client.handler.EzyAppAccessHandler;
 import com.tvd12.ezyfoxserver.client.handler.EzyAppDataHandler;
 import com.tvd12.ezyfoxserver.client.handler.EzyConnectionFailureHandler;
 import com.tvd12.ezyfoxserver.client.handler.EzyConnectionSuccessHandler;
@@ -25,7 +26,7 @@ import com.tvd12.ezyfoxserver.client.request.EzyAccessAppRequest;
 import com.tvd12.ezyfoxserver.client.request.EzyRequest;
 
 import vn.team.freechat.data.MessageReceived;
-import vn.team.freechat.mvc.Controller;
+import vn.team.freechat.mvc.IController;
 import vn.team.freechat.mvc.Mvc;
 import vn.team.freechat.contant.Commands;
 import vn.team.freechat.handler.HandshakeHandler;
@@ -47,16 +48,16 @@ public class ClientFactory {
     }
 
     public EzyClient newClient(EzyRequest loginRequest) {
-        final Controller connectionController = mvc.getController("connection");
-        final Controller contactController = mvc.getController("contact");
-        final Controller messageController = mvc.getController("message");
+        final IController connectionController = mvc.getController("connection");
+        final IController contactController = mvc.getController("contact");
+        final IController messageController = mvc.getController("message");
         final EzyClientConfig config = EzyClientConfig.builder()
                 .zoneName("freechat")
                 .build();
         final EzyClients clients = EzyClients.getInstance();
         EzyClient oldClient = clients.getDefaultClient();
         final EzyClient client = oldClient != null ? oldClient : clients.newDefaultClient(config);
-        final EzySetup setup = client.get(EzySetup.class);
+        final EzySetup setup = client.setup();
         setup.addEventHandler(EzyEventType.CONNECTION_SUCCESS, new EzyConnectionSuccessHandler() {
             @Override
             protected void postHandle() {
@@ -69,17 +70,28 @@ public class ClientFactory {
             protected void preHandle(EzyDisconnectionEvent event) {
                 connectionController.updateView("show-loading");
             }
+
+            @Override
+            protected boolean shouldReconnect(EzyDisconnectionEvent event) {
+                return super.shouldReconnect(event);
+            }
         });
         setup.addDataHandler(EzyCommand.HANDSHAKE, new HandshakeHandler(loginRequest));
         setup.addDataHandler(EzyCommand.LOGIN, new EzyLoginSuccessHandler() {
 
             @Override
-            protected void handleLoginSuccess(EzyArray joinedApps, EzyData responseData) {
+            protected void handleLoginSuccess(EzyData responseData) {
                 EzyRequest request = new EzyAccessAppRequest("freechat");
                 client.send(request);
             }
         });
-        setup.addDataHandler(EzyCommand.APP_ACCESS, new EzyAccessAppHandler() {
+        setup.addDataHandler(EzyCommand.LOGIN_ERROR, new EzyLoginErrorHandler() {
+            @Override
+            public void handle(EzyArray data) {
+                super.handle(data);
+            }
+        });
+        setup.addDataHandler(EzyCommand.APP_ACCESS, new EzyAppAccessHandler() {
             @Override
             protected void postHandle(EzyApp app, EzyArray data) {
                 connectionController.updateView("show-contacts");
