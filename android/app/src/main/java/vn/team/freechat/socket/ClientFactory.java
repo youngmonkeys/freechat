@@ -22,7 +22,7 @@ import com.tvd12.ezyfoxserver.client.handler.EzyConnectionSuccessHandler;
 import com.tvd12.ezyfoxserver.client.handler.EzyDisconnectionHandler;
 import com.tvd12.ezyfoxserver.client.handler.EzyEventHandler;
 import com.tvd12.ezyfoxserver.client.handler.EzyLoginSuccessHandler;
-import com.tvd12.ezyfoxserver.client.request.EzyAccessAppRequest;
+import com.tvd12.ezyfoxserver.client.request.EzyAppAccessRequest;
 import com.tvd12.ezyfoxserver.client.request.EzyRequest;
 
 import vn.team.freechat.data.MessageReceived;
@@ -81,7 +81,7 @@ public class ClientFactory {
 
             @Override
             protected void handleLoginSuccess(EzyData responseData) {
-                EzyRequest request = new EzyAccessAppRequest("freechat");
+                EzyRequest request = new EzyAppAccessRequest("freechat");
                 client.send(request);
             }
         });
