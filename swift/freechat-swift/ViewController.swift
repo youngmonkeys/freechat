@@ -27,7 +27,7 @@ class ExHandshakeHandler : EzyHandshakeHandler {
 };
 
 class ExLoginSuccessHandler : EzyLoginSuccessHandler {
-    override func handleLoginSuccess(joinedApps: NSArray, responseData: NSObject) {
+    override func handleLoginSuccess(responseData: NSObject) {
         let array = NSMutableArray()
         array.add("freechat")
         array.add(NSDictionary())
@@ -41,6 +41,9 @@ class ExAppAccessHandler : EzyAppAccessHandler {
         let contactView = storyboard.instantiateViewController(withIdentifier: "contactView") as! ContactViewController
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = contactView
+//        let array = NSMutableArray();
+//        array.add(app.id);
+//        client!.sendRequest(cmd: EzyCommand.APP_EXIT, data: array);
     }
 };
 

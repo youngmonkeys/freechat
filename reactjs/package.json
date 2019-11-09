@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "create-react-class": "^15.6.3",
-    "ezyfox-es6-client": "^1.1.1",
+    "ezyfox-es6-client": "^1.1.3",
     "jquery": "^3.3.1",
     "mvc-es6": "^1.0.0",
     "react": "^16.4.2",
