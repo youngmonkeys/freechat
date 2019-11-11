@@ -8,10 +8,8 @@ import com.tvd12.ezyfox.binding.annotation.EzyValue;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @EzyObjectBinding(read = false)
 public class Error implements Serializable {

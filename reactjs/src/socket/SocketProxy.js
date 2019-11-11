@@ -61,31 +61,29 @@ class SocketProxy {
         });
         
         setupApp.addDataHandler("2", function(app, data) {
-            let contacts = data['new-contacts'];
-            console.log("add news contacts: " + JSON.stringify(contacts));
-            contactController.updateViews("newContacts", contacts);
+            console.log("add news contacts: " + JSON.stringify(data));
+            contactController.updateViews("newContacts", data);
         });
         
         setupApp.addDataHandler("4", function(app, data) {
-            let {message} = data;
-            console.log("received message: " + message + ", update view now");
-            messageController.updateViews("systemMessage", message);
+            console.log("received message: " + JSON.stringify(data) + ", update view now");
+            messageController.updateViews("systemMessage", data);
         });
         
         setupApp.addDataHandler("5", function(app, data) {
-            contactController.updateViews("newContacts", data['contacts']);
+            contactController.updateViews("newContacts", data);
         });
         
         setupApp.addDataHandler("6", function(app, data) {
-            const {from, message} = data;
-            console.log("received message: " + message + " from: " + from + ", update view now");
+            console.log("received message: " + JSON.stringify(data) + ", update view now");
             messageController.updateViews("userMessage", data);
         });
         return client;
     }
 
     connect() {
-        let url = "wss://ws.tvd12.com/ws";
+        // let url = "wss://ws.tvd12.com/ws";
+        let url = "ws://localhost:2208/ws";
         let client = this.getClient();
         client.connect(url);
     }

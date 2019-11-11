@@ -23,8 +23,6 @@ public class ChatMessageServiceImpl
 	@EzyAutoBind
 	private ChatMaxIdService maxIdService;
 	
-
-	
 	private void presave(ChatMessage message) {
 		long id = newEntityId();
 		message.setId(id);

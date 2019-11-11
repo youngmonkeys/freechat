@@ -101,9 +101,7 @@ class AddContactView extends React.Component {
         this.state = {
             show: false,
             searchedContacts : {
-            'dungtv' : {username : 'dungtv', fullName : 'Ta Van Dung'}, 
-            'datdt': {username : 'datdt', fullName : 'Tien Dat'}, 
-            'havm': {username : 'havm', fullName : 'Vu Manh Ha'}
+            'dungtv' : {username : 'dungtv', fullName : 'Ta Van Dung'}
             },
             suggestedContacts : {}
         };

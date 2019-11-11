@@ -26,7 +26,7 @@ public class ChatSuggestContactsHandler
 	
 	@Override
 	protected void execute() throws EzyBadRequestException {
-		List<ChatUser> users = userService.getSuggestionUsers(user.getName(), 0, 20);
+		List<ChatUser> users = userService.getSuggestionUsers(user.getName(), 0, 30);
 		response(users);
 	}
 	

@@ -91,7 +91,7 @@ class ContactView extends React.Component {
                     <span className="contact-status online"></span>
                     <img src={require('../images/70x70.png')} alt="" />
                     <div className="meta">
-                        <p className="name">{data.username}</p>
+                        <p className="name">{data.channel.users[0]}</p>
                         <p className="preview">{data.lastMessage}</p>
                     </div>
                 </div>
@@ -115,7 +115,7 @@ class ContactListView extends React.Component {
         this.selectedItem = selected ? newSelectedItem : null;
         var target = null;
         if(this.selectedItem)
-            target = this.selectedItem.props.data.username;
+            target = this.selectedItem.props.data.channel.channelId;
         this.parent.updateTargetContact(target);
     }
 
@@ -147,7 +147,7 @@ class CurrentContactView extends React.Component {
         return (
             <div className="contact-profile">
                 <img src={require('../images/70x70.png')} alt="" />
-                <div id="divGroupReceiver"><p id="receiver">{data.username}</p></div>
+                <div id="divGroupReceiver"><p id="receiver">{data.channel.users[0]}</p></div>
                 <div className="social-media">
                     <i className="icon-facebook" aria-hidden="true"></i>
                     <i className="icon-twitter" aria-hidden="true"></i>
@@ -217,16 +217,20 @@ class MessageView extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
-            contacts : [{username: "System", lastMessage: ""}],
-            targetContact : "System",
-            messagess : {"System" : [{value: "message 1st", reply: false}, {value: "message 2nd", reply: true}]},
+            message: "",
+            contacts : [
+                {channel: {channelId: 0, users: ["System"]}, lastMessage: ""}
+            ],
+            targetContact : 0,
+            messagess : {[0] : [{value: "message 1st", reply: false}, {value: "message 2nd", reply: true}]},
         };
         
         this.contactDict = {};
         const {contacts} = this.state;
         contacts.forEach((contact) => {
-            this.contactDict[contact.username] = contact;
+            this.contactDict[contact.channel.channelId] = contact;
         });
 
         let mvc = Mvc.getInstance();
@@ -255,6 +259,10 @@ class MessageView extends React.Component {
         SocketRequest.requestGetContacts(0, 50);
     }
 
+    onMessageChange(e) {
+        this.setState({message: e.target.value});
+    }
+
     componentWillUnmount() {
         this.messageController.removeAllViews();
         this.disconnectController.removeAllViews();
@@ -262,18 +270,17 @@ class MessageView extends React.Component {
     }
 
     addContacts(newContacts) {
-        console.log('add contacts: ' + newContacts);
         const {contacts, messagess} = this.state;
         const contactMap = this.contactDict;
         var updateContacts = [];
         newContacts.forEach(function(newContact) {
-            const old = contactMap[newContact];
+            const old = contactMap[newContact.channelId];
             if(!old) {
-                const item = {username : newContact, lastMessage: ""};
-                contactMap[newContact] = item;
+                const item = {channel: newContact, lastMessage: ""};
+                contactMap[newContact.channelId] = item;
                 updateContacts.unshift(item);
-                messagess[newContact] = [];
-                console.log("add new contact: " + newContact + " success");
+                messagess[newContact.channelId] = [];
+                console.log("add new contact: " + JSON.stringify(newContact) + " success");
             }
         });
         updateContacts = updateContacts.concat(contacts);
@@ -281,17 +288,16 @@ class MessageView extends React.Component {
     }
 
     updateTargetContact(target) {
-        var newTartget = target ? target : "System";
+        var newTartget = target ? target : 0;
         this.setState({targetContact : newTartget});
         console.log('change contact, now target: ' + newTartget);
     }
 
     addAndSendMessage(e) {
         if (e.key === 'Enter') {
-            var messageInput = this.refs.messageInput;
-            var message = messageInput.value;
+            var message = this.state.message;
             console.log("message input = " + message);
-            messageInput.value = "";
+            this.setState({message : ""});
             this.addSentMessage({value: message, reply: false});
             this.sendMessage(message);
         }
@@ -304,38 +310,28 @@ class MessageView extends React.Component {
 
     addSentMessage(msg) {
         const { messagess, targetContact } = this.state;
-        const messages = messagess[targetContact];
-        messages.push(msg);
-        this.setState({ messagess: messagess });
-    }
-    
-    addReceivedMessage(msg) {
-        const { messagess, targetContact } = this.state;
-        const messages = messagess[targetContact];
+        const messages = messagess[targetContact] || [];
         messages.push(msg);
         this.setState({ messagess: messagess });
     }
 
     addReceivedSystemMessage(msg) {
         const { contacts, messagess } = this.state;
-        const messages = messagess["System"];
-        const contact = this.contactDict["System"];
-        contact.lastMessage = msg;
-        messages.push({value: msg, reply: true});
+        const messages = messagess[0];
+        const contact = this.contactDict[0];
+        contact.lastMessage = msg.message;
+        messages.push({value: msg.message, reply: true});
         this.setState({ contacts: contacts, messagess: messagess });
     }
 
     addReceivedUserMessage(msg) {
         const { contacts, messagess } = this.state;
-        if(!messagess[msg.from]) {
-            const item = {username : msg.from, lastMessage: ""};
-            this.contactDict[msg.from] = item;
-            contacts.unshift(item);
-            messagess[msg.from] = [];
-            console.log("add new contact: " + msg.from + " success");
+        if(!this.contactDict[msg.channelId]) {
+            let newContact = {channelId : msg.channelId, users: [msg.from]};
+            this.addContacts([newContact]);
         }
-        const messages = messagess[msg.from];
-        const contact = this.contactDict[msg.from];
+        const messages = messagess[msg.channelId];
+        const contact = this.contactDict[msg.channelId];
         contact.lastMessage = msg.message;
         messages.push({value: msg.message, reply: true});
         this.setState({ contacts: contacts, messagess: messagess });
@@ -347,9 +343,9 @@ class MessageView extends React.Component {
     }
 
     render() {
-        const { contacts, messagess, targetContact } = this.state;
-        const currentContact = this.contactDict[targetContact] ? this.contactDict[targetContact] : this.contactDict["System"];
-        const messages = messagess[targetContact] ? messagess[targetContact] : [];
+        const {message, contacts, messagess, targetContact } = this.state;
+        const currentContact = contacts[targetContact] || contacts[0];
+        const messages = messagess[targetContact] || [];
         return (
             <div>
                 <header className="main-nav">
@@ -408,8 +404,9 @@ class MessageView extends React.Component {
                             <div className="message-input">
                                 <div className="wrap">
                                     <input type="text" 
-                                        ref="messageInput"  
+                                        value={message}  
                                         placeholder="Write your message..." 
+                                        onChange={this.onMessageChange.bind(this)}
                                         onKeyDown={this.addAndSendMessage.bind(this)}  /> 
                                     <i className="icon-attachment attachment" aria-hidden="true"></i>
                                     <button className="submit" 

@@ -2,7 +2,7 @@ package vn.team.freechat.handler;
 
 import static vn.team.freechat.constant.ChatCommands.CHAT_GET_CONTACTS;
 
-import java.util.Set;
+import java.util.List;
 
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
@@ -12,7 +12,8 @@ import com.tvd12.ezyfox.core.annotation.EzyClientRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
 
 import lombok.Setter;
-import vn.team.freechat.repo.ChatContactRepo;
+import vn.team.freechat.data.ChatChannelUsers;
+import vn.team.freechat.service.ChatChannelUserService;
 
 @Setter
 @EzyPrototype
@@ -22,23 +23,31 @@ public class ChatGetContactsHandler
 		extends ChatClientRequestHandler
 		implements EzyDataBinding {
 	
-	private int skip;
-	private int limit;
+	protected int skip;
+	protected int limit;
 	
 	@EzyAutoBind
-	private ChatContactRepo contactRepo;
+	private ChatChannelUserService channelUserService;
+	
+	@Override
+	protected void preExecute() {
+		if(limit > 30) 
+			limit = 30;
+	}
 	
 	@Override
 	protected void execute() throws EzyBadRequestException {
-		Set<String> contacts = contactRepo.getContactNames(user.getName(), skip, limit);
-		reponseMessage(contacts);
+		
+		List<ChatChannelUsers> channels = 
+				channelUserService.getChannelsOfUser(user.getName(), skip, limit);
+		reponseMessage(channels);
 	}
 	
-	public void reponseMessage(Set<String> contacts) {
-		responseFactory.newObjectResponse()
+	public void reponseMessage(List<ChatChannelUsers> contacts) {
+		responseFactory.newArrayResponse()
 			.command(CHAT_GET_CONTACTS)
 			.session(session)
-			.param("contacts", contacts)
+			.data(contacts)
 			.execute();
 	}
 

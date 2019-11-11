@@ -32,10 +32,15 @@ public abstract class ChatClientRequestHandler
 	
 	@Override
 	public final void handle() {
+		preExecute();
 		execute();
+		postExecute();
 	}
+	
+	protected void preExecute() {} 
 	
 	protected abstract void execute() throws EzyBadRequestException;
 	
+	protected void postExecute() {}
 	
 }

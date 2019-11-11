@@ -43,7 +43,9 @@ public class ChatSystemMessageHandler
 		responseFactory.newObjectResponse()
 			.command(CHAT_SYSTEM_MESSAGE)
 			.user(user)
+			.param("from", "System")
 			.param("message", question)
+			.param("channelId", 0)
 			.execute();
 	}
 

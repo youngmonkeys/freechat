@@ -14,6 +14,7 @@ import com.tvd12.ezyfoxserver.exception.EzyLoginErrorException;
 import lombok.Getter;
 import lombok.Setter;
 import vn.team.freechat.common.data.ChatNewUser;
+import vn.team.freechat.common.data.ChatUser;
 import vn.team.freechat.common.service.ChatUserService;
 import vn.team.freechat.plugin.constant.ChatLoginError;
 
@@ -28,19 +29,34 @@ public class ChatUserLoginController extends EzyAbstractPluginEventController<Ez
 	
 	@Override
 	public void handle(EzyPluginContext ctx, EzyUserLoginEvent event) {
-		getLogger().info("handle user {} login in vn-freechatvn", event.getUsername());
-		checkPassword(event.getPassword());
-		checkUser(event.getUsername(), event.getPassword());
+		logger.info("handle user {} login in vn-freechatvn", event.getUsername());
+
+		validateEvent(event);
+		
+		String username = event.getUsername();
+		String password = event.getPassword();
+		
+		ChatNewUser newUser = getUser(username, password);
+		ChatUser userData = newUser.getUser();
+		
+		if(!newUser.isNewUser()) {
+			if(!userData.getPassword().equals(password))
+				throw new EzyLoginErrorException(ChatLoginError.ALREADY_REGISTER);
+		}
+		
 		event.setStreamingEnable(true);
-		getLogger().info("username and password match, accept user: {}", event.getUsername());
+		event.setUserProperty("dataId", userData.getId());
+		
+		logger.info("username and password match, accept user: {}", event.getUsername());
 	}
 
-	private void checkPassword(String password) {
-		if(EzyStrings.isNoContent(password))
+	private void validateEvent(EzyUserLoginEvent event) {
+		if(EzyStrings.isNoContent(event.getPassword()))
 			throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
+		
 	}
 	
-	private void checkUser(String username, String password) {
+	private ChatNewUser getUser(String username, String password) {
 		ChatNewUser newUser = userService.createUser(
 				username, 
 				user -> {
@@ -48,9 +64,6 @@ public class ChatUserLoginController extends EzyAbstractPluginEventController<Ez
 					user.setOnline(true);
 				}
 		);
-		if(newUser.isNewUser()) {
-			if(!newUser.getUser().getPassword().equals(password))
-				throw new EzyLoginErrorException(ChatLoginError.ALREADY_REGISTER);
-		}
+		return newUser;
 	}
 }

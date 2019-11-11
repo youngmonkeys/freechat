@@ -15,11 +15,11 @@ class SocketRequestClass {
         this.getApp().sendRequest('5', {skip: skip, limit: limit});
     }
 
-    sendMessageRequest(target, message) {
-        if(target === "System")
+    sendMessageRequest(channelId, message) {
+        if(channelId === 0)
             this.sendSystemMessageRequest(message);
         else 
-            this.sendUserMessageRequest(target, message);
+            this.sendUserMessageRequest(channelId, message);
     }
     
     sendSystemMessageRequest(message) {
@@ -27,7 +27,7 @@ class SocketRequestClass {
     }
 
     sendUserMessageRequest(target, message) {
-        this.getApp().sendRequest("6", {message : message, to : target});
+        this.getApp().sendRequest("6", {message : message, channelId : target});
     }
 
     getClient() {

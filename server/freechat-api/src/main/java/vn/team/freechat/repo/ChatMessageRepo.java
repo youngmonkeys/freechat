@@ -6,7 +6,7 @@ import com.tvd12.ezyfox.mongodb.EzyMongoRepository;
 
 import vn.team.freechat.data.ChatMessage;
 
-@EzyAutoImpl
+@EzyAutoImpl("messageRepo")
 public interface ChatMessageRepo 
 	extends EzyMongoRepository<Long, ChatMessage> {
 	
