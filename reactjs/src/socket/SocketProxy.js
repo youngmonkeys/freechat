@@ -82,8 +82,8 @@ class SocketProxy {
     }
 
     connect() {
-        // let url = "wss://ws.tvd12.com/ws";
-        let url = "ws://localhost:2208/ws";
+        let url = "wss://ws.tvd12.com/ws";
+        // let url = "ws://localhost:2208/ws";
         let client = this.getClient();
         client.connect(url);
     }

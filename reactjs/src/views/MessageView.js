@@ -245,7 +245,7 @@ class MessageView extends React.Component {
             this.addReceivedSystemMessage(msg);
         });
         this.messageController.addDefaultView("userMessage", (msg) => {
-            console.log("add user system message now");
+            console.log("add rev user message now");
             this.addReceivedUserMessage(msg);
         });
         this.contactController.addDefaultView("newContacts", (newContacts) => {
@@ -325,7 +325,7 @@ class MessageView extends React.Component {
     }
 
     addReceivedUserMessage(msg) {
-        const { contacts, messagess } = this.state;
+        const { messagess } = this.state;
         if(!this.contactDict[msg.channelId]) {
             let newContact = {channelId : msg.channelId, users: [msg.from]};
             this.addContacts([newContact]);
@@ -334,7 +334,7 @@ class MessageView extends React.Component {
         const contact = this.contactDict[msg.channelId];
         contact.lastMessage = msg.message;
         messages.push({value: msg.message, reply: true});
-        this.setState({ contacts: contacts, messagess: messagess });
+        this.setState({ messagess: messagess });
         console.log('process rev user message done');
     }
 
