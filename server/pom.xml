@@ -21,9 +21,7 @@
 		<directory.apps>apps</directory.apps>
 		<directory.entries>entries</directory.entries>
 		<directory.common>common</directory.common>
-		<core.version>1.0.0</core.version>
-		<bean.version>1.0.0</bean.version>
-		<binding.version>1.0.0</binding.version>
+		<core.version>1.1.0</core.version>
 	</properties>
 
 	<dependencies>
@@ -31,16 +29,6 @@
 			<groupId>com.tvd12</groupId>
 			<artifactId>ezyfox-server-core</artifactId>
 			<version>${core.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.tvd12</groupId>
-			<artifactId>ezyfox-bean</artifactId>
-			<version>${bean.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.tvd12</groupId>
-			<artifactId>ezyfox-binding</artifactId>
-			<version>${binding.version}</version>
 		</dependency>
 	</dependencies>
 	<profiles>

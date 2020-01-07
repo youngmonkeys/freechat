@@ -9,21 +9,27 @@
 	<artifactId>freechat-common</artifactId>
 	<name>freechat-common</name>
 	
+	<properties>
+		<ezy.hazelcast.bean.version>1.1.0</ezy.hazelcast.bean.version>
+		<ezy.hazelcast.morphia.version>1.1.0</ezy.hazelcast.morphia.version>
+		<ezy.hazelcast.server.support.version>1.1.0</ezy.hazelcast.server.support.version>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.tvd12</groupId>
-			<artifactId>ezyfox-hazelcast-bean</artifactId>
-			<version>1.0.0</version>
+			<artifactId>ezydata-hazelcast-bean</artifactId>
+			<version>${ezy.hazelcast.bean.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.tvd12</groupId>
-			<artifactId>ezyfox-hazelcast-morphia</artifactId>
-			<version>1.0.0</version>
+			<artifactId>ezydata-hazelcast-morphia</artifactId>
+			<version>${ezy.hazelcast.morphia.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.tvd12</groupId>
 			<artifactId>ezyfox-server-support</artifactId>
-			<version>1.0.1</version>
+			<version>${ezy.hazelcast.server.support.version}</version>
 		</dependency>
 	</dependencies>
 	

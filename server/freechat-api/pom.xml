@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>vn.team</groupId>
 			<artifactId>freechat-common</artifactId>
-			<version>1.0.0</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -2,7 +2,7 @@ package vn.team.freechat.common.repo;
 
 import java.util.List;
 
-import com.tvd12.ezyfox.mongodb.EzyMongoRepository;
+import com.tvd12.ezydata.mongodb.EzyMongoRepository;
 
 import vn.team.freechat.common.data.ChatUser;
 

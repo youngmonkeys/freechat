@@ -2,8 +2,8 @@ package vn.team.freechat.repo.impl;
 
 import java.util.List;
 
+import com.tvd12.ezydata.morphia.repository.EzyDatastoreRepository;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
-import com.tvd12.ezyfox.morphia.repository.EzyDatastoreRepository;
 
 import dev.morphia.query.Query;
 import dev.morphia.query.internal.MorphiaCursor;

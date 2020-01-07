@@ -1,10 +1,10 @@
 package vn.team.freechat.common.service.impl;
 
 import com.hazelcast.core.HazelcastInstance;
+import com.tvd12.ezydata.hazelcast.factory.EzyMapTransactionFactory;
+import com.tvd12.ezydata.hazelcast.service.EzyTransactionalMaxIdService;
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
-import com.tvd12.ezyfox.hazelcast.factory.EzyMapTransactionFactory;
-import com.tvd12.ezyfox.hazelcast.service.EzyTransactionalMaxIdService;
 
 import vn.team.freechat.common.service.ChatMaxIdService;
 

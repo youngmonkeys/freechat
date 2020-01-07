@@ -3,11 +3,11 @@ package vn.team.freechat.common.creator;
 import com.hazelcast.config.Config;
 import com.hazelcast.core.HazelcastInstance;
 import com.mongodb.client.MongoDatabase;
+import com.tvd12.ezydata.hazelcast.EzyMongoDatastoreHazelcastFactory;
+import com.tvd12.ezydata.hazelcast.mapstore.EzyMapstoresFetcher;
+import com.tvd12.ezydata.hazelcast.mapstore.EzySimpleMapstoresFetcher;
+import com.tvd12.ezydata.hazelcast.util.EzyHazelcastConfigs;
 import com.tvd12.ezyfox.function.EzyCreation;
-import com.tvd12.ezyfox.hazelcast.EzyMongoDatastoreHazelcastFactory;
-import com.tvd12.ezyfox.hazelcast.mapstore.EzyMapstoresFetcher;
-import com.tvd12.ezyfox.hazelcast.mapstore.EzySimpleMapstoresFetcher;
-import com.tvd12.ezyfox.hazelcast.util.EzyHazelcastConfigs;
 
 import dev.morphia.Datastore;
 

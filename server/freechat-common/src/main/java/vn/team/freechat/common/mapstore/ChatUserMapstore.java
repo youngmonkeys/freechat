@@ -2,8 +2,8 @@ package vn.team.freechat.common.mapstore;
 
 import java.util.Map;
 
+import com.tvd12.ezydata.hazelcast.mapstore.EzyMongoDatastoreMapstore;
 import com.tvd12.ezyfox.database.annotation.EzyMapstore;
-import com.tvd12.ezyfox.hazelcast.mapstore.EzyMongoDatastoreMapstore;
 
 import vn.team.freechat.common.constant.ChatEntities;
 import vn.team.freechat.common.data.ChatUser;

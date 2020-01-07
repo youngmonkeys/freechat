@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.mongodb.MongoClient;
+import com.tvd12.ezydata.hazelcast.factory.EzySimpleMapTransactionFactory;
+import com.tvd12.ezydata.hazelcast.service.EzyTransactionalMaxIdService;
+import com.tvd12.ezydata.mongodb.loader.EzyInputStreamMongoClientLoader;
+import com.tvd12.ezydata.morphia.EzyDataStoreBuilder;
 import com.tvd12.ezyfox.database.service.EzyMaxIdService;
-import com.tvd12.ezyfox.hazelcast.factory.EzySimpleMapTransactionFactory;
-import com.tvd12.ezyfox.hazelcast.service.EzyTransactionalMaxIdService;
-import com.tvd12.ezyfox.mongodb.loader.EzyInputStreamMongoClientLoader;
-import com.tvd12.ezyfox.morphia.EzyDataStoreBuilder;
 import com.tvd12.test.base.BaseTest;
 
 import dev.morphia.Datastore;
