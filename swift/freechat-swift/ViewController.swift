@@ -47,8 +47,8 @@ class ExAppAccessHandler : EzyAppAccessHandler {
     }
 };
 
-class ExFirstAppResponseHandler : EzyAbstractAppDataHandler<NSDictionary> {
-    override func process(app: EzyApp, data: NSDictionary) {
+class ExFirstAppResponseHandler : EzyAbstractAppDataHandler<NSArray> {
+    override func process(app: EzyApp, data: NSArray) {
         let mvc = Mvc.getInstance()
         let controller = mvc?.getController(name: "contact")
         controller?.updateViews(action: "init", component: "contacts", data: data)
