@@ -5,7 +5,7 @@ import com.tvd12.ezyfoxserver.client.entity.EzyObject;
 
 import java.util.Date;
 
-import vn.team.freechat.contant.MessageType;
+import vn.team.freechat.constant.MessageType;
 
 /**
  * Created by tavandung12 on 10/7/18.
@@ -18,8 +18,8 @@ public class MessageReceived extends Message {
     public MessageReceived() {
     }
 
-    public MessageReceived(String message, String from) {
-        super(message);
+    public MessageReceived(long channelId, String from, String message) {
+        super(channelId, message);
         this.from = from;
     }
 

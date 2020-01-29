@@ -4,7 +4,7 @@ import com.tvd12.ezyfoxserver.client.entity.EzyData;
 import com.tvd12.ezyfoxserver.client.factory.EzyEntityFactory;
 import com.tvd12.ezyfoxserver.client.request.EzyRequest;
 
-import vn.team.freechat.contant.Commands;
+import vn.team.freechat.constant.Commands;
 
 /**
  * Created by tavandung12 on 10/6/18.
@@ -12,18 +12,18 @@ import vn.team.freechat.contant.Commands;
 
 public class SendUserMessageRequest implements EzyRequest {
 
-    private final String to;
+    private final long channelId;
     private final String message;
 
-    public SendUserMessageRequest(String to, String message) {
-        this.to = to;
+    public SendUserMessageRequest(long channelId, String message) {
         this.message = message;
+        this.channelId = channelId;
     }
 
     @Override
     public EzyData serialize() {
         return EzyEntityFactory.newObjectBuilder()
-                .append("to", to)
+                .append("channelId", channelId)
                 .append("message", message)
                 .build();
     }

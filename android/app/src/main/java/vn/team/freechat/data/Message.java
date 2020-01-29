@@ -13,17 +13,19 @@ import java.util.Date;
 
 public abstract class Message implements EzyObjectDeserializable {
 
+    protected Long channelId;
     protected String message;
     protected Date sentTime;
 
     public Message() {
     }
 
-    public Message(String message) {
-        this(message, new Date());
+    public Message(long channelId, String message) {
+        this(channelId, message, new Date());
     }
 
-    public Message(String message, Date sentTime) {
+    public Message(long channelId, String message, Date sentTime) {
+        this.channelId = channelId;
         this.message = message;
         this.sentTime = sentTime;
     }
@@ -31,6 +33,11 @@ public abstract class Message implements EzyObjectDeserializable {
     @Override
     public void deserialize(EzyObject data) {
         this.message = data.get("message");
+        this.channelId = data.get("channelId", Long.class);
+    }
+
+    public Long getChannelId() {
+        return channelId;
     }
 
     public String getMessage() {

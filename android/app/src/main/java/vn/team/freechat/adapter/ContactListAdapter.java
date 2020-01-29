@@ -8,10 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.tvd12.ezyfoxserver.client.util.Lists;
-
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import tvd12.com.ezyfoxserver.client.R;
 import vn.team.freechat.model.ContactListItemModel;
@@ -23,23 +24,34 @@ import vn.team.freechat.model.ContactListItemModel;
 public class ContactListAdapter extends ArrayAdapter<ContactListItemModel> {
 
     private final List<ContactListItemModel> items;
+    private final Map<Long, ContactListItemModel> itemMap;
     private static final int item_layout_id = R.layout.component_contact_list_item;
 
     public ContactListAdapter(Context context) {
-        this(context, Lists.newArrayList(new ContactListItemModel("System")));
+        this(context, new ArrayList<ContactListItemModel>());
     }
 
     public ContactListAdapter(Context context, List<ContactListItemModel> items) {
         super(context, item_layout_id, items);
         this.items = items;
+        this.itemMap = new HashMap<>();
+        this.addItemModel(ContactListItemModel.systemModel());
     }
 
-    public void addItemModel(ContactListItemModel model) {
-        items.add(model);
+    public ContactListItemModel getItemModel(int position) {
+        return items.get(position);
     }
 
-    public void addItemModels(Collection<ContactListItemModel> itemModels) {
-        items.addAll(itemModels);
+    public void addItemModel(ContactListItemModel item) {
+        if(!itemMap.containsKey(item.getId())) {
+            this.items.add(item);
+            this.itemMap.put(item.getId(), item);
+        }
+    }
+
+    public void addItemModels(Collection<ContactListItemModel> items) {
+        for(ContactListItemModel item : items)
+            addItemModel(item);
     }
 
     @NonNull
@@ -50,7 +62,7 @@ public class ContactListAdapter extends ArrayAdapter<ContactListItemModel> {
         TextView usernameView = view.findViewById(R.id.username);
         TextView lastMessageView = view.findViewById(R.id.lastMessage);
         ContactListItemModel model = items.get(position);
-        usernameView.setText(model.getUsername());
+        usernameView.setText(model.getContactUser());
         lastMessageView.setText(model.getLastMessage());
         return view;
     }

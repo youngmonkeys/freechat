@@ -4,7 +4,7 @@ import com.tvd12.ezyfoxserver.client.entity.EzyData;
 import com.tvd12.ezyfoxserver.client.factory.EzyEntityFactory;
 import com.tvd12.ezyfoxserver.client.request.EzyRequest;
 
-import vn.team.freechat.contant.Commands;
+import vn.team.freechat.constant.Commands;
 
 /**
  * Created by tavandung12 on 10/5/18.

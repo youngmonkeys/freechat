@@ -10,4 +10,8 @@ public interface IModel {
     <T> T get(Object key);
 
     <T> T remove(Object key);
+
+    IModel newChild(Object key);
+
+    IModel getChild(Object key);
 }

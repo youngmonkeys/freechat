@@ -2,7 +2,9 @@ package vn.team.freechat.socket;
 
 import com.tvd12.ezyfoxserver.client.EzyClient;
 import com.tvd12.ezyfoxserver.client.EzyClients;
+import com.tvd12.ezyfoxserver.client.handler.EzyHandshakeHandler;
 import com.tvd12.ezyfoxserver.client.handler.EzyLoginErrorHandler;
+import com.tvd12.ezyfoxserver.client.request.EzyLoginRequest;
 import com.tvd12.ezyfoxserver.client.setup.EzyAppSetup;
 import com.tvd12.ezyfoxserver.client.setup.EzySetup;
 import com.tvd12.ezyfoxserver.client.config.EzyClientConfig;
@@ -27,27 +29,26 @@ import com.tvd12.ezyfoxserver.client.request.EzyRequest;
 
 import vn.team.freechat.data.MessageReceived;
 import vn.team.freechat.mvc.IController;
+import vn.team.freechat.mvc.IModel;
 import vn.team.freechat.mvc.Mvc;
-import vn.team.freechat.contant.Commands;
-import vn.team.freechat.handler.HandshakeHandler;
+import vn.team.freechat.constant.Commands;
 
 /**
  * Created by tavandung12 on 10/7/18.
  */
 
-public class ClientFactory {
+public class SocketClientProxy {
 
     private final Mvc mvc = Mvc.getInstance();
-    private static final ClientFactory INSTANCE = new ClientFactory();
+    private static final SocketClientProxy INSTANCE = new SocketClientProxy();
 
-    private ClientFactory() {
-    }
+    private SocketClientProxy() { }
 
-    public static ClientFactory getInstance() {
+    public static SocketClientProxy getInstance() {
         return INSTANCE;
     }
 
-    public EzyClient newClient(EzyRequest loginRequest) {
+    public void setup() {
         final IController connectionController = mvc.getController("connection");
         final IController contactController = mvc.getController("contact");
         final IController messageController = mvc.getController("message");
@@ -76,7 +77,18 @@ public class ClientFactory {
                 return super.shouldReconnect(event);
             }
         });
-        setup.addDataHandler(EzyCommand.HANDSHAKE, new HandshakeHandler(loginRequest));
+        setup.addDataHandler(EzyCommand.HANDSHAKE, new EzyHandshakeHandler() {
+            @Override
+            protected EzyRequest getLoginRequest() {
+                IModel model = mvc.getModel();
+                IModel connection = model.get("connection");
+                return new EzyLoginRequest(
+                        "freechat",
+                        (String)connection.get("username"),
+                        (String)connection.get("password")
+                );
+            }
+        });
         setup.addDataHandler(EzyCommand.LOGIN, new EzyLoginSuccessHandler() {
 
             @Override
@@ -113,11 +125,10 @@ public class ClientFactory {
 
         EzyAppSetup appSetup = setup.setupApp("freechat");
 
-        appSetup.addDataHandler("5", new EzyAppDataHandler<EzyObject>() {
+        appSetup.addDataHandler(Commands.CHAT_GET_CONTACTS, new EzyAppDataHandler<EzyArray>() {
             @Override
-            public void handle(EzyApp app, EzyObject data) {
-                EzyArray usernames = data.get("contacts");
-                contactController.updateView("add-contacts", usernames);
+            public void handle(EzyApp app, EzyArray contacts) {
+                contactController.updateView("add-contacts", contacts);
             }
         });
         appSetup.addDataHandler(Commands.CHAT_SYSTEM_MESSAGE, new EzyAppDataHandler<EzyObject>() {
@@ -134,7 +145,16 @@ public class ClientFactory {
                 messageController.updateView("add-message", MessageReceived.create(data));
             }
         });
-        return client;
+    }
+
+    public void connect() {
+        EzyClient client = getClient();
+        client.connect("ws.tvd12.com", 3005);
+    }
+
+    public EzyClient getClient() {
+        EzyClients clients = EzyClients.getInstance();
+        return clients.getDefaultClient();
     }
 
 }

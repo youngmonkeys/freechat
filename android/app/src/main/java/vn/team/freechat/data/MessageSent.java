@@ -2,9 +2,7 @@ package vn.team.freechat.data;
 
 import com.tvd12.ezyfoxserver.client.constant.EzyConstant;
 
-import java.util.Date;
-
-import vn.team.freechat.contant.MessageType;
+import vn.team.freechat.constant.MessageType;
 
 /**
  * Created by tavandung12 on 10/7/18.
@@ -12,16 +10,8 @@ import vn.team.freechat.contant.MessageType;
 
 public class MessageSent extends Message {
 
-    private String to;
-
-    public MessageSent(String message, String to) {
-        super(message);
-        this.to = to;
-        this.sentTime = new Date();
-    }
-
-    public String getTo() {
-        return to;
+    public MessageSent(long channelId, String message) {
+        super( channelId, message);
     }
 
     @Override

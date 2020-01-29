@@ -9,28 +9,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.tvd12.ezyfoxserver.client.EzyClient;
-import com.tvd12.ezyfoxserver.client.request.EzyLoginRequest;
-import com.tvd12.ezyfoxserver.client.request.EzyRequest;
-
 import tvd12.com.ezyfoxserver.client.R;
-import vn.team.freechat.socket.ClientFactory;
 import vn.team.freechat.mvc.IController;
+import vn.team.freechat.mvc.IModel;
 import vn.team.freechat.mvc.IView;
 import vn.team.freechat.mvc.Mvc;
+import vn.team.freechat.socket.SocketClientProxy;
 
 public class MainActivity extends AppCompatActivity {
-
-    private EzyClient client;
 
     private View loadingView;
     private EditText usernameView;
     private EditText passwordView;
     private Button loginButtonView;
     private IController connectionController;
-
-//    private String host = "192.168.1.13";
-    private String host = "ws.tvd12.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         initComponents();
         setViewControllers();
+        setSocketClient();
     }
 
     @Override
@@ -105,12 +98,21 @@ public class MainActivity extends AppCompatActivity {
         loginButtonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientFactory factory = ClientFactory.getInstance();
-                client = factory.newClient(newLoginRequest());
-                client.connect(host, 3005);
+                Mvc mvc = Mvc.getInstance();
+                IModel model = mvc.getModel();
+                IModel connection = model.newChild("connection");
+                connection.put("username", usernameView.getText().toString());
+                connection.put("password", passwordView.getText().toString());
                 loadingView.setVisibility(View.VISIBLE);
+                SocketClientProxy clientProxy = SocketClientProxy.getInstance();
+                clientProxy.connect();
             }
         });
+    }
+
+    private void setSocketClient() {
+        SocketClientProxy clientProxy = SocketClientProxy.getInstance();
+        clientProxy.setup();
     }
 
     private void showLostPing(int count) {
@@ -125,14 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 "try connect: " + count,
                 Toast.LENGTH_LONG);
         toast.show();
-    }
-
-    private EzyRequest newLoginRequest() {
-        return new EzyLoginRequest(
-                "freechat",
-                usernameView.getText().toString(),
-                passwordView.getText().toString()
-        );
     }
 
     private void startMessageActivity() {

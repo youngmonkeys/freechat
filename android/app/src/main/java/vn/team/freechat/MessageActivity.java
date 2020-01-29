@@ -1,6 +1,7 @@
 package vn.team.freechat;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,23 +14,22 @@ import com.tvd12.ezyfoxserver.client.request.EzyRequest;
 import tvd12.com.ezyfoxserver.client.R;
 import vn.team.freechat.adapter.MessageListAdapter;
 import vn.team.freechat.adapter.MessageListAdapters;
+import vn.team.freechat.data.ChannelUsers;
 import vn.team.freechat.data.Message;
 import vn.team.freechat.data.MessageReceived;
 import vn.team.freechat.data.MessageSent;
-import vn.team.freechat.mvc.Controller;
 import vn.team.freechat.mvc.IController;
 import vn.team.freechat.mvc.IView;
 import vn.team.freechat.mvc.Mvc;
-import vn.team.freechat.request.SendSystemMessageRequest;
-import vn.team.freechat.request.SendUserMessageRequest;
+import vn.team.freechat.socket.SocketRequests;
 
 /**
  * Created by tavandung12 on 10/5/18.
  */
 
-public class MessageActivity extends AppActivity {
+public class MessageActivity extends AppCompatActivity {
 
-    private String targetContact;
+    private ChannelUsers targetContact;
     private IController messageController;
     private IController connectionController;
 
@@ -84,9 +84,9 @@ public class MessageActivity extends AppActivity {
 
     private void initComponents() {
         Mvc mvc = Mvc.getInstance();
-        targetContact = getIntent().getStringExtra("targetContact");
         messageController = mvc.getController("message");
         connectionController = mvc.getController("connection");
+        targetContact = (ChannelUsers) getIntent().getSerializableExtra("targetContact");
     }
 
     private void initViews() {
@@ -100,18 +100,18 @@ public class MessageActivity extends AppActivity {
         View chatboxView = findViewById(R.id.chatbox);
         messageInputView = chatboxView.findViewById(R.id.messageInput);
         sendButtonView = chatboxView.findViewById(R.id.sendButton);
-        targetNameView.setText(targetContact);
+        targetNameView.setText(targetContact.getUser());
         targetLastMessageView.setText("");
 
         MessageListAdapters adapters = MessageListAdapters.getInstance();
-        messageListAdapter = adapters.getAdapter(this, targetContact);
+        messageListAdapter = adapters.getAdapter(this, targetContact.getChannelId());
         messageListView.setAdapter(messageListAdapter);
         LinearLayoutManager messageListLayoutManager = newMessageListLayoutManager();
         messageListView.setLayoutManager(messageListLayoutManager);
     }
 
     private void setViewsData() {
-        targetNameView.setText(targetContact);
+        targetNameView.setText(targetContact.getUser());
         targetLastMessageView.setText("");
     }
 
@@ -126,13 +126,13 @@ public class MessageActivity extends AppActivity {
             @Override
             public void onClick(View v) {
                 EzyRequest request;
+                long channelId = targetContact.getChannelId();
                 String messageText = messageInputView.getText().toString();
-                if(targetContact.equalsIgnoreCase("System"))
-                    request = new SendSystemMessageRequest(messageText);
+                if(channelId == 0)
+                    SocketRequests.sendSystemMessage(messageText);
                 else
-                    request = new SendUserMessageRequest(targetContact, messageText);
-                app.send(request);
-                Message message = new MessageSent(messageText, targetContact);
+                    SocketRequests.sendUserMessage(channelId, messageText);
+                Message message = new MessageSent(channelId, messageText);
                 addMessageItem(message);
                 messageInputView.setText("");
             }
@@ -140,6 +140,8 @@ public class MessageActivity extends AppActivity {
     }
 
     private void addMessage(MessageReceived message) {
+        if(message.getChannelId() != targetContact.getChannelId())
+            return;
         addMessageItem(message);
         targetLastMessageView.setText(message.getMessage());
     }

@@ -1,4 +1,4 @@
-package vn.team.freechat.contant;
+package vn.team.freechat.constant;
 
 import com.tvd12.ezyfoxserver.client.constant.EzyConstant;
 

@@ -35,4 +35,18 @@ public class Model implements IModel {
             return (T)current;
         }
     }
+
+    @Override
+    public IModel newChild(Object key) {
+        IModel child = new Model();
+        synchronized (map) {
+            map.put(key, child);
+        }
+        return child;
+    }
+
+    @Override
+    public IModel getChild(Object key) {
+        return get(key);
+    }
 }

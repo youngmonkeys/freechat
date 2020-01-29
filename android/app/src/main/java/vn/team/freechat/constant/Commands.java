@@ -1,4 +1,4 @@
-package vn.team.freechat.contant;
+package vn.team.freechat.constant;
 
 /**
  * Created by tavandung12 on 10/3/18.

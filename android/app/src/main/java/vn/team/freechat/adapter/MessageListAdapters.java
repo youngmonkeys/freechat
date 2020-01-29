@@ -11,8 +11,8 @@ import java.util.Map;
 
 public final class MessageListAdapters {
 
-    private final Map<String, MessageListAdapter> apdapters;
-    private static final MessageListAdapters INSTANCE = new MessageListAdapters();
+    private final Map<Long, MessageListAdapter> apdapters;
+    private final static MessageListAdapters INSTANCE = new MessageListAdapters();
 
     private MessageListAdapters() {
         this.apdapters = new HashMap<>();
@@ -22,12 +22,12 @@ public final class MessageListAdapters {
         return INSTANCE;
     }
 
-    public MessageListAdapter getAdapter(Context context, String targetName) {
+    public MessageListAdapter getAdapter(Context context, long targetChannelId) {
         synchronized (apdapters) {
-            MessageListAdapter adapter = apdapters.get(targetName);
+            MessageListAdapter adapter = apdapters.get(targetChannelId);
             if(adapter == null) {
                 adapter = new MessageListAdapter(context);
-                apdapters.put(targetName, adapter);
+                apdapters.put(targetChannelId, adapter);
             }
             return adapter;
         }

@@ -2,30 +2,32 @@ package vn.team.freechat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tvd12.ezyfoxserver.client.entity.EzyArray;
+import com.tvd12.ezyfoxserver.client.entity.EzyObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tvd12.com.ezyfoxserver.client.R;
 import vn.team.freechat.adapter.ContactListAdapter;
+import vn.team.freechat.data.ChannelUsers;
 import vn.team.freechat.model.ContactListItemModel;
-import vn.team.freechat.mvc.Controller;
 import vn.team.freechat.mvc.IController;
 import vn.team.freechat.mvc.IView;
 import vn.team.freechat.mvc.Mvc;
-import vn.team.freechat.request.GetContactsRequest;
+import vn.team.freechat.socket.SocketRequests;
 
 /**
  * Created by tavandung12 on 10/1/18.
  */
 
-public class ContactActivity extends AppActivity {
+public class ContactActivity extends AppCompatActivity {
 
     private String username;
     private IController contactController;
@@ -46,7 +48,6 @@ public class ContactActivity extends AppActivity {
         initViews();
         setViewsData();
         setViewControllers();
-        sendGetContactsRequest();
     }
 
     @Override
@@ -70,6 +71,12 @@ public class ContactActivity extends AppActivity {
                 addContacts((EzyArray)data);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sendGetContactsRequest();
     }
 
     @Override
@@ -106,28 +113,32 @@ public class ContactActivity extends AppActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 loadingView.setVisibility(View.VISIBLE);
-                onContactItemClick(view);
+                ContactListAdapter adapter = (ContactListAdapter) parent.getAdapter();
+                onContactItemClick(adapter.getItemModel(position).getContact());
             }
         });
     }
 
-    private void addContacts(EzyArray usernames) {
+    private void sendGetContactsRequest() {
+        SocketRequests.sendGetContacts();
+    }
+
+    private void addContacts(EzyArray contacts) {
         List<ContactListItemModel> models = new ArrayList<>();
-        for(int i = 0 ; i < usernames.size() ; i++)
-            models.add(new ContactListItemModel(usernames.get(i, String.class), ""));
+        for(int i = 0 ; i < contacts.size() ; ++i) {
+            EzyObject item = contacts.get(i, EzyObject.class);
+            long channelId = item.get("channelId", long.class);
+            String[] users = item.get("users", String[].class);
+            ChannelUsers contact = new ChannelUsers(channelId, users);
+            models.add(new ContactListItemModel(contact));
+        }
         contactListAdapter.addItemModels(models);
         contactListAdapter.notifyDataSetChanged();
     }
 
-    private void sendGetContactsRequest() {
-        app.send(new GetContactsRequest(0, 50));
-    }
-
-    private void onContactItemClick(View view) {
-        TextView usernameView = view.findViewById(R.id.username);
-        String username = usernameView.getText().toString();
+    private void onContactItemClick(ChannelUsers contact) {
         Intent intent = new Intent(this, MessageActivity.class);
-        intent.putExtra("targetContact", username);
+        intent.putExtra("targetContact", contact);
         startActivity(intent);
     }
 }
