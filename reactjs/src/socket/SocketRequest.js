@@ -45,6 +45,6 @@ class SocketRequestClass {
 
 }
 
-let SocketRequest = SocketRequest || new SocketRequestClass();
+var SocketRequest = SocketRequest || new SocketRequestClass();
 
 export default SocketRequest;

@@ -30,8 +30,7 @@ class ContactViewController: UIViewController, UITableViewDataSource, View {
     }
     
     func update(component: String, data: Any) {
-        let dict = data as! NSDictionary
-        let contacts = dict["contacts"] as! NSArray
+        let contacts = data as! NSArray
         for contact in contacts {
             contactDatas.append(ContactCellData(username: contact as! String, lastMessage: "empty"))
         }

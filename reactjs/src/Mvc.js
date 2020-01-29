@@ -1,33 +1,3 @@
-class Mvc {
-    static instance = null;
-
-    constructor() {
-        this.controllers = {}
-        this.models = {};
-    }
-
-    static getInstance() {
-        if (!Mvc.instance)
-            Mvc.instance = new Mvc();
-        return Mvc.instance;
-    }
-
-    newController(name) {
-        var controller = new Controller();
-        this.addController(name, controller);
-        return controller;
-    }
-
-    addController(name, controller) {
-        this.controllers[name] = controller;
-    }
-
-    getController(name) {
-        var controller = this.controllers[name];
-        return controller;
-    }
-}
-
 class Controller {
 
     constructor() {
@@ -96,4 +66,40 @@ class Controller {
     }
 }
 
-export default Mvc
+class MvcClass {
+
+    constructor() {
+        this.controllers = {};
+        this.models = {};
+    }
+
+    newController(name) {
+        var controller = new Controller();
+        this.addController(name, controller);
+        return controller;
+    }
+
+    addController(name, controller) {
+        this.controllers[name] = controller;
+    }
+
+    getController(name) {
+        var controller = this.controllers[name];
+        return controller;
+    }
+
+}
+
+var mvcInstance = mvcInstance || new MvcClass();
+
+class MvcSingleton {
+
+    getInstance() {
+        return mvcInstance;
+    }
+
+}
+
+var Mvc = Mvc || new MvcSingleton();
+
+export default Mvc;
