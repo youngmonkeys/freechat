@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Mvc from '../Mvc';
-import MessageScript from './js/Message';
+import $ from 'jquery'
+import Mvc from 'mvc-es6';
 import AddContactView from './AddContactView';
-import SocketProxy from '../socket/SocketProxy';
-import SocketRequest from '../socket/SocketRequest'
+import SocketProxy from '../../socket/SocketProxy';
+import SocketRequest from '../../socket/SocketRequest'
 
 class MessageItemView extends React.Component {
     constructor(props) {
@@ -17,14 +17,14 @@ class MessageItemView extends React.Component {
             ? 
             (
                 <li className="replies">
-                    <img src={require('../images/50x50.png')} alt="" />
+                    <img src={require('../../images/50x50.png')} alt="" />
                     <p>{data.value}</p>
                 </li>
             )
             :
             (
                 <li className="sent">
-                    <img src={require('../images/50x50.png')} alt="" />
+                    <img src={require('../../images/50x50.png')} alt="" />
                     <p>{data.value}</p>
                 </li>
             )
@@ -36,7 +36,6 @@ class MessageListView extends React.Component {
     constructor(props) {
         super(props);
         this.messageListRef = React.createRef();
-        this.script = new MessageScript(); 
     }
 
     componentWillUpdate(nextProps) {
@@ -44,7 +43,13 @@ class MessageListView extends React.Component {
     }
     
     componentDidUpdate() {
-        this.script.scrollToBottom();
+        this.scrollToBottom();
+    }
+
+    scrollToBottom() {
+        const messages = document.querySelector("#messageListDiv")
+        const height = messages.scrollHeight;
+        $(messages).animate({scrollTop: height}, "fast");
     }
 
     render()  {
@@ -89,7 +94,7 @@ class ContactView extends React.Component {
             <li className={"contact " + activeClass} onClick={this.onClick}>
                 <div className="wrap">
                     <span className="contact-status online"></span>
-                    <img src={require('../images/70x70.png')} alt="" />
+                    <img src={require('../../images/70x70.png')} alt="" />
                     <div className="meta">
                         <p className="name">{data.channel.users[0]}</p>
                         <p className="preview">{data.lastMessage}</p>
@@ -146,7 +151,7 @@ class CurrentContactView extends React.Component {
         const {data} = this.props;
         return (
             <div className="contact-profile">
-                <img src={require('../images/70x70.png')} alt="" />
+                <img src={require('../../images/70x70.png')} alt="" />
                 <div id="divGroupReceiver"><p id="receiver">{data.channel.users[0]}</p></div>
                 <div className="social-media">
                     <i className="icon-facebook" aria-hidden="true"></i>
@@ -176,7 +181,7 @@ class MyShortProfileView extends React.Component {
         return (
             <div id="profile">
                 <div className="wrap">
-                    <a href="#"><img id="profile-img" src={require('../images/80x80.png')} className="online" alt="" /></a>
+                    <a href="#"><img id="profile-img" src={require('../../images/80x80.png')} className="online" alt="" /></a>
                     <p id ="userName">{data.username}</p>
                     <i className="icon-arrow-down32 expand-button" aria-hidden="true"></i>
                     <div id="status-options">
@@ -236,7 +241,6 @@ class MessageView extends React.Component {
         let mvc = Mvc.getInstance();
         this.messageController = mvc.getController("message");
         this.contactController = mvc.getController("contact");        
-        this.disconnectController = mvc.getController("disconnect");
     }
 
     componentDidMount() {
@@ -251,10 +255,6 @@ class MessageView extends React.Component {
         this.contactController.addDefaultView("newContacts", (newContacts) => {
             this.addContacts(newContacts);
         });
-        this.disconnectController.addDefaultView("disconnect", (reason) => {
-            console.log("disconnected, redirect to login view");
-            this.props.history.push("/login");
-        });
 
         SocketRequest.requestGetContacts(0, 50);
     }
@@ -265,7 +265,6 @@ class MessageView extends React.Component {
 
     componentWillUnmount() {
         this.messageController.removeAllViews();
-        this.disconnectController.removeAllViews();
         this.contactController.removeDefaultView("newContacts");
     }
 
@@ -424,7 +423,7 @@ class MessageView extends React.Component {
                     <div className="row">
                         <div className="col-md-12 col-sm-12">
                             <div className="pull-left">
-                                © 2017 Bird&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Web app kit by <a href="http://followtechnique.com" target="_blank">FollowTechnique</a>.							</div>
+                                © 2019 Free Chat&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;created by <a href="https://youngmonkeys.org" target="_blank">youngmonkeys.org</a>.							</div>
                             <div className="pull-right">
                                 <div className="label label-info">Version: 1.3.0</div>
                             </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, ModalBody, ModalFooter } from 'reactstrap';
-import Mvc from '../Mvc';
-import SocketRequest from '../socket/SocketRequest'
+import Mvc from 'mvc-es6';
+import SocketRequest from '../../socket/SocketRequest'
 
 class SuggestedContactItemView extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class SuggestedContactItemView extends React.Component {
       return (
         <div className="suggested-contact">
             <div className="left-side">
-                <img src={require('../images/avatar001.png')} alt="Avatar" className="avatar" />
+                <img src={require('../../images/avatar001.png')} alt="Avatar" className="avatar" />
                 <div className="info">
                     <p>{data.username}</p>
                     <p>{data.fullName}</p>
@@ -177,7 +177,7 @@ class AddContactView extends React.Component {
                         <h3>selected</h3>
                         <div className="selected-members">
                             <div className="selected-contact">
-                                <img src={require('../images/avatar001.png')} alt="Avatar" className="avatar" />
+                                <img src={require('../../images/avatar001.png')} alt="Avatar" className="avatar" />
                                 <p>dungtv</p>
                             </div>
                         </div>

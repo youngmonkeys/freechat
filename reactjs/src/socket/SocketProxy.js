@@ -1,6 +1,6 @@
 // import Ezy from '../lib/ezyfox-server-es6-client'
 import Ezy from 'ezyfox-es6-client';
-import Mvc from '../Mvc';
+import Mvc from 'mvc-es6';
 
 class SocketProxy {
     
@@ -31,15 +31,21 @@ class SocketProxy {
 
         let accessAppHandler = new Ezy.AppAccessHandler();
         accessAppHandler.postHandle = function(app, data) {
-            let loginController = mvc.getController("login");
-            loginController.updateViews('connect');
+            let routerController = mvc.getController("router");
+            routerController.updateViews('change', '/message');
         }
 
         let disconnectionHandler = new Ezy.DisconnectionHandler();
         disconnectionHandler.preHandle = function(event) {
-            console.log("custom disconnection handler")
-            let disconnectController = mvc.getController("disconnect");
-            disconnectController.updateViews("disconnect");
+            let routerController = mvc.getController("router");
+            routerController.updateViews('change', '/');
+        }
+        let shouldReconnectParent = disconnectionHandler.shouldReconnect;
+        disconnectionHandler.shouldReconnect = function(event) {
+            var reason = event.reason;
+            if(reason == 401)
+                return false;
+            return shouldReconnectParent(event);
         }
 
         let config = new Ezy.ClientConfig;

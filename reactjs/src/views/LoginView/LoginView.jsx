@@ -1,16 +1,16 @@
 import * as React from 'react';
-import Mvc from '../Mvc';
-import SocketProxy from '../socket/SocketProxy'
+import Mvc from 'mvc-es6';
+import SocketProxy from '../../socket/SocketProxy'
 
 class LoginView extends React.Component {
     constructor(props) {
         super(props);
         this.onLogin = this.onLogin.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
         this.onUsernameChange = this.onUsernameChange.bind(this);
         this.onPasswordChange = this.onPasswordChange.bind(this);
         let mvc = Mvc.getInstance();
         let models = mvc.models;
-        this.loginController = mvc.getController("login");
         this.connection = models.connection;
         if(!this.connection) {
             this.connection = {
@@ -22,22 +22,17 @@ class LoginView extends React.Component {
         this.state = this.connection;
     }
 
-    componentDidMount() {
-        this.loginController.addDefaultView('connect', () => {
-            this.props.history.push("/message");
-        })
-    }
-
-    componentWillUnmount() {
-        this.loginController.removeViews('connect');
-    }
-
     onLogin() {
         this.connection.url = this.state.url;
         this.connection.username = this.state.username;
         this.connection.password = this.state.password;
         let socketProxy = SocketProxy.getInstance();
         socketProxy.connect();
+    }
+
+    onKeyDown(e) {
+        if (e.key === 'Enter')
+            this.onLogin();
     }
 
     onUsernameChange(e) {
@@ -61,14 +56,14 @@ class LoginView extends React.Component {
                                 <span className="input-group-text" id="basic-addon-username"><i className="icon-user"></i></span>
                             </div>
                             <input type="text" className="form-control" placeholder="username" aria-label="username" aria-describedby="basic-addon-username"
-                                value={username} onChange={this.onUsernameChange} />
+                                value={username} onChange={this.onUsernameChange} onKeyDown={this.onKeyDown} />
                         </div>
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon-password"><i className="icon-key"></i></span>
                             </div>
                             <input type="password" className="form-control" placeholder="password" aria-label="password" aria-describedby="basic-addon-password" 
-                                value={password} onChange={this.onPasswordChange} />
+                                value={password} onChange={this.onPasswordChange} onKeyDown={this.onKeyDown} />
                         </div>
                         <div className="login-options">
                             <div className="checkbox">
