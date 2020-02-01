@@ -23,11 +23,17 @@ class SocketProxy {
             return ["freechat", username, password, []];
         }
 
-        let userLoginHandler = new Ezy.LoginSuccessHandler();
-        userLoginHandler.handleLoginSuccess = function() {
+        let loginSuccessHandler = new Ezy.LoginSuccessHandler();
+        loginSuccessHandler.handleLoginSuccess = function() {
             let accessAppRequest = ["freechat", []];
             this.client.sendRequest(Ezy.Command.APP_ACCESS, accessAppRequest);
         }
+
+        let loginErrorHandler = new Ezy.LoginErrorHandler();
+        loginErrorHandler.handleLoginError = function(event) {
+            let loginController = mvc.getController("login");
+            loginController.updateViews("loginError", event[1]);
+        };
 
         let accessAppHandler = new Ezy.AppAccessHandler();
         accessAppHandler.postHandle = function(app, data) {
@@ -55,7 +61,8 @@ class SocketProxy {
         let setup = client.setup;
         setup.addEventHandler(Ezy.EventType.DISCONNECTION, disconnectionHandler);
         setup.addDataHandler(Ezy.Command.HANDSHAKE, handshakeHandler);
-        setup.addDataHandler(Ezy.Command.LOGIN, userLoginHandler);
+        setup.addDataHandler(Ezy.Command.LOGIN, loginSuccessHandler);
+        setup.addDataHandler(Ezy.Command.LOGIN_ERROR, loginErrorHandler);
         setup.addDataHandler(Ezy.Command.APP_ACCESS, accessAppHandler);
         let setupApp = setup.setupApp("freechat");
 

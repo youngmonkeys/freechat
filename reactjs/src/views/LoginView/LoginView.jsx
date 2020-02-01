@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Mvc from 'mvc-es6';
 import SocketProxy from '../../socket/SocketProxy'
+import Component from '../components'
 
 class LoginView extends React.Component {
     constructor(props) {
@@ -19,7 +20,10 @@ class LoginView extends React.Component {
             };
             models.connection = this.connection;
         }
-        this.state = this.connection;
+        this.state = {
+            username : this.connection.username,
+            password : this.connection.password
+        }
     }
 
     onLogin() {
@@ -47,6 +51,7 @@ class LoginView extends React.Component {
         const {username, password} = this.state;
         return (
                 <div className="login-div">
+                    <Component.ToastView />
                     <div className="login-title">
                         <h1 className="text-light">Login to your account </h1>
                     </div>
