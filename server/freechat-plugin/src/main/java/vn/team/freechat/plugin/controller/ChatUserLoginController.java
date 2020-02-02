@@ -19,7 +19,6 @@ import lombok.Setter;
 import vn.team.freechat.common.data.ChatNewUser;
 import vn.team.freechat.common.data.ChatUser;
 import vn.team.freechat.common.service.ChatUserService;
-import vn.team.freechat.plugin.constant.ChatLoginError;
 
 @Getter
 @Setter
@@ -45,7 +44,7 @@ public class ChatUserLoginController
 		
 		if(!newUser.isNewUser()) {
 			if(!userData.getPassword().equals(password))
-				throw new EzyLoginErrorException(ChatLoginError.ALREADY_REGISTER);
+				throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
 		}
 		
 		event.setStreamingEnable(true);

@@ -44,6 +44,7 @@ class SeachedContactListView extends React.Component {
     }
 
     onSelect(username, checked) {
+        this.parent.onSelect(username, checked);
     }
   
     render() {
@@ -173,7 +174,7 @@ class AddContactView extends React.Component {
                     </div>
                 </ModalBody>
                 <ModalFooter>
-                    <div className="selected-contacts">
+                    {/* <div className="selected-contacts">
                         <h3>selected</h3>
                         <div className="selected-members">
                             <div className="selected-contact">
@@ -181,7 +182,7 @@ class AddContactView extends React.Component {
                                 <p>dungtv</p>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <SeachedContactListView parent={this} data={searchedContactsData} />
                     <SuggestedContactListView parent={this} data={suggestedContactsData} />
                 </ModalFooter>

@@ -36,9 +36,10 @@ class App extends Component {
     this.mvc.newController("app");
     this.mvc.newController("contact");
     this.mvc.newController("message");
-    this.mvc.newController("myProfile");
+    this.mvc.newController("chat");
     this.mvc.newController("router");
     this.mvc.newController("login");
+    this.mvc.models.chat = {};
 
     // setup socket
     this.socketProxy = SocketProxy.getInstance();
