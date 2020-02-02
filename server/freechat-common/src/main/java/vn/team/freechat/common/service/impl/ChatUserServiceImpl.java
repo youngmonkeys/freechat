@@ -1,5 +1,6 @@
 package vn.team.freechat.common.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
@@ -46,6 +47,15 @@ public class ChatUserServiceImpl
 		applier.apply(nuser);
 		map.set(username, nuser);
 		return new ChatNewUser(nuser, true);
+	}
+	
+	@Override
+	public List<ChatUser> getSearchUsers(String owner, int skip, int limit) {
+		ChatUser found = userRepo.findByUsername(owner);
+		List<ChatUser> list = new ArrayList<>();
+		if(found != null)
+			list.add(found);
+		return list;
 	}
 	
 	@Override

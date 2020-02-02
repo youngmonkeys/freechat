@@ -91,6 +91,10 @@ class SocketProxy {
             console.log("received message: " + JSON.stringify(data) + ", update view now");
             messageController.updateViews("userMessage", data);
         });
+
+        setupApp.addDataHandler("9", function(app, data) {
+            contactController.updateViews("seachedContacts", data['users']);
+        });
         return client;
     }
 
