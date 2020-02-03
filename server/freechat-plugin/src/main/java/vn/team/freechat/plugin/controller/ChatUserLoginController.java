@@ -1,5 +1,8 @@
 package vn.team.freechat.plugin.controller;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.core.annotation.EzyServerEventHandler;
@@ -16,32 +19,32 @@ import lombok.Setter;
 import vn.team.freechat.common.data.ChatNewUser;
 import vn.team.freechat.common.data.ChatUser;
 import vn.team.freechat.common.service.ChatUserService;
-import vn.team.freechat.plugin.constant.ChatLoginError;
 
 @Getter
 @Setter
 @EzySingleton
 @EzyServerEventHandler(EzyEventNames.USER_LOGIN)
-public class ChatUserLoginController extends EzyAbstractPluginEventController<EzyUserLoginEvent> {
+public class ChatUserLoginController 
+		extends EzyAbstractPluginEventController<EzyUserLoginEvent> {
 
 	@EzyAutoBind
 	private ChatUserService userService;
 	
 	@Override
 	public void handle(EzyPluginContext ctx, EzyUserLoginEvent event) {
-		logger.info("handle user {} login in vn-freechatvn", event.getUsername());
+		logger.info("handle user {} login in", event.getUsername());
 
 		validateEvent(event);
 		
 		String username = event.getUsername();
-		String password = event.getPassword();
+		String password = encodePassword(event.getPassword());
 		
 		ChatNewUser newUser = getUser(username, password);
 		ChatUser userData = newUser.getUser();
 		
 		if(!newUser.isNewUser()) {
 			if(!userData.getPassword().equals(password))
-				throw new EzyLoginErrorException(ChatLoginError.ALREADY_REGISTER);
+				throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
 		}
 		
 		event.setStreamingEnable(true);
@@ -51,7 +54,10 @@ public class ChatUserLoginController extends EzyAbstractPluginEventController<Ez
 	}
 
 	private void validateEvent(EzyUserLoginEvent event) {
-		if(EzyStrings.isNoContent(event.getPassword()))
+		String password = event.getPassword();
+		if(EzyStrings.isNoContent(password))
+			throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
+		if(password.length() < 6)
 			throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
 		
 	}
@@ -65,5 +71,16 @@ public class ChatUserLoginController extends EzyAbstractPluginEventController<Ez
 				}
 		);
 		return newUser;
+	}
+	
+	private String encodePassword(String password) {
+		try {
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			byte[] encoded = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+			return new String(encoded, StandardCharsets.UTF_8);
+		}
+		catch (Exception e) {
+			throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
+		}
 	}
 }

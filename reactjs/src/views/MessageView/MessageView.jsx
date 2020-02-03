@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Mvc from '../Mvc';
-import MessageScript from './js/Message';
+import $ from 'jquery'
+import Mvc from 'mvc-es6';
 import AddContactView from './AddContactView';
-import SocketProxy from '../socket/SocketProxy';
-import SocketRequest from '../socket/SocketRequest'
+import SocketProxy from '../../socket/SocketProxy';
+import SocketRequest from '../../socket/SocketRequest'
 
 class MessageItemView extends React.Component {
     constructor(props) {
@@ -17,14 +17,14 @@ class MessageItemView extends React.Component {
             ? 
             (
                 <li className="replies">
-                    <img src={require('../images/50x50.png')} alt="" />
+                    <img src={require('../../images/50x50.png')} alt="" />
                     <p>{data.value}</p>
                 </li>
             )
             :
             (
                 <li className="sent">
-                    <img src={require('../images/50x50.png')} alt="" />
+                    <img src={require('../../images/50x50.png')} alt="" />
                     <p>{data.value}</p>
                 </li>
             )
@@ -35,8 +35,6 @@ class MessageItemView extends React.Component {
 class MessageListView extends React.Component { 
     constructor(props) {
         super(props);
-        this.messageListRef = React.createRef();
-        this.script = new MessageScript(); 
     }
 
     componentWillUpdate(nextProps) {
@@ -44,13 +42,19 @@ class MessageListView extends React.Component {
     }
     
     componentDidUpdate() {
-        this.script.scrollToBottom();
+        this.scrollToBottom();
+    }
+
+    scrollToBottom() {
+        const messages = document.querySelector("#messageListDiv")
+        const height = messages.scrollHeight;
+        $(messages).animate({scrollTop: height}, "fast");
     }
 
     render()  {
         const {messages} = this.props;
         return (
-            <div className="messages" id="messageListDiv" ref={this.messageListRef}>
+            <div className="messages" id="messageListDiv">
                 <ul id="messageListUl">
                     {
                         messages.map((msg, i) => <MessageItemView key={i} data={msg} />)
@@ -66,8 +70,10 @@ class ContactView extends React.Component {
         super(props);
         this.parent = props.parent;
         this.state = {selected : false};
+        this.data = props.data;
         this.onClick = this.onClick.bind(this);
-        this.controller = Mvc.getInstance().controller;
+        this.mvc = Mvc.getInstance();
+        this.chatController = this.mvc.getController("chat");
     }
 
     unselect() {
@@ -75,10 +81,18 @@ class ContactView extends React.Component {
     }
 
     onClick(e) {
-        const {selected} = this.state;
-        const newSelected = !selected;
-        this.parent.updateSelectedItem(this, newSelected);
+        let chatModel = this.mvc.models.chat;
+        var currentContactView = chatModel.currentContactView;
+        if(currentContactView == this)
+            return;
+        if(currentContactView != null)
+            currentContactView.unselect();
+        chatModel.currentContactView = this;
+        let channelId = this.data.channel.channelId;
+        let {selected} = this.state;
+        let newSelected = !selected;
         this.setState({selected : newSelected});
+        this.chatController.updateViews("changeTarget", channelId);
     }
 
     render() {
@@ -89,7 +103,7 @@ class ContactView extends React.Component {
             <li className={"contact " + activeClass} onClick={this.onClick}>
                 <div className="wrap">
                     <span className="contact-status online"></span>
-                    <img src={require('../images/70x70.png')} alt="" />
+                    <img src={require('../../images/70x70.png')} alt="" />
                     <div className="meta">
                         <p className="name">{data.channel.users[0]}</p>
                         <p className="preview">{data.lastMessage}</p>
@@ -103,20 +117,8 @@ class ContactView extends React.Component {
 class ContactListView extends React.Component {
     constructor(props) {
         super(props);
-        this.parent = props.parent;
-        this.selectedItem = null;
-    }
-
-    updateSelectedItem(newSelectedItem, selected) {
-        if(this.selectedItem) {
-            if(newSelectedItem != this.selectedItem) 
-                this.selectedItem.unselect();
-        }
-        this.selectedItem = selected ? newSelectedItem : null;
-        var target = null;
-        if(this.selectedItem)
-            target = this.selectedItem.props.data.channel.channelId;
-        this.parent.updateTargetContact(target);
+        this.mvc = Mvc.getInstance();
+        this.chatController = this.mvc.getController("chat");
     }
 
     render() {
@@ -126,7 +128,7 @@ class ContactListView extends React.Component {
                 <ul id="ul-contacts">
                 {
                     contacts.map((contact, i) => (
-                        <ContactView key={i} data={contact} parent={this} />
+                        <ContactView key={i} data={contact} />
                     ))
                 }
                 </ul>
@@ -138,15 +140,13 @@ class ContactListView extends React.Component {
 class CurrentContactView extends React.Component {
     constructor(props) {
         super(props);
-        this.parent = props.parent;
-        this.controller = Mvc.getInstance().controller;
     }
 
     render() {
         const {data} = this.props;
         return (
             <div className="contact-profile">
-                <img src={require('../images/70x70.png')} alt="" />
+                <img src={require('../../images/70x70.png')} alt="" />
                 <div id="divGroupReceiver"><p id="receiver">{data.channel.users[0]}</p></div>
                 <div className="social-media">
                     <i className="icon-facebook" aria-hidden="true"></i>
@@ -163,7 +163,6 @@ class MyShortProfileView extends React.Component {
         super(props);
         this.parent = props.parent;
         let mvc = Mvc.getInstance();
-        this.myProfileController = mvc.getController("myProfile");
         let client = SocketProxy.getInstance().getClient();
         let me = client.me;
         this.data = {
@@ -176,7 +175,7 @@ class MyShortProfileView extends React.Component {
         return (
             <div id="profile">
                 <div className="wrap">
-                    <a href="#"><img id="profile-img" src={require('../images/80x80.png')} className="online" alt="" /></a>
+                    <a href="#"><img id="profile-img" src={require('../../images/80x80.png')} className="online" alt="" /></a>
                     <p id ="userName">{data.username}</p>
                     <i className="icon-arrow-down32 expand-button" aria-hidden="true"></i>
                     <div id="status-options">
@@ -234,9 +233,9 @@ class MessageView extends React.Component {
         });
 
         let mvc = Mvc.getInstance();
+        this.chatController = mvc.getController("chat");
         this.messageController = mvc.getController("message");
         this.contactController = mvc.getController("contact");        
-        this.disconnectController = mvc.getController("disconnect");
     }
 
     componentDidMount() {
@@ -251,9 +250,8 @@ class MessageView extends React.Component {
         this.contactController.addDefaultView("newContacts", (newContacts) => {
             this.addContacts(newContacts);
         });
-        this.disconnectController.addDefaultView("disconnect", (reason) => {
-            console.log("disconnected, redirect to login view");
-            this.props.history.push("/login");
+        this.chatController.addDefaultView("changeTarget", (target) => {
+            this.updateTargetContact(target);
         });
 
         SocketRequest.requestGetContacts(0, 50);
@@ -264,8 +262,8 @@ class MessageView extends React.Component {
     }
 
     componentWillUnmount() {
+        this.chatController.removeAllViews();
         this.messageController.removeAllViews();
-        this.disconnectController.removeAllViews();
         this.contactController.removeDefaultView("newContacts");
     }
 
@@ -278,12 +276,12 @@ class MessageView extends React.Component {
             if(!old) {
                 const item = {channel: newContact, lastMessage: ""};
                 contactMap[newContact.channelId] = item;
-                updateContacts.unshift(item);
+                updateContacts.push(item);
                 messagess[newContact.channelId] = [];
                 console.log("add new contact: " + JSON.stringify(newContact) + " success");
             }
         });
-        updateContacts = updateContacts.concat(contacts);
+        updateContacts = contacts.concat(updateContacts);
         this.setState({contacts : updateContacts});
     }
 
@@ -388,7 +386,7 @@ class MessageView extends React.Component {
                                 <label><i className="icon-search4" aria-hidden="true"></i></label>
                                 <input id="search-user-keyword" type="text" placeholder="Search contacts..." />
                             </div>
-                            <ContactListView contacts={contacts} parent={this} />
+                            <ContactListView contacts={contacts} />
                             <div id="bottom-bar">
                                 <button id="addcontact" onClick={this.onAddContactClick.bind(this)}>
                                     <i className="icon-user-plus" data-toggle="modal" data-target="#addContactsModel" aria-hidden="true"></i> 
@@ -399,7 +397,7 @@ class MessageView extends React.Component {
                         </div>
                         <div className="content-wrapper">
                             <div className="content">
-                            <CurrentContactView data={currentContact} parent={this} />
+                            <CurrentContactView data={currentContact} />
                             <MessageListView messages={messages} />
                             <div className="message-input">
                                 <div className="wrap">
@@ -424,7 +422,7 @@ class MessageView extends React.Component {
                     <div className="row">
                         <div className="col-md-12 col-sm-12">
                             <div className="pull-left">
-                                © 2017 Bird&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Web app kit by <a href="http://followtechnique.com" target="_blank">FollowTechnique</a>.							</div>
+                                © 2019 Free Chat&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;created by <a href="https://youngmonkeys.org" target="_blank">youngmonkeys.org</a>.							</div>
                             <div className="pull-right">
                                 <div className="label label-info">Version: 1.3.0</div>
                             </div>

@@ -15,7 +15,7 @@ import './css/login.css';
 import './css/add-contact.css';
 import './App.css';
 
-import Mvc from './Mvc'
+import Mvc from 'mvc-es6'
 import SocketProxy from './socket/SocketProxy'
 
 import LoginView from './views/LoginView'
@@ -25,6 +25,7 @@ class App extends Component {
   constructor() {
     super(...arguments);
     this.authenticated = false;
+    this.state = {currentViewURI: ""};
 
     // setup ezyfox
     Ezy.Logger.debug = () => true;
@@ -34,10 +35,11 @@ class App extends Component {
     this.mvc = Mvc.getInstance();
     this.mvc.newController("app");
     this.mvc.newController("contact");
-    this.mvc.newController("disconnect");
-    this.mvc.newController("login");
     this.mvc.newController("message");
-    this.mvc.newController("myProfile");
+    this.mvc.newController("chat");
+    this.mvc.newController("router");
+    this.mvc.newController("login");
+    this.mvc.models.chat = {};
 
     // setup socket
     this.socketProxy = SocketProxy.getInstance();
@@ -45,24 +47,41 @@ class App extends Component {
   }
 
   componentWillMount() {
-    var client = this.clients.getDefaultClient();
-    if(client)
-      this.authenticated = client.isConnected();
+    let routerController = this.mvc.getController("router");
+    routerController.addDefaultView("change", viewURI => {
+      this.setState({currentViewURI : viewURI});
+    });
+  }
+
+  isAuthenticated() {
+    let clients = Ezy.Clients.getInstance();
+    let client = clients.getDefaultClient();
+    return client && client.isConnected();
   }
 
   render() {
+    let {currentViewURI} = this.state;
+    let view;
+    switch(currentViewURI) {
+      case "/login":
+        view = <LoginView />;
+        break;
+      case "/message":
+          view = <MessageView />;
+          break;
+      default:
+        view = <LoginView />;
+        currentViewURI = "/login";
+        break;
+    };
+    window.history.pushState('', '', currentViewURI);
     return (
-      <Router>
+     
         <div>
-          <Route exact path="/" component={LoginView} />
-          <Route exact path="/login" component={LoginView} />
-          {/*<Route exact path="/message" component={MessageView} />*/}
-          <AuthRoute exact path="/message" component={MessageView} />
-          <Redirect from="*" to="/login" />
+            {view}
         </div>
-      </Router>
-    );
 
+    );
   }
 }
 

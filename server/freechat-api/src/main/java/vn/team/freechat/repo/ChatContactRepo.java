@@ -8,4 +8,6 @@ public interface ChatContactRepo {
 	
 	Set<String> getContactNames(String actor, int skip, int limit);
 	
+	int countContact(String actor);
+	
 }

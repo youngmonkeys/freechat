@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, ModalBody, ModalFooter } from 'reactstrap';
-import Mvc from '../Mvc';
-import SocketRequest from '../socket/SocketRequest'
+import Mvc from 'mvc-es6';
+import SocketRequest from '../../socket/SocketRequest'
 
 class SuggestedContactItemView extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class SuggestedContactItemView extends React.Component {
       return (
         <div className="suggested-contact">
             <div className="left-side">
-                <img src={require('../images/avatar001.png')} alt="Avatar" className="avatar" />
+                <img src={require('../../images/avatar001.png')} alt="Avatar" className="avatar" />
                 <div className="info">
                     <p>{data.username}</p>
                     <p>{data.fullName}</p>
@@ -39,23 +39,40 @@ class SuggestedContactItemView extends React.Component {
   
 class SeachedContactListView extends React.Component {
     constructor(props) {
-      super(props);
-      this.parent = props.parent;
+        super(props);
+        this.parent = props.parent;
+        let mvc = Mvc.getInstance();
+        this.contactController = mvc.getController("contact");
+        this.state = {
+            searchedContacts : [
+                {username : 'dungtv', fullName : ''}
+            ]
+        };
+    }
+
+    componentDidMount() {
+        this.contactController.addDefaultView("seachedContacts", (users) => {
+            this.setState({searchedContacts : users});
+        });
+    }
+
+    componentWillUnmount() {
+        this.contactController.removeDefaultView("seachedContacts");
     }
 
     onSelect(username, checked) {
+        this.parent.onSelect(username, checked);
     }
   
     render() {
-      const {data} = this.props;
-      const items = data.items;
+      const {searchedContacts} = this.state;
       return (
         <div className="suggested-contacts searched-contacts">
           <h3>searched</h3>
           <div className="items">
           {
-            Object.keys(items).map((key) => (
-                <SuggestedContactItemView parent={this} key={key} data={items[key]} />
+            searchedContacts.map((item, i) => (
+                <SuggestedContactItemView parent={this} key={i} data={item} />
             ))
           }
           </div>
@@ -69,6 +86,19 @@ class SeachedContactListView extends React.Component {
     constructor(props) {
         super(props);
         this.parent = props.parent;
+        let mvc = Mvc.getInstance();
+        this.contactController = mvc.getController("contact");
+        this.state = {suggestedContacts : []};
+    }
+
+    componentDidMount() {
+        this.contactController.addDefaultView("suggestion", (users) => {
+            this.setState({suggestedContacts : users});
+        });
+    }
+
+    componentWillUnmount() {
+        this.contactController.removeDefaultView("suggestion");
     }
 
     onSelect(username, checked) {
@@ -76,15 +106,14 @@ class SeachedContactListView extends React.Component {
     }
   
     render() {
-        const {data} = this.props;
-        const items = data.items;
+        const {suggestedContacts} = this.state;
         return (
             <div className="suggested-contacts">
             <h3>suggested</h3>
             <div className="items">
             {
-                Object.keys(items).map((key) => (
-                    <SuggestedContactItemView parent={this} key={key} data={items[key]} />
+                suggestedContacts.map((item, i) => (
+                    <SuggestedContactItemView parent={this} key={i} data={item} />
                 ))
             }
             </div>
@@ -100,28 +129,15 @@ class AddContactView extends React.Component {
         this.parent = props.parent;
         this.state = {
             show: false,
-            searchedContacts : {
-            'dungtv' : {username : 'dungtv', fullName : 'Ta Van Dung'}
-            },
-            suggestedContacts : {}
+            searchKeyword: ""
         };
         this.selectedContacts = new Set();
         this.toggle = this.toggle.bind(this);
         this.onDone = this.onDone.bind(this);
+        this.onSearchChange = this.onSearchChange.bind(this);
+        this.onSearch = this.onSearch.bind(this);
+        this.onSearchKeyDown = this.onSearchKeyDown.bind(this);
         this.parent.toggleAddContactView = this.toggle;
-
-        let mvc = Mvc.getInstance();
-        this.contactController = mvc.getController("contact");
-    }
-
-    componentDidMount() {
-        this.contactController.addDefaultView("suggestion", (users) => {
-            this.setState({suggestedContacts : users});
-        });
-    }
-
-    componentWillUnmount() {
-        this.contactController.removeDefaultView("suggestion");
     }
   
     toggle() {
@@ -148,11 +164,24 @@ class AddContactView extends React.Component {
         SocketRequest.requestAddContacts(Array.from(this.selectedContacts));
         this.toggle();
     }
+
+    onSearchChange(e) {
+        this.setState({searchKeyword: e.target.value});
+    }
+
+    onSearch(e) {
+        let {searchKeyword} = this.state;
+        if(searchKeyword.length > 0)
+            SocketRequest.searchContacts(searchKeyword);
+    }
+    
+    onSearchKeyDown(e) {
+        if (e.key === 'Enter')
+            this.onSearch();
+    }
   
     render() {
-      const {show, searchedContacts, suggestedContacts} = this.state;
-      const suggestedContactsData = {items: suggestedContacts};
-      const searchedContactsData = {items: searchedContacts};
+      const {show} = this.state;
       return (
             <Modal isOpen={show} toggle={this.toggle} id="addContactsModel">
                 <div className="modal-header">
@@ -163,27 +192,20 @@ class AddContactView extends React.Component {
                 <ModalBody>
                     <div className="row no-gutters">
                         <div className="col">
-                            <input className="form-control border-secondary border-right-0 border-left-0 rounded-0" type="search" placeholder="Search" id="example-search-input4" />
+                            <input className="form-control border-secondary border-right-0 border-left-0 rounded-0" type="search" placeholder="Search" id="example-search-input4" 
+                                onChange={this.onSearchChange} onKeyDown={this.onSearchKeyDown}/>
                         </div>
                         <div className="col-auto">
-                            <button className="btn btn-outline-secondary border-left-0 border-right-0 rounded-0 rounded-right" type="button">
+                            <button className="btn btn-outline-secondary border-left-0 border-right-0 rounded-0 rounded-right" type="button"
+                                onClick={this.onSearch}>
                                 <i className="fa fa-search"></i>
                             </button>
                         </div>
                     </div>
                 </ModalBody>
                 <ModalFooter>
-                    <div className="selected-contacts">
-                        <h3>selected</h3>
-                        <div className="selected-members">
-                            <div className="selected-contact">
-                                <img src={require('../images/avatar001.png')} alt="Avatar" className="avatar" />
-                                <p>dungtv</p>
-                            </div>
-                        </div>
-                    </div>
-                    <SeachedContactListView parent={this} data={searchedContactsData} />
-                    <SuggestedContactListView parent={this} data={suggestedContactsData} />
+                    <SeachedContactListView parent={this} />
+                    <SuggestedContactListView parent={this} />
                 </ModalFooter>
             </Modal>
       );

@@ -59,6 +59,17 @@ public class ChatContactRepoImpl
 		}
 		return answer;
 	}
+	
+	@Override
+	public int countContact(String actor) {
+		Query<ChatContact> query = newQuery();
+		query.or(
+				query.criteria("id.user1st").equal(actor),
+				query.criteria("id.user2nd").equal(actor)
+		);
+		long count = query.count();
+		return (int)count;
+	}
 
 	@Override
 	protected Class<ChatContact> getEntityType() {

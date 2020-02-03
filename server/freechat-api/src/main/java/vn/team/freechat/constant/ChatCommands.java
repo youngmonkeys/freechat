@@ -8,9 +8,9 @@ public final class ChatCommands {
 	public static final String CHAT_SYSTEM_MESSAGE			= "4";
 	public static final String CHAT_GET_CONTACTS			= "5";
 	public static final String CHAT_USER_MESSAGE			= "6";
-	
 	public static final String CHAT_CHANNEL_GET				= "7";
 	public static final String CHAT_CHANNEL_MESSAGE			= "8";
+	public static final String SEARCH_CONTACTS				= "9";
 	
 	private ChatCommands() {
 	}

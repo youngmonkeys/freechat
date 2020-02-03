@@ -48,6 +48,10 @@ public class ChatAddContactsHandler
 	protected void execute() throws EzyBadRequestException {
 		if(target.size() > 30)
 			throw new EzyBadRequestException(ChatErrors.TOO_MANY_CONTACTS, "too many contacts");
+		int currentContactCount = contactRepo.countContact(user.getName());
+		int total = currentContactCount + target.size();
+		if(total > 30)
+			throw new EzyBadRequestException(ChatErrors.FULL_CONTACTS, "full contacts");
 		Set<String> newContacts = contactRepo.addContacts(user.getName(), target);
 		List<ChatChannelUsers> channelUsers = addChannels(newContacts);
 		response(channelUsers);

@@ -1,6 +1,6 @@
 // import Ezy from '../lib/ezyfox-server-es6-client'
 import Ezy from 'ezyfox-es6-client';
-import Mvc from '../Mvc';
+import Mvc from 'mvc-es6';
 
 class SocketProxy {
     
@@ -23,23 +23,35 @@ class SocketProxy {
             return ["freechat", username, password, []];
         }
 
-        let userLoginHandler = new Ezy.LoginSuccessHandler();
-        userLoginHandler.handleLoginSuccess = function() {
+        let loginSuccessHandler = new Ezy.LoginSuccessHandler();
+        loginSuccessHandler.handleLoginSuccess = function() {
             let accessAppRequest = ["freechat", []];
             this.client.sendRequest(Ezy.Command.APP_ACCESS, accessAppRequest);
         }
 
+        let loginErrorHandler = new Ezy.LoginErrorHandler();
+        loginErrorHandler.handleLoginError = function(event) {
+            let loginController = mvc.getController("login");
+            loginController.updateViews("loginError", event[1]);
+        };
+
         let accessAppHandler = new Ezy.AppAccessHandler();
         accessAppHandler.postHandle = function(app, data) {
-            let loginController = mvc.getController("login");
-            loginController.updateViews('connect');
+            let routerController = mvc.getController("router");
+            routerController.updateViews('change', '/message');
         }
 
         let disconnectionHandler = new Ezy.DisconnectionHandler();
         disconnectionHandler.preHandle = function(event) {
-            console.log("custom disconnection handler")
-            let disconnectController = mvc.getController("disconnect");
-            disconnectController.updateViews("disconnect");
+            let routerController = mvc.getController("router");
+            routerController.updateViews('change', '/');
+        }
+        let shouldReconnectParent = disconnectionHandler.shouldReconnect;
+        disconnectionHandler.shouldReconnect = function(event) {
+            var reason = event.reason;
+            if(reason == 401)
+                return false;
+            return shouldReconnectParent(event);
         }
 
         let config = new Ezy.ClientConfig;
@@ -49,7 +61,8 @@ class SocketProxy {
         let setup = client.setup;
         setup.addEventHandler(Ezy.EventType.DISCONNECTION, disconnectionHandler);
         setup.addDataHandler(Ezy.Command.HANDSHAKE, handshakeHandler);
-        setup.addDataHandler(Ezy.Command.LOGIN, userLoginHandler);
+        setup.addDataHandler(Ezy.Command.LOGIN, loginSuccessHandler);
+        setup.addDataHandler(Ezy.Command.LOGIN_ERROR, loginErrorHandler);
         setup.addDataHandler(Ezy.Command.APP_ACCESS, accessAppHandler);
         let setupApp = setup.setupApp("freechat");
 
@@ -77,6 +90,10 @@ class SocketProxy {
         setupApp.addDataHandler("6", function(app, data) {
             console.log("received message: " + JSON.stringify(data) + ", update view now");
             messageController.updateViews("userMessage", data);
+        });
+
+        setupApp.addDataHandler("9", function(app, data) {
+            contactController.updateViews("seachedContacts", data['users']);
         });
         return client;
     }
