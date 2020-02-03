@@ -49,6 +49,7 @@ public class SocketClientProxy {
     }
 
     public void setup() {
+        final IController loginController = mvc.getController("login");
         final IController connectionController = mvc.getController("connection");
         final IController contactController = mvc.getController("contact");
         final IController messageController = mvc.getController("message");
@@ -73,7 +74,14 @@ public class SocketClientProxy {
             }
 
             @Override
+            protected void control(EzyDisconnectionEvent event) {
+                connectionController.updateView("hide-loading");
+            }
+
+            @Override
             protected boolean shouldReconnect(EzyDisconnectionEvent event) {
+                if(event.getReason() == 401)
+                    return false;
                 return super.shouldReconnect(event);
             }
         });
@@ -99,8 +107,8 @@ public class SocketClientProxy {
         });
         setup.addDataHandler(EzyCommand.LOGIN_ERROR, new EzyLoginErrorHandler() {
             @Override
-            public void handle(EzyArray data) {
-                super.handle(data);
+            protected void handleLoginError(EzyArray data) {
+                loginController.updateView("show-failure", data.get(1, String.class));
             }
         });
         setup.addDataHandler(EzyCommand.APP_ACCESS, new EzyAppAccessHandler() {

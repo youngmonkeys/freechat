@@ -16,9 +16,6 @@ public final class Mvc {
     private Mvc() {
         this.model = new Model();
         this.controllers = new HashMap<>();
-        this.addController("connection");
-        this.addController("contact");
-        this.addController("message");
     }
 
     public static Mvc getInstance() {

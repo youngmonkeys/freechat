@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText usernameView;
     private EditText passwordView;
     private Button loginButtonView;
+    private IController loginController;
     private IController connectionController;
 
     @Override
@@ -71,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
                 startMessageActivity();
             }
         });
+        loginController.addView("show-failure", new IView() {
+            @Override
+            public void update(Object data) {
+                showLoginFailure((String)data);
+            }
+        });
     }
 
     @Override
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         connectionController.removeView("show-contacts");
         connectionController.removeView("show-lost-ping");
         connectionController.removeView("show-try-connect");
+        loginController.removeView("show-failure");
     }
 
     private void initViews() {
@@ -91,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initComponents() {
         Mvc mvc = Mvc.getInstance();
+        loginController = mvc.getController("login");
         connectionController = mvc.getController("connection");
     }
 
@@ -113,6 +122,13 @@ public class MainActivity extends AppCompatActivity {
     private void setSocketClient() {
         SocketClientProxy clientProxy = SocketClientProxy.getInstance();
         clientProxy.setup();
+    }
+
+    private void showLoginFailure(String reason) {
+        Toast toast = Toast.makeText(this,
+                "login failed: " + reason,
+                Toast.LENGTH_LONG);
+        toast.show();
     }
 
     private void showLostPing(int count) {
