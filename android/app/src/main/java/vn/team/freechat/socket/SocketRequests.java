@@ -4,8 +4,15 @@ import com.tvd12.ezyfoxserver.client.EzyClient;
 import com.tvd12.ezyfoxserver.client.EzyClients;
 import com.tvd12.ezyfoxserver.client.constant.EzyCommand;
 import com.tvd12.ezyfoxserver.client.entity.EzyApp;
+import com.tvd12.ezyfoxserver.client.entity.EzyArray;
+import com.tvd12.ezyfoxserver.client.entity.EzyObject;
 import com.tvd12.ezyfoxserver.client.entity.EzyZone;
+import com.tvd12.ezyfoxserver.client.factory.EzyEntityFactory;
 import com.tvd12.ezyfoxserver.client.request.EzyRequest;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Set;
 
 import vn.team.freechat.constant.Commands;
 import vn.team.freechat.request.GetContactsRequest;
@@ -26,6 +33,30 @@ public final class SocketRequests {
         EzyApp app = getApp();
         if(app != null)
             app.send(Commands.SUGGEST_CONTACTS);
+    }
+
+    public static void sendAddContact(String user) {
+        sendAddContacts(Arrays.asList(user));
+    }
+
+    public static void sendSearchContacts(String keyword) {
+        EzyApp app = getApp();
+        if(app != null) {
+            EzyObject data = EzyEntityFactory.newObjectBuilder()
+                    .append("keyword", keyword)
+                    .build();
+            app.send(Commands.SEARCH_CONTACTS, data);
+        }
+    }
+
+    public static void sendAddContacts(Collection<String> users) {
+        EzyApp app = getApp();
+        if(app != null) {
+            EzyObject data = EzyEntityFactory.newObjectBuilder()
+                    .append("target", users)
+                    .build();
+            app.send(Commands.ADD_CONTACTS, data);
+        }
     }
 
     public static void sendSystemMessage(String message) {

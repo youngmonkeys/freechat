@@ -139,6 +139,19 @@ public class SocketClientProxy {
                 contactController.updateView("search-contacts", contacts);
             }
         });
+        appSetup.addDataHandler(Commands.SEARCH_CONTACTS, new EzyAppDataHandler<EzyObject>() {
+            @Override
+            public void handle(EzyApp app, EzyObject data) {
+                EzyArray contacts = data.get("users", EzyArray.class);
+                contactController.updateView("search-contacts", contacts);
+            }
+        });
+        appSetup.addDataHandler(Commands.ADD_CONTACTS, new EzyAppDataHandler<EzyArray>() {
+            @Override
+            public void handle(EzyApp app, EzyArray data) {
+                contactController.updateView("add-search-contacts", data);
+            }
+        });
         appSetup.addDataHandler(Commands.CHAT_GET_CONTACTS, new EzyAppDataHandler<EzyArray>() {
             @Override
             public void handle(EzyApp app, EzyArray contacts) {

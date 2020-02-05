@@ -3,9 +3,13 @@ package vn.team.freechat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.tvd12.ezyfoxserver.client.entity.EzyArray;
 import com.tvd12.ezyfoxserver.client.entity.EzyObject;
@@ -29,12 +33,13 @@ import vn.team.freechat.socket.SocketRequests;
 
 public class ContactSearchActivity extends AppCompatActivity {
 
-    private String username;
     private IController contactController;
     private IController connectionController;
 
     private View loadingView;
     private View backButtonView;
+    private View searchButtonView;
+    private EditText keywordView;
     private ListView contactListView;
     private SearchContactListAdapter contactListAdapter;
 
@@ -65,7 +70,15 @@ public class ContactSearchActivity extends AppCompatActivity {
         contactController.addView("search-contacts", new IView() {
             @Override
             public void update(Object data) {
+                loadingView.setVisibility(View.GONE);
                 addContacts((EzyArray)data);
+            }
+        });
+
+        contactController.addView("add-search-contacts", new IView() {
+            @Override
+            public void update(Object data) {
+                backToContactView();
             }
         });
     }
@@ -85,14 +98,15 @@ public class ContactSearchActivity extends AppCompatActivity {
 
     private void initComponents() {
         Mvc mvc = Mvc.getInstance();
-        username = getIntent().getStringExtra("username");
         contactController = mvc.getController("contact");
         connectionController = mvc.getController("connection");
     }
 
     private void initViews() {
         loadingView = findViewById(R.id.loading);
+        keywordView = findViewById(R.id.keyword);
         backButtonView = findViewById(R.id.back);
+        searchButtonView = findViewById(R.id.search);
         contactListView = findViewById(R.id.contactList);
         contactListAdapter = new SearchContactListAdapter(this);
         contactListView.setAdapter(contactListAdapter);
@@ -102,17 +116,43 @@ public class ContactSearchActivity extends AppCompatActivity {
         backButtonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingView.setVisibility(View.GONE);
                 backToContactView();
+            }
+        });
+        searchButtonView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadingView.setVisibility(View.VISIBLE);
+                sendSearchContacts();
+            }
+        });
+        keywordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    sendSearchContacts();
+                    return true;
+                }
+                return false;
             }
         });
         contactListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 loadingView.setVisibility(View.VISIBLE);
-                ContactListAdapter adapter = (ContactListAdapter) parent.getAdapter();
-                onContactItemClick(adapter.getItemModel(position).getContact());
+                SearchContactListAdapter adapter = (SearchContactListAdapter) parent.getAdapter();
+                onContactItemClick(adapter.getItemModel(position).getUsername());
             }
         });
+    }
+
+    private void sendSearchContacts() {
+        String keyword = keywordView.getText().toString();
+        if(keyword.isEmpty())
+            SocketRequests.sendGetSuggestContacts();
+        else
+            SocketRequests.sendSearchContacts(keyword);
     }
 
     private void sendGetSuggestContacts() {
@@ -131,10 +171,8 @@ public class ContactSearchActivity extends AppCompatActivity {
         contactListAdapter.notifyDataSetChanged();
     }
 
-    private void onContactItemClick(ChannelUsers contact) {
-        Intent intent = new Intent(this, MessageActivity.class);
-        intent.putExtra("targetContact", contact);
-        startActivity(intent);
+    private void onContactItemClick(String username) {
+        SocketRequests.sendAddContact(username);
     }
 
     private void backToContactView() {

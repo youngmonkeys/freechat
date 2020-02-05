@@ -36,6 +36,10 @@ public class SearchContactListAdapter extends ArrayAdapter<SearchContactModel> {
         this.items = items;
     }
 
+    public SearchContactModel getItemModel(int position) {
+        return this.items.get(position);
+    }
+
     public void setItemModels(Collection<SearchContactModel> items) {
         this.items.clear();
         this.items.addAll(items);
