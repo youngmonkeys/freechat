@@ -1,4 +1,4 @@
-package vn.team.freechat.constant;
+package vn.team.freechat.test.game;
 
 public final class GameConstants {
 

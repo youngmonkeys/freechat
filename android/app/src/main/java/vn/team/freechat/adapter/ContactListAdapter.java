@@ -15,43 +15,49 @@ import java.util.List;
 import java.util.Map;
 
 import tvd12.com.ezyfoxserver.client.R;
-import vn.team.freechat.model.ContactListItemModel;
+import vn.team.freechat.model.ChatContactModel;
 
 /**
  * Created by tavandung12 on 10/3/18.
  */
 
-public class ContactListAdapter extends ArrayAdapter<ContactListItemModel> {
+public class ContactListAdapter extends ArrayAdapter<ChatContactModel> {
 
-    private final List<ContactListItemModel> items;
-    private final Map<Long, ContactListItemModel> itemMap;
+    private final List<ChatContactModel> items;
+    private final Map<Long, ChatContactModel> itemMap;
     private static final int item_layout_id = R.layout.component_contact_list_item;
 
     public ContactListAdapter(Context context) {
-        this(context, new ArrayList<ContactListItemModel>());
+        this(context, new ArrayList<ChatContactModel>());
     }
 
-    public ContactListAdapter(Context context, List<ContactListItemModel> items) {
+    public ContactListAdapter(Context context, List<ChatContactModel> items) {
         super(context, item_layout_id, items);
         this.items = items;
         this.itemMap = new HashMap<>();
-        this.addItemModel(ContactListItemModel.systemModel());
+        this.addItemModel(ChatContactModel.systemModel());
     }
 
-    public ContactListItemModel getItemModel(int position) {
+    public ChatContactModel getItemModel(int position) {
         return items.get(position);
     }
 
-    public void addItemModel(ContactListItemModel item) {
+    public void addItemModel(ChatContactModel item) {
         if(!itemMap.containsKey(item.getId())) {
             this.items.add(item);
             this.itemMap.put(item.getId(), item);
         }
     }
 
-    public void addItemModels(Collection<ContactListItemModel> items) {
-        for(ContactListItemModel item : items)
+    public void addItemModels(Collection<ChatContactModel> items) {
+        for(ChatContactModel item : items)
             addItemModel(item);
+    }
+
+    public void setItemModels(Collection<ChatContactModel> items) {
+        this.items.clear();
+        this.itemMap.clear();
+        this.addItemModels(items);
     }
 
     @NonNull
@@ -61,7 +67,7 @@ public class ContactListAdapter extends ArrayAdapter<ContactListItemModel> {
         View view = inflater.inflate(item_layout_id, parent, false);
         TextView usernameView = view.findViewById(R.id.username);
         TextView lastMessageView = view.findViewById(R.id.lastMessage);
-        ContactListItemModel model = items.get(position);
+        ChatContactModel model = items.get(position);
         usernameView.setText(model.getContactUser());
         lastMessageView.setText(model.getLastMessage());
         return view;

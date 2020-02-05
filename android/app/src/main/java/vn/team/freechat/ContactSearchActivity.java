@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.tvd12.ezyfoxserver.client.entity.EzyArray;
 import com.tvd12.ezyfoxserver.client.entity.EzyObject;
@@ -17,8 +15,9 @@ import java.util.List;
 
 import tvd12.com.ezyfoxserver.client.R;
 import vn.team.freechat.adapter.ContactListAdapter;
+import vn.team.freechat.adapter.SearchContactListAdapter;
 import vn.team.freechat.data.ChannelUsers;
-import vn.team.freechat.model.ChatContactModel;
+import vn.team.freechat.model.SearchContactModel;
 import vn.team.freechat.mvc.IController;
 import vn.team.freechat.mvc.IView;
 import vn.team.freechat.mvc.Mvc;
@@ -28,27 +27,23 @@ import vn.team.freechat.socket.SocketRequests;
  * Created by tavandung12 on 10/1/18.
  */
 
-public class ContactActivity extends AppCompatActivity {
+public class ContactSearchActivity extends AppCompatActivity {
 
     private String username;
     private IController contactController;
     private IController connectionController;
 
     private View loadingView;
-    private View profileBox;
-    private ImageButton searchButton;
-    private TextView profileUsernameView;
-    private TextView profileStatusMessageView;
+    private View backButtonView;
     private ListView contactListView;
-    private ContactListAdapter contactListAdapter;
+    private SearchContactListAdapter contactListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact);
+        setContentView(R.layout.activity_contact_search);
         initComponents();
         initViews();
-        setViewsData();
         setViewControllers();
     }
 
@@ -67,7 +62,7 @@ public class ContactActivity extends AppCompatActivity {
                 loadingView.setVisibility(View.GONE);
             }
         });
-        contactController.addView("add-contacts", new IView() {
+        contactController.addView("search-contacts", new IView() {
             @Override
             public void update(Object data) {
                 addContacts((EzyArray)data);
@@ -78,14 +73,14 @@ public class ContactActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        sendGetContactsRequest();
+        sendGetSuggestContacts();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         loadingView.setVisibility(View.GONE);
-        contactController.removeView("add-contacts");
+        contactController.removeView("search-contacts");
     }
 
     private void initComponents() {
@@ -97,25 +92,17 @@ public class ContactActivity extends AppCompatActivity {
 
     private void initViews() {
         loadingView = findViewById(R.id.loading);
-        profileBox = findViewById(R.id.profileBox);
-        searchButton = findViewById(R.id.search);
-        profileUsernameView = profileBox.findViewById(R.id.username);
-        profileStatusMessageView = profileBox.findViewById(R.id.statusMessage);
+        backButtonView = findViewById(R.id.back);
         contactListView = findViewById(R.id.contactList);
-        contactListAdapter = new ContactListAdapter(this);
+        contactListAdapter = new SearchContactListAdapter(this);
         contactListView.setAdapter(contactListAdapter);
     }
 
-    private void setViewsData() {
-        profileUsernameView.setText(username);
-        profileStatusMessageView.setText("hello world");
-    }
-
     private void setViewControllers() {
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        backButtonView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onSearchButtonClick();
+            public void onClick(View v) {
+                backToContactView();
             }
         });
         contactListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -128,31 +115,29 @@ public class ContactActivity extends AppCompatActivity {
         });
     }
 
-    private void sendGetContactsRequest() {
-        SocketRequests.sendGetContacts();
+    private void sendGetSuggestContacts() {
+        SocketRequests.sendGetSuggestContacts();
     }
 
     private void addContacts(EzyArray contacts) {
-        List<ChatContactModel> models = new ArrayList<>();
+        List<SearchContactModel> models = new ArrayList<>();
         for(int i = 0 ; i < contacts.size() ; ++i) {
             EzyObject item = contacts.get(i, EzyObject.class);
-            long channelId = item.get("channelId", long.class);
-            String[] users = item.get("users", String[].class);
-            ChannelUsers contact = new ChannelUsers(channelId, users);
-            models.add(new ChatContactModel(contact));
+            String username = item.get("username", String.class);
+            String fullName = item.get("fullName", String.class, "");
+            models.add(new SearchContactModel(username, fullName));
         }
-        contactListAdapter.addItemModels(models);
+        contactListAdapter.setItemModels(models);
         contactListAdapter.notifyDataSetChanged();
-    }
-
-    private void onSearchButtonClick() {
-        Intent intent = new Intent(this, ContactSearchActivity.class);
-        startActivity(intent);
     }
 
     private void onContactItemClick(ChannelUsers contact) {
         Intent intent = new Intent(this, MessageActivity.class);
         intent.putExtra("targetContact", contact);
         startActivity(intent);
+    }
+
+    private void backToContactView() {
+        onBackPressed();
     }
 }

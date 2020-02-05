@@ -4,7 +4,6 @@ import com.tvd12.ezyfox.binding.EzyAccessType;
 import com.tvd12.ezyfox.binding.annotation.EzyObjectBinding;
 
 import lombok.Getter;
-import vn.team.freechat.constant.GameConstants;
 
 @Getter
 @EzyObjectBinding(

@@ -1,6 +1,6 @@
 package vn.team.freechat.test.game;
 
-import static vn.team.freechat.constant.GameCommands.JOIN_ROOM;
+import static vn.team.freechat.test.game.GameCommands.JOIN_ROOM;
 
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
 import com.tvd12.ezyfox.core.annotation.EzyClientRequestListener;

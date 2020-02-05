@@ -1,27 +1,25 @@
 package vn.team.freechat.model;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import vn.team.freechat.data.ChannelUsers;
 
 /**
  * Created by tavandung12 on 10/3/18.
  */
 
-public class ContactListItemModel {
+public class ChatContactModel {
 
     private final long id;
     private String lastMessage;
     private ChannelUsers contact;
 
-    public ContactListItemModel(ChannelUsers contact) {
+    public ChatContactModel(ChannelUsers contact) {
         this.contact = contact;
         this.lastMessage = "";
         this.id = contact.getChannelId();
     }
 
-    public static ContactListItemModel systemModel() {
-        return new ContactListItemModel(new ChannelUsers(0, "System"));
+    public static ChatContactModel systemModel() {
+        return new ChatContactModel(new ChannelUsers(0, "System"));
     }
 
     public long getId() {

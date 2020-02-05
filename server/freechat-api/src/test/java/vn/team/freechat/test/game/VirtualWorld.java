@@ -7,8 +7,6 @@ import java.util.Map;
 
 import com.tvd12.ezyfox.util.EzyLoggable;
 
-import vn.team.freechat.constant.GameConstants;
-
 public class VirtualWorld extends EzyLoggable {
 
 	private Thread thread;

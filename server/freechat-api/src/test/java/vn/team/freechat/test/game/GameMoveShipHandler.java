@@ -1,6 +1,6 @@
 package vn.team.freechat.test.game;
 
-import static vn.team.freechat.constant.GameCommands.MOVE_SHIP;
+import static vn.team.freechat.test.game.GameCommands.MOVE_SHIP;
 
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
 import com.tvd12.ezyfox.binding.EzyDataBinding;

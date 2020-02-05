@@ -19,7 +19,6 @@ import com.tvd12.ezyfoxserver.support.factory.EzyResponseFactory;
 
 import lombok.Getter;
 import lombok.Setter;
-import vn.team.freechat.constant.GameCommands;
 
 @Getter
 @EzyObjectBinding(

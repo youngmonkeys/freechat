@@ -21,6 +21,7 @@
         </activity>
         <activity android:name="vn.team.freechat.ContactActivity" />
         <activity android:name="vn.team.freechat.MessageActivity" />
+        <activity android:name="vn.team.freechat.ContactSearchActivity" />
     </application>
 
 </manifest>
