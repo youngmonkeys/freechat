@@ -65,7 +65,7 @@ git pull origin master
 6. Open project on ```XCode```
 7. Build and run
 
-# Server-side build and run
+# 6. Server-side build and run
 
 1. Clone source code
 2. Import source code (```server``` folder) into IDE (Eclipse, Intellij, Netbean)
