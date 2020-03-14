@@ -719,12 +719,27 @@
     outline: none
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     .main-container {
         margin-top: 10px;
     }
     .mc-wrapper {
         height: 88vh
+    }
+
+    .mc-wrapper .mc-sidepanel #profile .wrap {
+        text-align: center;
+    }
+
+    .mc-wrapper .mc-sidepanel #profile .wrap img.online {
+        max-width: 52px;
+        float:none;
+    }
+
+
+
+    .mc-wrapper .content-wrapper .content .contact-profile {
+        height: 52px
     }
     .mc-wrapper .content-wrapper .content .contact-profile {
         height: 52px
@@ -733,6 +748,7 @@
         width: 32px;
         margin: 10px
     }
+
     .mc-wrapper .content-wrapper .content .contact-profile p {
         font-size: 14px;
         padding-top: 18px;
@@ -763,14 +779,22 @@
         border-radius: 8px;
         max-width: 170px
     }
+    .mc-wrapper .mc-sidepanel #contacts ul li.contact {
+        display: block;
+    }
+    .mc-wrapper .mc-sidepanel #contacts ul li.contact .wrap {
+        text-align: center;
+    }
+    .mc-wrapper .mc-sidepanel #contacts ul li.contact .wrap span {
+        left: calc(50% - 20px);
+    }
+    .mc-wrapper .mc-sidepanel #contacts ul li.contact .wrap img {
+        float:none;
+        margin-right: 0;
+        margin-bottom: 2px;
+    }
     .mc-wrapper .mc-sidepanel #contacts ul li.contact .wrap .meta .preview {
         display: none;
-    }
-    .mc-wrapper .mc-sidepanel #contacts ul li.contact .wrap .meta .name {
-        width: 30px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 
     .mc-wrapper .content-wrapper .content .contact-profile p {
@@ -781,7 +805,7 @@
     }
 }
 
-@media (min-width: 576px) and (max-width: 768px) {
+@media (max-width: 768px) {
     .mc-wrapper .mc-sidepanel #profile .wrap #status-options ul li span.status-circle {
         width: 14px;
         height: 14px
@@ -807,7 +831,7 @@
     .mc-wrapper .mc-sidepanel #contacts ul li.contact {
         padding-top: 6px;
         padding-right: 0px;
-        padding-bottom: 46px;
+        padding-bottom: 26px;
         padding-left: 8px;
     }
     .mc-wrapper .mc-sidepanel #contacts ul li.contact.active {
@@ -819,9 +843,6 @@
     }
     .mc-wrapper .mc-sidepanel #contacts ul li.contact .wrap img {
         margin-right: 0px
-    }
-    .mc-wrapper .mc-sidepanel #contacts ul li.contact .wrap .meta {
-        display: none
     }
     .mc-wrapper .mc-sidepanel #bottom-bar button {
         width: 100%;
