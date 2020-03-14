@@ -10463,10 +10463,6 @@ select[size] option+option {
     font-size: 12px
 }
 
-.checkbox label {
-    padding-left: 28px
-}
-
 .checkbox input[type=checkbox] {
     margin-left: 0px;
     left: 0
