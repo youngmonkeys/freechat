@@ -50,6 +50,7 @@ class LoginView extends React.Component {
     render() {
         const {username, password} = this.state;
         return (
+            <div className="login-div-wrap">
                 <div className="login-div">
                     <Component.ToastView />
                     <div className="login-title">
@@ -80,6 +81,7 @@ class LoginView extends React.Component {
                         <button className="btn btn-info btn-block" onClick={this.onLogin}>Login</button>
                     </div>
                 </div>
+            </div>
        );
     }
  }
