@@ -818,9 +818,7 @@
         display: none;
     }
     .mc-wrapper .mc-sidepanel #contacts ul li.contact {
-        padding-top: 6px;
         padding-right: 0px;
-        padding-bottom: 26px;
         padding-left: 8px;
     }
     .mc-wrapper .mc-sidepanel #contacts ul li.contact.active {

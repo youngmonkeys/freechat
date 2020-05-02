@@ -1,4 +1,7 @@
 @media (max-width: 767px) {
+  .navbar {
+    padding: 0;
+  }
   .messages-wrapper {
     height: 100vh;
     overflow: hidden;
@@ -27,6 +30,33 @@
       flex: 0 0 70%;
       max-width: 70%;
     }
+    &.toggle {
+      .mc-sidepanel {
+        flex: 0 0 100px;
+        max-width: 100px;
+      }
+      .content-wrapper {
+        flex: 0 0 calc(100% - 100px);
+        max-width: calc(100% - 100px);
+      }
+    }
   }
-
+}
+.left-branding {
+  display: flex;
+  align-items: center;
+  button {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    font-size: 20px;
+    line-height: 1;
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
+    i {
+      color: #1C2B36;
+    }
+  }
 }

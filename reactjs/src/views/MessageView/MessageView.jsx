@@ -359,6 +359,11 @@ class MessageView extends React.Component {
                     <div className="navbar-left">
                         <ul className="left-branding">
                             <li>
+                                <button onClick={this.handleToggle}>
+                                    <i className="fa fa-bars" />
+                                </button>
+                            </li>
+                            <li>
                                 <a href="index.html"><div className="logo"></div></a>
                             </li>
                         </ul>
@@ -390,11 +395,6 @@ class MessageView extends React.Component {
                 <section className="main-container">
                     <div className={`mc-wrapper ${toggle ? 'toggle' : ''}`}>
                         <div className="mc-sidepanel">
-                            <div className="mc-sidepanel-toggle">
-                                <button onClick={this.handleToggle}>
-                                    <i className="fa fa-bars" />
-                                </button>
-                            </div>
                             <div className="mc-sidepanel-content">
                                 <MyShortProfileView parent={this} />
                                 <div id="search">
