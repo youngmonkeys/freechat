@@ -1,0 +1,32 @@
+@media (max-width: 767px) {
+  .messages-wrapper {
+    height: 100vh;
+    overflow: hidden;
+    .main-container {
+      height: calc(100vh - 100px);
+    }
+  }
+  .mc-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    .mc-sidepanel {
+      flex: 0 0 30%;
+      max-width: 30%;
+      height: 100%;
+      .mc-sidepanel-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        #contact {
+          height: auto;
+        }
+      }
+    }
+    .content-wrapper {
+      flex: 0 0 70%;
+      max-width: 70%;
+    }
+  }
+
+}

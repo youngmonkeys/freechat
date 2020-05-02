@@ -4,6 +4,7 @@ import Mvc from 'mvc-es6';
 import AddContactView from './AddContactView';
 import SocketProxy from '../../socket/SocketProxy';
 import SocketRequest from '../../socket/SocketRequest'
+import './style.scss';
 
 class MessageItemView extends React.Component {
     constructor(props) {
@@ -353,7 +354,7 @@ class MessageView extends React.Component {
         const currentContact = contacts[targetContact] || contacts[0];
         const messages = messagess[targetContact] || [];
         return (
-            <div>
+            <div className="messages-wrapper">
                 <header className="main-nav">
                     <div className="navbar-left">
                         <ul className="left-branding">
