@@ -24,7 +24,6 @@
     float: left;
     background: #1C2B36;
     color: #6b94b3;
-    overflow: hidden;
     position: relative;
     -webkit-border-top-left-radius: 2px;
     -moz-border-top-left-radius: 2px;
@@ -39,6 +38,29 @@
     -moz-border-bottom-left-radius: 2px;
     border-bottom-left-radius: 2px
 }
+
+.mc-wrapper .mc-sidepanel .mc-sidepanel-toggle button {
+    background: transparent;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top:0;
+    outline: none;
+    font-size: 17px;
+    line-height: 1;
+    padding: 5px;
+}
+
+.main-container .mc-wrapper.toggle .mc-sidepanel {
+    width: 90px;
+}
+
+.main-container .mc-wrapper.toggle .content-wrapper {
+    width: calc(100% - 100px);
+}
+
 
 .mc-wrapper .mc-sidepanel #profile.expanded .wrap {
     height: 180px;
@@ -861,7 +883,6 @@
         display: none
     }
     .mc-wrapper .content-wrapper .content {
-        width: calc(100% - 58px);
         min-width: 240px !important
     }
     .mc-wrapper .content-wrapper .content .messages ul li p {
@@ -879,6 +900,12 @@
     #contacts tbody tr td:nth-child(3),
     #contacts tbody tr td:nth-child(4) {
         display: none
+    }
+}
+
+@media (min-width: 768px) {
+    .mc-wrapper .mc-sidepanel .mc-sidepanel-toggle button {
+        display: none;
     }
 }
 

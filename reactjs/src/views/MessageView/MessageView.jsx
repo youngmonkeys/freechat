@@ -224,6 +224,7 @@ class MessageView extends React.Component {
             ],
             targetContact : 0,
             messagess : {[0] : [{value: "message 1st", reply: false}, {value: "message 2nd", reply: true}]},
+            toggle: false,
         };
         
         this.contactDict = {};
@@ -340,8 +341,15 @@ class MessageView extends React.Component {
         this.toggleAddContactView();
     }
 
+    handleToggle = () => {
+        const { toggle } = this.state;
+        this.setState ({
+          toggle: !toggle,
+        });
+    }
+
     render() {
-        const {message, contacts, messagess, targetContact } = this.state;
+        const {message, contacts, messagess, targetContact, toggle } = this.state;
         const currentContact = contacts[targetContact] || contacts[0];
         const messages = messagess[targetContact] || [];
         return (
@@ -379,20 +387,27 @@ class MessageView extends React.Component {
 
                 </header>
                 <section className="main-container">
-                    <div className="mc-wrapper">
+                    <div className={`mc-wrapper ${toggle ? 'toggle' : ''}`}>
                         <div className="mc-sidepanel">
-                            <MyShortProfileView parent={this} />
-                            <div id="search">
-                                <label><i className="icon-search4" aria-hidden="true"></i></label>
-                                <input id="search-user-keyword" type="text" placeholder="Search contacts..." />
-                            </div>
-                            <ContactListView contacts={contacts} />
-                            <div id="bottom-bar">
-                                <button id="addcontact" onClick={this.onAddContactClick.bind(this)}>
-                                    <i className="icon-user-plus" data-toggle="modal" data-target="#addContactsModel" aria-hidden="true"></i> 
-                                    <span>Add contact</span>
+                            <div className="mc-sidepanel-toggle">
+                                <button onClick={this.handleToggle}>
+                                    <i className="fa fa-bars" />
                                 </button>
-                                <button id="setting"><i className="icon-gear" aria-hidden="true"></i> <span>Settings</span></button>
+                            </div>
+                            <div className="mc-sidepanel-content">
+                                <MyShortProfileView parent={this} />
+                                <div id="search">
+                                    <label><i className="icon-search4" aria-hidden="true"></i></label>
+                                    <input id="search-user-keyword" type="text" placeholder="Search contacts..." />
+                                </div>
+                                <ContactListView contacts={contacts} />
+                                <div id="bottom-bar">
+                                    <button id="addcontact" onClick={this.onAddContactClick.bind(this)}>
+                                        <i className="icon-user-plus" data-toggle="modal" data-target="#addContactsModel" aria-hidden="true"></i>
+                                        <span>Add contact</span>
+                                    </button>
+                                    <button id="setting"><i className="icon-gear" aria-hidden="true"></i> <span>Settings</span></button>
+                                </div>
                             </div>
                         </div>
                         <div className="content-wrapper">
