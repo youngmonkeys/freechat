@@ -14,9 +14,9 @@ body {
     background-size: cover;
 }
 
-html, body {
-    height: 95%;
-}
+/*html, body {*/
+/*    height: 95%;*/
+/*}*/
 
 .x-toast {
     position: fixed;

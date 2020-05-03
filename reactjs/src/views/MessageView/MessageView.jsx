@@ -4,6 +4,7 @@ import Mvc from 'mvc-es6';
 import AddContactView from './AddContactView';
 import SocketProxy from '../../socket/SocketProxy';
 import SocketRequest from '../../socket/SocketRequest'
+import './style.scss';
 
 class MessageItemView extends React.Component {
     constructor(props) {
@@ -353,10 +354,15 @@ class MessageView extends React.Component {
         const currentContact = contacts[targetContact] || contacts[0];
         const messages = messagess[targetContact] || [];
         return (
-            <div>
+            <div className="messages-wrapper">
                 <header className="main-nav">
                     <div className="navbar-left">
                         <ul className="left-branding">
+                            <li>
+                                <button onClick={this.handleToggle}>
+                                    <i className="fa fa-bars" />
+                                </button>
+                            </li>
                             <li>
                                 <a href="index.html"><div className="logo"></div></a>
                             </li>
@@ -389,11 +395,6 @@ class MessageView extends React.Component {
                 <section className="main-container">
                     <div className={`mc-wrapper ${toggle ? 'toggle' : ''}`}>
                         <div className="mc-sidepanel">
-                            <div className="mc-sidepanel-toggle">
-                                <button onClick={this.handleToggle}>
-                                    <i className="fa fa-bars" />
-                                </button>
-                            </div>
                             <div className="mc-sidepanel-content">
                                 <MyShortProfileView parent={this} />
                                 <div id="search">
