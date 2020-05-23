@@ -3,8 +3,7 @@ import $ from 'jquery'
 import Mvc from 'mvc-es6';
 import AddContactView from './AddContactView';
 import SocketProxy from '../../socket/SocketProxy';
-import SocketRequest from '../../socket/SocketRequest'
-import './style.scss';
+import SocketRequest from '../../socket/SocketRequest';
 
 class MessageItemView extends React.Component {
     constructor(props) {

@@ -13,6 +13,7 @@ import './css/main-container.css';
 import './css/footer-container.css';
 import './css/login.css';
 import './css/add-contact.css';
+import './css/message-view.css';
 import './App.css';
 
 import Mvc from 'mvc-es6'
