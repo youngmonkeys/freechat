@@ -14,7 +14,7 @@ import com.mongodb.client.MongoDatabase;
 import com.tvd12.ezydata.hazelcast.factory.EzyMapTransactionFactory;
 import com.tvd12.ezydata.hazelcast.factory.EzySimpleMapTransactionFactory;
 import com.tvd12.ezydata.morphia.EzyDataStoreBuilder;
-import com.tvd12.ezydata.morphia.bean.EzyMorphiaRepositories;
+import com.tvd12.ezydata.morphia.bean.EzyMorphiaRepositoriesImplementer;
 import com.tvd12.ezyfox.bean.EzyBeanContextBuilder;
 import com.tvd12.ezyfoxserver.context.EzyPluginContext;
 import com.tvd12.ezyfoxserver.context.EzyServerContext;
@@ -104,7 +104,7 @@ public class ChatPluginEntry extends EzySimplePluginEntry {
 	}
     
     private Map<Class<?>, Object> implementMongoRepo(Datastore datastore) {
-    		return EzyMorphiaRepositories.newRepositoriesImplementer()
+    		return new EzyMorphiaRepositoriesImplementer()
     			.scan("com.tvd12.freechat.common.repo")
     			.scan("com.tvd12.freechat.plugin.repo")
     			.implement(datastore);

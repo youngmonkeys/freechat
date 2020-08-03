@@ -8,7 +8,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.mongodb.MongoClient;
 import com.tvd12.ezydata.hazelcast.factory.EzyMapTransactionFactory;
 import com.tvd12.ezydata.morphia.EzyDataStoreBuilder;
-import com.tvd12.ezydata.morphia.bean.EzyMorphiaRepositories;
+import com.tvd12.ezydata.morphia.bean.EzyMorphiaRepositoriesImplementer;
 import com.tvd12.ezyfox.bean.EzyBeanContextBuilder;
 import com.tvd12.ezyfoxserver.context.EzyAppContext;
 import com.tvd12.ezyfoxserver.context.EzyZoneContext;
@@ -93,7 +93,7 @@ public class ChatAppEntry extends EzySimpleAppEntry {
 	}
 
 	private Map<Class<?>, Object> implementMongoRepo(Datastore datastore) {
-		return EzyMorphiaRepositories.newRepositoriesImplementer()
+		return new EzyMorphiaRepositoriesImplementer()
 				.scan("com.tvd12.freechat.repo")
 				.implement(datastore);
 	}

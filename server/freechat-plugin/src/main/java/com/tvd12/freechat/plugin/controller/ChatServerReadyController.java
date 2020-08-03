@@ -1,21 +1,20 @@
 package com.tvd12.freechat.plugin.controller;
 
-import com.tvd12.ezyfox.annotation.EzyKeyValue;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
+import com.tvd12.ezyfox.core.annotation.EzyServerEventHandler;
+import com.tvd12.ezyfoxserver.constant.EzyEventNames;
 import com.tvd12.ezyfoxserver.context.EzyPluginContext;
 import com.tvd12.ezyfoxserver.controller.EzyAbstractPluginEventController;
 import com.tvd12.ezyfoxserver.event.EzyServerReadyEvent;
 
-@EzySingleton(properties = {
-		@EzyKeyValue(key = "type", value = "EVENT_HANDLER"),
-		@EzyKeyValue(key = "name", value = "SERVER_READY")
-})
+@EzySingleton
+@EzyServerEventHandler(event = EzyEventNames.SERVER_READY)
 public class ChatServerReadyController 
 		extends EzyAbstractPluginEventController<EzyServerReadyEvent> {
 
 	@Override
 	public void handle(EzyPluginContext ctx, EzyServerReadyEvent event) {
-		getLogger().info("freechat plugin: fire custom app ready");
+		logger.info("freechat plugin: fire custom app ready");
 	}
 	
 }
