@@ -7,8 +7,8 @@ class SocketRequestClass {
         this.getApp().sendRequest('1');
     }
 
-    searchContacts(keyword) {
-        this.getApp().sendRequest('9', {keyword : keyword});
+    searchContacts(keyword, skip, limit) {
+        this.getApp().sendRequest('9', {keyword : keyword, skip: skip, limit: limit});
     }
 
     requestAddContacts(target) {

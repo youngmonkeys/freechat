@@ -1,3 +1,10 @@
+# file and folder
+.idea/
+*/.idea/
+*.zip
+*.iml
+*/.iml
+
 *.project
 *.classpath
 *.class
@@ -19,3 +26,5 @@ buildNumber.properties
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
+
+

@@ -44,6 +44,7 @@ public class ChatGetContactsHandler
 	}
 	
 	public void reponseMessage(List<ChatChannelUsers> contacts) {
+		logger.info("get contracts results: {}", contacts);
 		responseFactory.newArrayResponse()
 			.command(CHAT_GET_CONTACTS)
 			.session(session)
