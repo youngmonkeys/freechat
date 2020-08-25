@@ -13,7 +13,6 @@ class SocketProxy {
     }
 
     setup() {
-        console.log("setup SocketProxy");
         let mvc = Mvc.getInstance();
         let models = mvc.models;
         let handshakeHandler = new Ezy.HandshakeHandler();
@@ -81,7 +80,7 @@ class SocketProxy {
         });
         
         setupApp.addDataHandler("4", function(app, data) {
-            console.log("handle received message: " + JSON.stringify(data) + ", update view now");
+            console.log("handle received system message: " + JSON.stringify(data));
             messageController.updateViews("systemMessage", data);
         });
         
@@ -91,7 +90,7 @@ class SocketProxy {
         });
         
         setupApp.addDataHandler("6", function(app, data) {
-            console.log("handle received message: " + JSON.stringify(data) + ", update view now");
+            console.log("handle received user message: " + JSON.stringify(data));
             messageController.updateViews("userMessage", data);
         });
 
@@ -104,8 +103,8 @@ class SocketProxy {
     }
 
     connect() {
-        // let url = "wss://ws.tvd12.com/ws";
-        let url = "ws://localhost:2208/ws";
+        let url = "wss://ws.tvd12.com/ws";
+        // let url = "ws://localhost:2208/ws";
         let client = this.getClient();
         client.connect(url);
     }

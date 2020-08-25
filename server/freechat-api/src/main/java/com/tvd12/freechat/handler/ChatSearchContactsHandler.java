@@ -43,15 +43,14 @@ public class ChatSearchContactsHandler
 
 	@Override
 	protected void execute() throws EzyBadRequestException {
-		logger.info("search contracts user name: {}, keyword: {}, skip: {}, limit: {}", user.getName(), keyword, skip, limit);
-		List<ChatChannelUsers> channels =
-				channelUserService.getChannelsOfUser(user.getName(), 0, 30);
+		logger.debug("search contracts user name: {}, keyword: {}, skip: {}, limit: {}", user.getName(), keyword, skip, limit);
+		List<ChatChannelUsers> channels = channelUserService.getChannelsOfUser(user.getName(), 0, 30);
 		List<ChatChannelUsers> answers = filterChannels(keyword, channels);
 		reponseMessage(answers);
 	}
 	
 	public void reponseMessage(List<ChatChannelUsers> contacts) {
-		logger.info("search contracts results: {}", contacts);
+		logger.debug("search contracts results: {}", contacts);
 		responseFactory.newArrayResponse()
 				.command(SEARCH_CONTACTS)
 				.session(session)

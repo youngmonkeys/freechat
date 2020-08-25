@@ -221,7 +221,7 @@ class MessageView extends React.Component {
             message: "",
             keyword: "",
             contacts : [
-                {channel: {channelId: 0, users: ["System"]}, lastMessage: ""},
+                {channel: {channelId: 0, users: ["System"]}, lastMessage: ""}
             ],
             targetContact : 0,
             messagess : {[0] : [{value: "message 1st", reply: false}, {value: "message 2nd", reply: true}]},

@@ -37,14 +37,12 @@ public class ChatGetContactsHandler
 	
 	@Override
 	protected void execute() throws EzyBadRequestException {
-		
-		List<ChatChannelUsers> channels = 
-				channelUserService.getChannelsOfUser(user.getName(), skip, limit);
+		List<ChatChannelUsers> channels = channelUserService.getChannelsOfUser(user.getName(), skip, limit);
 		reponseMessage(channels);
 	}
 	
 	public void reponseMessage(List<ChatChannelUsers> contacts) {
-		logger.info("get contracts results: {}", contacts);
+		logger.debug("get contracts results: {}", contacts);
 		responseFactory.newArrayResponse()
 			.command(CHAT_GET_CONTACTS)
 			.session(session)
