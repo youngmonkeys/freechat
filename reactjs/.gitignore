@@ -1,5 +1,12 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+# file and folder
+.idea/
+*/.idea/
+*.zip
+*.iml
+*/.iml
+
 # dependencies
 /node_modules
 
@@ -21,3 +28,5 @@ yarn-debug.log*
 yarn-error.log*
 
 package-lock.json
+
+

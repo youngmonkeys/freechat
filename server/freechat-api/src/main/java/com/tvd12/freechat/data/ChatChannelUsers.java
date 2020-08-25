@@ -7,8 +7,10 @@ import com.tvd12.ezyfox.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 @AllArgsConstructor
 @EzyObjectBinding(read = false)
 public class ChatChannelUsers {

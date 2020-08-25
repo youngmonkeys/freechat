@@ -21,13 +21,13 @@ class SocketProxy {
             let username = connection.username;
             let password = connection.password;
             return ["freechat", username, password, []];
-        }
+        };
 
         let loginSuccessHandler = new Ezy.LoginSuccessHandler();
         loginSuccessHandler.handleLoginSuccess = function() {
             let accessAppRequest = ["freechat", []];
             this.client.sendRequest(Ezy.Command.APP_ACCESS, accessAppRequest);
-        }
+        };
 
         let loginErrorHandler = new Ezy.LoginErrorHandler();
         loginErrorHandler.handleLoginError = function(event) {
@@ -39,20 +39,20 @@ class SocketProxy {
         accessAppHandler.postHandle = function(app, data) {
             let routerController = mvc.getController("router");
             routerController.updateViews('change', '/message');
-        }
+        };
 
         let disconnectionHandler = new Ezy.DisconnectionHandler();
         disconnectionHandler.preHandle = function(event) {
             let routerController = mvc.getController("router");
             routerController.updateViews('change', '/');
-        }
+        };
         let shouldReconnectParent = disconnectionHandler.shouldReconnect;
         disconnectionHandler.shouldReconnect = function(event) {
             var reason = event.reason;
             if(reason == 401)
                 return false;
             return shouldReconnectParent(event);
-        }
+        };
 
         let config = new Ezy.ClientConfig;
         config.zoneName = "freechat";
@@ -70,31 +70,35 @@ class SocketProxy {
         let contactController = mvc.getController("contact");
 
         setupApp.addDataHandler("1", function(app, data) {
+            console.log("handle suggestion contacts: " + JSON.stringify(data));
             contactController.updateViews("suggestion", data['users']);
         });
         
         setupApp.addDataHandler("2", function(app, data) {
-            console.log("add news contacts: " + JSON.stringify(data));
+            console.log("handle add news contacts: " + JSON.stringify(data));
             contactController.updateViews("newContacts", data);
         });
         
         setupApp.addDataHandler("4", function(app, data) {
-            console.log("received message: " + JSON.stringify(data) + ", update view now");
+            console.log("handle received system message: " + JSON.stringify(data));
             messageController.updateViews("systemMessage", data);
         });
         
         setupApp.addDataHandler("5", function(app, data) {
+            console.log("handle get contracts: " + JSON.stringify(data));
             contactController.updateViews("newContacts", data);
         });
         
         setupApp.addDataHandler("6", function(app, data) {
-            console.log("received message: " + JSON.stringify(data) + ", update view now");
+            console.log("handle received user message: " + JSON.stringify(data));
             messageController.updateViews("userMessage", data);
         });
 
         setupApp.addDataHandler("9", function(app, data) {
-            contactController.updateViews("seachedContacts", data['users']);
+            console.log("handle search contacts: " + JSON.stringify(data));
+            contactController.updateViews("searchContacts", data);
         });
+
         return client;
     }
 

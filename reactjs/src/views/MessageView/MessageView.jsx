@@ -219,6 +219,7 @@ class MessageView extends React.Component {
 
         this.state = {
             message: "",
+            keyword: "",
             contacts : [
                 {channel: {channelId: 0, users: ["System"]}, lastMessage: ""}
             ],
@@ -226,7 +227,6 @@ class MessageView extends React.Component {
             messagess : {[0] : [{value: "message 1st", reply: false}, {value: "message 2nd", reply: true}]},
             toggle: false,
         };
-        
         this.contactDict = {};
         const {contacts} = this.state;
         contacts.forEach((contact) => {
@@ -236,23 +236,34 @@ class MessageView extends React.Component {
         let mvc = Mvc.getInstance();
         this.chatController = mvc.getController("chat");
         this.messageController = mvc.getController("message");
-        this.contactController = mvc.getController("contact");        
+        this.contactController = mvc.getController("contact");
     }
 
     componentDidMount() {
+        console.log("start componentDidMount");
         this.messageController.addDefaultView("systemMessage", (msg) => {
-            console.log("add rev system message now");
+            console.log("view add rev system message now");
             this.addReceivedSystemMessage(msg);
         });
+
         this.messageController.addDefaultView("userMessage", (msg) => {
-            console.log("add rev user message now");
+            console.log("view add rev user message now");
             this.addReceivedUserMessage(msg);
         });
+
         this.contactController.addDefaultView("newContacts", (newContacts) => {
+            console.log("view add rev new contacts now");
             this.addContacts(newContacts);
         });
+
         this.chatController.addDefaultView("changeTarget", (target) => {
+            console.log("view add rev change target now");
             this.updateTargetContact(target);
+        });
+
+        this.contactController.addDefaultView("searchContacts", (contactsSearched) => {
+            console.log("view add rev search contacts now");
+            this.searchContacts(contactsSearched);
         });
 
         SocketRequest.requestGetContacts(0, 50);
@@ -260,6 +271,10 @@ class MessageView extends React.Component {
 
     onMessageChange(e) {
         this.setState({message: e.target.value});
+    }
+
+    onSearchChange(e) {
+        this.setState({keyword: e.target.value});
     }
 
     componentWillUnmount() {
@@ -284,6 +299,23 @@ class MessageView extends React.Component {
         });
         updateContacts = contacts.concat(updateContacts);
         this.setState({contacts : updateContacts});
+    }
+
+    searchContacts(contactsSearcheds) {
+        const {messagess} = this.state;
+        const contactMap = this.contactDict;
+        var searchContacts = [{channel: {channelId: 0, users: ["System"]}, lastMessage: ""}];
+        contactsSearcheds.forEach(function(contactSearched) {
+            const contactOld = contactMap[contactSearched.channelId];
+            if(contactOld) {
+                const item = {channel: contactSearched, lastMessage: ""};
+                contactMap[contactSearched.channelId] = item;
+                searchContacts.push(item);
+                messagess[contactSearched.channelId] = [];
+                console.log("searched contact: " + JSON.stringify(contactSearched) + " success");
+            }
+        });
+        this.setState({contacts : searchContacts});
     }
 
     updateTargetContact(target) {
@@ -341,15 +373,22 @@ class MessageView extends React.Component {
         this.toggleAddContactView();
     }
 
+    onSearchKeyDown(e) {
+        if (e.key === 'Enter') {
+            let {keyword} = this.state;
+            SocketRequest.searchContacts(keyword, 0, 30);
+        }
+    }
+
     handleToggle = () => {
         const { toggle } = this.state;
         this.setState ({
           toggle: !toggle,
         });
-    }
+    };
 
     render() {
-        const {message, contacts, messagess, targetContact, toggle } = this.state;
+        const {message, keyword, contacts, messagess, targetContact, toggle} = this.state;
         const currentContact = contacts[targetContact] || contacts[0];
         const messages = messagess[targetContact] || [];
         return (
@@ -389,8 +428,8 @@ class MessageView extends React.Component {
 
                         </ul>
                     </div>
-
                 </header>
+
                 <section className="main-container">
                     <div className={`mc-wrapper ${toggle ? 'toggle' : ''}`}>
                         <div className="mc-sidepanel">
@@ -398,7 +437,13 @@ class MessageView extends React.Component {
                                 <MyShortProfileView parent={this} />
                                 <div id="search">
                                     <label><i className="icon-search4" aria-hidden="true"></i></label>
-                                    <input id="search-user-keyword" type="text" placeholder="Search contacts..." />
+                                    <input
+                                        id="search-user-keyword"
+                                        type="text"
+                                        value={keyword}
+                                        onChange={this.onSearchChange.bind(this)}
+                                        onKeyDown={this.onSearchKeyDown.bind(this)}
+                                        placeholder="Search contacts..." />
                                 </div>
                                 <ContactListView contacts={contacts} />
                                 <div id="bottom-bar">

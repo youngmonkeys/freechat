@@ -23,8 +23,8 @@ public class ChatContactRepoImpl
 	@Override
 	public Set<String> addContacts(String actor, Set<String> target) {
 		Set<ChatContact> contacts = new HashSet<>();
-		for(String un : target) {
-			ChatContactId id = new ChatContactId(actor, un);
+		for(String friend : target) {
+			ChatContactId id = new ChatContactId(actor, friend);
 			ChatContact contact = new ChatContact();
 			contact.setId(id);
 			contact.setActor(actor);
