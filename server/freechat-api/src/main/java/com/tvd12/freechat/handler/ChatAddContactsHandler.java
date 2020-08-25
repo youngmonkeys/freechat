@@ -5,6 +5,7 @@ import static com.tvd12.freechat.constant.ChatCommands.ADD_CONTACTS;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
@@ -13,6 +14,7 @@ import com.tvd12.ezyfox.binding.annotation.EzyObjectBinding;
 import com.tvd12.ezyfox.binding.annotation.EzyValue;
 import com.tvd12.ezyfox.core.annotation.EzyClientRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
+import com.tvd12.ezyfox.io.EzyCollections;
 import com.tvd12.freechat.constant.ChatErrors;
 import com.tvd12.freechat.data.ChatChannel;
 import com.tvd12.freechat.data.ChatChannelUser;
@@ -52,9 +54,19 @@ public class ChatAddContactsHandler
 		int total = currentContactCount + target.size();
 		if(total > 30)
 			throw new EzyBadRequestException(ChatErrors.FULL_CONTACTS, "full contacts");
-		Set<String> newContacts = contactRepo.addContacts(user.getName(), target);
+
+		Set<String> prevContacts = contactRepo.getContactNames(user.getName(), 0, 30);
+		Set<String> targetFilter = filterContacts(target, prevContacts);
+		if (EzyCollections.isEmpty(targetFilter))
+			return;
+
+		Set<String> newContacts = contactRepo.addContacts(user.getName(), targetFilter);
 		List<ChatChannelUsers> channelUsers = addChannels(newContacts);
 		response(channelUsers);
+	}
+
+	private Set<String> filterContacts(Set<String> target, Set<String> prevContacts) {
+		return target.stream().filter(friend -> !prevContacts.contains(friend)).collect(Collectors.toSet());
 	}
 	
 	private List<ChatChannelUsers> addChannels(Set<String> newContacts) {
@@ -78,7 +90,7 @@ public class ChatAddContactsHandler
 			
 			answer.add(new ChatChannelUsers(channelId, contact));
 		}
-		
+
 		channelService.saveChannels(newChannels);
 		channelUserService.saveChannelUsers(newChannelUsers);
 		

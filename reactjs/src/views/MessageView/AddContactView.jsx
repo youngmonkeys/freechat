@@ -146,7 +146,7 @@ class AddContactView extends React.Component {
             SocketRequest.requestSuggestionContacts();
         }
         else {
-            this.suggestedContacts = {};
+            this.selectedContacts = new Set();
         }
         this.setState({
             show: willShow
@@ -212,4 +212,4 @@ class AddContactView extends React.Component {
     }
   }
   
-  export default AddContactView;
+export default AddContactView;
