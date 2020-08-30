@@ -11,6 +11,10 @@ class SocketRequestClass {
         this.getApp().sendRequest('9', {keyword : keyword, skip: skip, limit: limit});
     }
 
+    searchContactsUsers(keyword, skip, limit) {
+        this.getApp().sendRequest('10', {keyword : keyword, skip: skip, limit: limit});
+    }
+
     requestAddContacts(target) {
         this.getApp().sendRequest('2', {target: target});
     }

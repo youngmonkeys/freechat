@@ -99,6 +99,11 @@ class SocketProxy {
             contactController.updateViews("searchContacts", data);
         });
 
+        setupApp.addDataHandler("10", function(app, data) {
+            console.log("handle search contacts users: " + JSON.stringify(data));
+            contactController.updateViews("searchContactsUsers", data['users']);
+        });
+
         return client;
     }
 
