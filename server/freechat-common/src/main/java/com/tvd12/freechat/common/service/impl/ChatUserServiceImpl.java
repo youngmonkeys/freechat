@@ -27,7 +27,6 @@ public class ChatUserServiceImpl
 	@Override
 	public void saveUser(ChatUser user) {
 		set(user.getUsername(), user);
-		
 	}
 	
 	@Override
@@ -50,12 +49,8 @@ public class ChatUserServiceImpl
 	}
 	
 	@Override
-	public List<ChatUser> getSearchUsers(String owner, int skip, int limit) {
-		ChatUser found = userRepo.findByUsername(owner);
-		List<ChatUser> list = new ArrayList<>();
-		if(found != null)
-			list.add(found);
-		return list;
+	public List<ChatUser> getSearchUsers(String keyword, String owner, int skip, int limit) {
+		return userRepo.findByUsername(keyword, owner, skip, limit);
 	}
 	
 	@Override

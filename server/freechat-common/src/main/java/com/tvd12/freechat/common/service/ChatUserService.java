@@ -14,7 +14,7 @@ public interface ChatUserService {
 	
 	ChatNewUser createUser(String username, EzyApply<ChatUser> applier);
 
-	List<ChatUser> getSearchUsers(String owner, int skip, int limit);
+	List<ChatUser> getSearchUsers(String keyword, String owner, int skip, int limit);
 	
 	List<ChatUser> getSuggestionUsers(String owner, int skip, int limit);
 	

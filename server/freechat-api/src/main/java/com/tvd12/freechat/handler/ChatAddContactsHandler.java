@@ -90,10 +90,9 @@ public class ChatAddContactsHandler
 			
 			answer.add(new ChatChannelUsers(channelId, contact));
 		}
-
 		channelService.saveChannels(newChannels);
 		channelUserService.saveChannelUsers(newChannelUsers);
-		
+
 		return answer;
 	}
 	

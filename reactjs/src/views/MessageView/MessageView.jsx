@@ -232,7 +232,6 @@ class MessageView extends React.Component {
         contacts.forEach((contact) => {
             this.contactDict[contact.channel.channelId] = contact;
         });
-
         let mvc = Mvc.getInstance();
         this.chatController = mvc.getController("chat");
         this.messageController = mvc.getController("message");
@@ -240,7 +239,6 @@ class MessageView extends React.Component {
     }
 
     componentDidMount() {
-        console.log("start componentDidMount");
         this.messageController.addDefaultView("systemMessage", (msg) => {
             console.log("view add rev system message now");
             this.addReceivedSystemMessage(msg);
@@ -261,9 +259,9 @@ class MessageView extends React.Component {
             this.updateTargetContact(target);
         });
 
-        this.contactController.addDefaultView("searchContacts", (contactsSearched) => {
+        this.contactController.addDefaultView("searchContacts", (contacts) => {
             console.log("view add rev search contacts now");
-            this.searchContacts(contactsSearched);
+            this.searchContacts(contacts);
         });
 
         SocketRequest.requestGetContacts(0, 50);
@@ -274,7 +272,9 @@ class MessageView extends React.Component {
     }
 
     onSearchChange(e) {
-        this.setState({keyword: e.target.value});
+        var keyword = e.target.value;
+        this.setState({keyword: keyword});
+        SocketRequest.searchContacts(keyword, 0, 30);
     }
 
     componentWillUnmount() {
@@ -301,11 +301,11 @@ class MessageView extends React.Component {
         this.setState({contacts : updateContacts});
     }
 
-    searchContacts(contactsSearcheds) {
+    searchContacts(contacts) {
         const {messagess} = this.state;
         const contactMap = this.contactDict;
         var searchContacts = [{channel: {channelId: 0, users: ["System"]}, lastMessage: ""}];
-        contactsSearcheds.forEach(function(contactSearched) {
+        contacts.forEach(function(contactSearched) {
             const contactOld = contactMap[contactSearched.channelId];
             if(contactOld) {
                 const item = {channel: contactSearched, lastMessage: ""};
@@ -373,13 +373,6 @@ class MessageView extends React.Component {
         this.toggleAddContactView();
     }
 
-    onSearchKeyDown(e) {
-        if (e.key === 'Enter') {
-            let {keyword} = this.state;
-            SocketRequest.searchContacts(keyword, 0, 30);
-        }
-    }
-
     handleToggle = () => {
         const { toggle } = this.state;
         this.setState ({
@@ -442,7 +435,6 @@ class MessageView extends React.Component {
                                         type="text"
                                         value={keyword}
                                         onChange={this.onSearchChange.bind(this)}
-                                        onKeyDown={this.onSearchKeyDown.bind(this)}
                                         placeholder="Search contacts..." />
                                 </div>
                                 <ContactListView contacts={contacts} />

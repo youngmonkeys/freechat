@@ -11,7 +11,8 @@ public final class ChatCommands {
 	public static final String CHAT_CHANNEL_GET				= "7";
 	public static final String CHAT_CHANNEL_MESSAGE			= "8";
 	public static final String SEARCH_CONTACTS				= "9";
-	
+	public static final String SEARCH_CONTACTS_USERS		= "10";
+
 	private ChatCommands() {
 	}
 	
