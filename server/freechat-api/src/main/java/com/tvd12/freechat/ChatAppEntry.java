@@ -36,7 +36,7 @@ public class ChatAppEntry extends EzySimpleAppEntry {
 	@Override
 	protected void setupBeanContext(EzyAppContext context, EzyBeanContextBuilder builder) {
 		EzyAppSetting setting = context.getApp().getSetting();
-		String appConfigFile = setting.getConfigFile();
+		String appConfigFile = getConfigFile(setting);
 		ChatAppConfig appConfig = readAppConfig(appConfigFile);
 		String databaseName = appConfig.getDatabaseName(); 
 		EzyZoneContext zoneContext = context.getParent();
@@ -50,6 +50,10 @@ public class ChatAppEntry extends EzySimpleAppEntry {
 		builder.addSingleton("hazelcastInstance", hzInstance);
 		builder.addSingleton("mapTransactionFactory", mapTransactionFactory);
 		addAutoImplMongoRepo(builder, datastore);
+	}
+	
+	protected String getConfigFile(EzyAppSetting setting) {
+		return setting.getConfigFile();
 	}
 	
 	public void start() throws Exception {

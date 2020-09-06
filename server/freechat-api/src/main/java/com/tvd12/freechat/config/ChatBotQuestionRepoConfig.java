@@ -1,5 +1,6 @@
 package com.tvd12.freechat.config;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -26,6 +27,10 @@ public class ChatBotQuestionRepoConfig {
 		EzyAppSetting setting = appContext.getApp().getSetting();
 		String appLocation = setting.getLocation();
 		Path path = Paths.get(appLocation, "config", fileName);
+		if(!Files.exists(path))
+			path = Paths.get("freechat-entry/config/questions.txt");
+		if(!Files.exists(path))
+			path = Paths.get("../freechat-entry/config/questions.txt");
 		ChatBotQuestionRepo repo = new ChatBotQuestionRepoFileSystem(path);
 		return repo;
 	}

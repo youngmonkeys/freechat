@@ -48,8 +48,8 @@ public class ChatPluginEntry extends EzySimplePluginEntry {
 	@Override
 	protected void setupBeanContext(EzyPluginContext context, EzyBeanContextBuilder builder) {
 		EzyPluginSetting setting = context.getPlugin().getSetting();
-		String pluginPath = setting.getLocation();
-		String pluginConfigFile = setting.getConfigFile();
+		String pluginPath = getPluginPath(setting);
+		String pluginConfigFile = getConfigFile(setting);
 		ChatPluginConfig pluginConfig = readPluginConfig(pluginConfigFile);
 		String databaseName = pluginConfig.getDatabaseName();
 		String mongoConfigFile = pluginConfig.getMongodbConfigFile();
@@ -71,7 +71,14 @@ public class ChatPluginEntry extends EzySimplePluginEntry {
 		zoneContext.setProperty(MongoClient.class, mongoClient);
 		zoneContext.setProperty(HazelcastInstance.class, hzInstance);
 		zoneContext.setProperty(EzyMapTransactionFactory.class, mapTransactionFactory);
-		
+	}
+	
+	protected String getPluginPath(EzyPluginSetting setting) {
+		return setting.getLocation();
+	}
+	
+	protected String getConfigFile(EzyPluginSetting setting) {
+		return setting.getConfigFile();
 	}
 
 	@Override
