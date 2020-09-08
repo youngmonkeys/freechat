@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import com.tvd12.ezyfoxserver.constant.EzyEventType;
 import com.tvd12.ezyfoxserver.embedded.EzyEmbeddedServer;
 import com.tvd12.ezyfoxserver.ext.EzyAppEntry;
 import com.tvd12.ezyfoxserver.ext.EzyPluginEntry;
@@ -23,6 +24,7 @@ public class FreechatStartup {
 		
 		EzyPluginSettingBuilder pluginSettingBuilder = new EzyPluginSettingBuilder()
 				.name("freechat")
+				.addListenEvent(EzyEventType.USER_LOGIN)
 				.entryLoader(DecoratedPluginEntryLoader.class);
 		
 		EzyAppSettingBuilder appSettingBuilder = new EzyAppSettingBuilder()
