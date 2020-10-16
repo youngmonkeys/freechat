@@ -366,7 +366,6 @@ class MessageView extends React.Component {
                         .then(response => {
                             var status = response.status;
                             if (status === 200) {
-                                console.log(response.data);
                                 this.setState({
                                     message: response.data,
                                     selectedFile: null
