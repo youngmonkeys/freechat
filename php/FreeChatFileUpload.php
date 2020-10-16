@@ -2,10 +2,7 @@
 include('FreeChatDBConnection.php');
 include('FreeChatLogger.php');
 include('FreeChatHttpCode.php');
-include('FreeChatConfig.php');
-
 header('Access-Control-Allow-Origin: *');
-
 class FreeChatFileUpload {
     private $db;
     private $token;
