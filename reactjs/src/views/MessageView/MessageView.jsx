@@ -4,6 +4,7 @@ import Mvc from 'mvc-es6';
 import AddContactView from './AddContactView';
 import SocketProxy from '../../socket/SocketProxy';
 import SocketRequest from '../../socket/SocketRequest';
+import axios from 'axios';
 
 class MessageItemView extends React.Component {
     constructor(props) {
@@ -226,6 +227,7 @@ class MessageView extends React.Component {
             targetContact : 0,
             messagess : {[0] : [{value: "message 1st", reply: false}, {value: "message 2nd", reply: true}]},
             toggle: false,
+            selectedFile: null,
         };
         this.contactDict = {};
         const {contacts} = this.state;
@@ -277,6 +279,24 @@ class MessageView extends React.Component {
         SocketRequest.searchContacts(keyword, 0, 30);
     }
 
+    attachFile(e) {
+        $('#file-input').trigger('click');
+    }
+
+    onInputClick(event) {
+        event.target.value = ''
+    }
+
+    onFileChange(e) {
+        var selectedFile = e.target.files[0];
+        if (selectedFile) {
+            this.setState({
+                selectedFile: selectedFile,
+                message: selectedFile.name,
+            });
+        }
+    }
+
     componentWillUnmount() {
         this.chatController.removeAllViews();
         this.messageController.removeAllViews();
@@ -324,10 +344,46 @@ class MessageView extends React.Component {
         console.log('change contact, now target: ' + newTartget);
     }
 
-    addAndSendMessage(e) {
-        if (e.key === 'Enter') {
-            var message = this.state.message;
-            console.log("message input = " + message);
+    buildFormData() {
+        let mvc = Mvc.getInstance();
+        const formData = new FormData();
+        formData.append(
+            "image",
+            this.state.selectedFile,
+            this.state.selectedFile.name,
+        );
+        formData.append("token", mvc.models.token);
+        return formData;
+    };
+
+    doAddAndSendMessage(e) {
+        if (e.key === 'Enter' || e.nativeEvent.type === 'click') {
+            if (this.state.selectedFile) {
+                var fileSize = this.state.selectedFile.size;
+                if (fileSize > 0) {
+                    var formData = this.buildFormData();
+                    axios.post("http://localhost/FreeChatFileUpload.php", formData)
+                        .then(response => {
+                            var status = response.status;
+                            if (status === 200) {
+                                console.log(response.data);
+                                this.setState({
+                                    message: response.data,
+                                    selectedFile: null
+                                });
+                                this.addAndSendMessage();
+                            }
+                        });
+                    return;
+                }
+            }
+            this.addAndSendMessage();
+        }
+    }
+
+    addAndSendMessage() {
+        var message = this.state.message;
+        if (message) {
             this.setState({message : ""});
             this.addSentMessage({value: message, reply: false});
             this.sendMessage(message);
@@ -457,11 +513,20 @@ class MessageView extends React.Component {
                                         value={message}  
                                         placeholder="Write your message..." 
                                         onChange={this.onMessageChange.bind(this)}
-                                        onKeyDown={this.addAndSendMessage.bind(this)}  /> 
-                                    <i className="icon-attachment attachment" aria-hidden="true"></i>
-                                    <button className="submit" 
-                                        id="buttonSendMessage" 
-                                        onClick={this.addAndSendMessage.bind(this)}>
+                                        onKeyDown={this.doAddAndSendMessage.bind(this)}  />
+
+                                    <i id="file-i"
+                                       className="icon-attachment attachment"
+                                       aria-hidden="true" onClick={this.attachFile}/>
+                                    <input id="file-input"
+                                           type="file"
+                                           style={{display: 'none' }}
+                                           onChange={this.onFileChange.bind(this)}
+                                           onClick={this.onInputClick.bind(this)}/>
+
+                                    <button className="submit"
+                                        id="buttonSendMessage"
+                                        onClick={this.doAddAndSendMessage.bind(this)}>
                                         <i className="icon-paperplane" aria-hidden="true"></i>
                                     </button>
                                 </div>

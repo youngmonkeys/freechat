@@ -1,8 +1,5 @@
 package com.tvd12.freechat.plugin.controller;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.core.annotation.EzyServerEventHandler;
@@ -15,10 +12,14 @@ import com.tvd12.ezyfoxserver.event.EzyUserLoginEvent;
 import com.tvd12.ezyfoxserver.exception.EzyLoginErrorException;
 import com.tvd12.freechat.common.data.ChatNewUser;
 import com.tvd12.freechat.common.data.ChatUser;
+import com.tvd12.freechat.common.data.ChatUserToken;
 import com.tvd12.freechat.common.service.ChatUserService;
-
+import com.tvd12.freechat.common.service.ChatUserTokenService;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 
 @Getter
 @Setter
@@ -29,6 +30,9 @@ public class ChatUserLoginController
 
 	@EzyAutoBind
 	private ChatUserService userService;
+
+	@EzyAutoBind
+	private ChatUserTokenService userTokenService;
 	
 	@Override
 	public void handle(EzyPluginContext ctx, EzyUserLoginEvent event) {
@@ -46,10 +50,12 @@ public class ChatUserLoginController
 			if(!userData.getPassword().equals(password))
 				throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
 		}
-		
+
+		saveUserToken(username, event);
+
 		event.setStreamingEnable(true);
 		event.setUserProperty("dataId", userData.getId());
-		
+
 		logger.info("username and password match, accept user: {}", event.getUsername());
 	}
 
@@ -82,5 +88,13 @@ public class ChatUserLoginController
 		catch (Exception e) {
 			throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
 		}
+	}
+
+	private void saveUserToken(String username, EzyUserLoginEvent event) {
+		ChatUserToken userToken = new ChatUserToken();
+		userToken.setUser(username);
+		String token = event.getSession().getToken();
+		userToken.setToken(token);
+		userTokenService.save(userToken);
 	}
 }

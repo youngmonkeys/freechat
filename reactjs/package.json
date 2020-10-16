@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.20.0",
     "create-react-class": "^15.6.3",
     "ezyfox-es6-client": "^1.1.5",
     "jquery": "^3.4.1",

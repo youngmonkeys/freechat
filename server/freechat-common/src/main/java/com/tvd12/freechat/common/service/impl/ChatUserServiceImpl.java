@@ -1,8 +1,5 @@
 package com.tvd12.freechat.common.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.function.EzyApply;
@@ -12,8 +9,9 @@ import com.tvd12.freechat.common.data.ChatUser;
 import com.tvd12.freechat.common.repo.ChatUserRepo;
 import com.tvd12.freechat.common.service.ChatUserService;
 import com.tvd12.freechat.common.service.HazelcastMapHasMaxIdService;
-
 import lombok.Setter;
+
+import java.util.List;
 
 @Setter
 @EzySingleton("userService")
@@ -38,9 +36,6 @@ public class ChatUserServiceImpl
 	public ChatNewUser createUser(String username, EzyApply<ChatUser> applier) {
 		ChatUser user = getUser(username);
 		if(user != null) 
-			return new ChatNewUser(user, false);
-		ChatUser cuser = getUser(username);
-		if(cuser != null) 
 			return new ChatNewUser(user, false);
 		ChatUser nuser = newUser(username);
 		applier.apply(nuser);

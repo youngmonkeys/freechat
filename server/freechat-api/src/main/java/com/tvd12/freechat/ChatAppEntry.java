@@ -104,7 +104,8 @@ public class ChatAppEntry extends EzySimpleAppEntry {
 
 	private Datastore newDatastore(MongoClient mongoClient, String databaseName) {
 		return EzyDataStoreBuilder.dataStoreBuilder()
-				.mongoClient(mongoClient).databaseName(databaseName)
+				.mongoClient(mongoClient)
+				.databaseName(databaseName)
 				.scan("com.tvd12.freechat.data")
 				.build();
 	}

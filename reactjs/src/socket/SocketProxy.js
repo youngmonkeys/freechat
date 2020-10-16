@@ -23,8 +23,14 @@ class SocketProxy {
             return ["freechat", username, password, []];
         };
 
+        handshakeHandler.postHandle = function(handshakeDataResponse) {
+            let token = handshakeDataResponse[1];
+            if (token)
+                models.token = token;
+        };
+
         let loginSuccessHandler = new Ezy.LoginSuccessHandler();
-        loginSuccessHandler.handleLoginSuccess = function() {
+        loginSuccessHandler.handleLoginSuccess = function(loginResponse) {
             let accessAppRequest = ["freechat", []];
             this.client.sendRequest(Ezy.Command.APP_ACCESS, accessAppRequest);
         };
