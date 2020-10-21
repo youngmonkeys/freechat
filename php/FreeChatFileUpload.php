@@ -54,7 +54,7 @@ class FreeChatFileUpload {
     public function buildResponse($user, $file_name, $file_ext) {
         $fileName = $user . $file_name . (new DateTime)->getTimestamp();
         $fileNameEnCode = hash("sha256", $fileName);
-        $response = FreeChatConfig::$path . $fileNameEnCode . ".$file_ext";
+        $response = FreeChatConfig::getInstance()->getAppRepoPathFile() . $fileNameEnCode . ".$file_ext";
         return $response;
     }
 }

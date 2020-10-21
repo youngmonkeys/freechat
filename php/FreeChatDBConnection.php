@@ -9,11 +9,11 @@ class FreeChatDBConnection {
     private static $_instance;
 
     private function __construct() {
-        $this->_db = new Client(FreeChatConfig::$host, [
-            'username' => FreeChatConfig::$username,
-            'password' => FreeChatConfig::$password,
+        $this->_db = new Client(FreeChatConfig::getInstance()->getDbHost(), [
+            'username' => FreeChatConfig::getInstance()->getDbUsername(),
+            'password' => FreeChatConfig::getInstance()->getDbPassword(),
         ]);
-        $this->_collection = $this->_db->selectCollection(FreeChatConfig::$databaseName, FreeChatConfig::$collectionName);
+        $this->_collection = $this->_db->selectCollection(FreeChatConfig::getInstance()->getDbDatabaseName(), FreeChatConfig::getInstance()->getDbCollectionName());
     }
 
     public static function getInstance() {
@@ -28,7 +28,7 @@ class FreeChatDBConnection {
         $tokenUsers = $this->_collection->find($query);
         foreach ($tokenUsers as $tokenUser) {
             $user = $tokenUser->user;
-            file_put_contents(FreeChatConfig::$logInfo.'log_' . date("j.n.Y") . '.log', 'query db get user by token: ' . $user . "\n", FILE_APPEND);
+            file_put_contents(FreeChatConfig::getInstance()->getAppLogInfo().'log_' . date("j.n.Y") . '.log', 'query db get user by token: ' . $user . "\n", FILE_APPEND);
             if ($user)
                 return $user;
         };
