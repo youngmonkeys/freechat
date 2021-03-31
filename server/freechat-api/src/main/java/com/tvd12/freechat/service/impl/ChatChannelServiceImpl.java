@@ -6,7 +6,7 @@ import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.freechat.common.service.ChatMaxIdService;
 import com.tvd12.freechat.constant.ChatEntities;
-import com.tvd12.freechat.data.ChatChannel;
+import com.tvd12.freechat.entity.ChatChannel;
 import com.tvd12.freechat.repo.ChatChannelRepo;
 import com.tvd12.freechat.service.ChatChannelService;
 

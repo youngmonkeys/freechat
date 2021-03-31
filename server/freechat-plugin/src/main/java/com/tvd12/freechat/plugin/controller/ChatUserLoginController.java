@@ -1,20 +1,17 @@
 package com.tvd12.freechat.plugin.controller;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.core.annotation.EzyServerEventHandler;
 import com.tvd12.ezyfox.io.EzyStrings;
+import com.tvd12.ezyfox.sercurity.EzySHA256;
 import com.tvd12.ezyfoxserver.constant.EzyEventNames;
 import com.tvd12.ezyfoxserver.constant.EzyLoginError;
 import com.tvd12.ezyfoxserver.context.EzyPluginContext;
 import com.tvd12.ezyfoxserver.controller.EzyAbstractPluginEventController;
 import com.tvd12.ezyfoxserver.event.EzyUserLoginEvent;
 import com.tvd12.ezyfoxserver.exception.EzyLoginErrorException;
-import com.tvd12.freechat.common.data.ChatNewUser;
-import com.tvd12.freechat.common.data.ChatUser;
+import com.tvd12.freechat.common.entity.ChatUser;
 import com.tvd12.freechat.common.service.ChatUserService;
 
 import lombok.Getter;
@@ -39,16 +36,17 @@ public class ChatUserLoginController
 		String username = event.getUsername();
 		String password = encodePassword(event.getPassword());
 		
-		ChatNewUser newUser = getUser(username, password);
-		ChatUser userData = newUser.getUser();
+		ChatUser user = userService.getUser(username);
+		if(user == null)
+			user = userService.createUser(username, password);
 		
-		if(!newUser.isNewUser()) {
-			if(!userData.getPassword().equals(password))
-				throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
-		}
+		if(!user.getPassword().equals(password))
+			throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
 		
-		event.setStreamingEnable(true);
-		event.setUserProperty("dataId", userData.getId());
+		user.setOnline(true);
+		userService.saveUser(user);
+		
+		event.setUserProperty("dataId", user.getId());
 		
 		logger.info("username and password match, accept user: {}", event.getUsername());
 	}
@@ -62,25 +60,7 @@ public class ChatUserLoginController
 		
 	}
 	
-	private ChatNewUser getUser(String username, String password) {
-		ChatNewUser newUser = userService.createUser(
-				username, 
-				user -> {
-					user.setPassword(password);
-					user.setOnline(true);
-				}
-		);
-		return newUser;
-	}
-	
 	private String encodePassword(String password) {
-		try {
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			byte[] encoded = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-			return new String(encoded, StandardCharsets.UTF_8);
-		}
-		catch (Exception e) {
-			throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
-		}
+		return EzySHA256.cryptUtfToLowercase(password);
 	}
 }

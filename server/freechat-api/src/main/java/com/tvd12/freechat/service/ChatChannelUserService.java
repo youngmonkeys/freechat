@@ -2,8 +2,8 @@ package com.tvd12.freechat.service;
 
 import java.util.List;
 
-import com.tvd12.freechat.data.ChatChannelUser;
 import com.tvd12.freechat.data.ChatChannelUsers;
+import com.tvd12.freechat.entity.ChatChannelUser;
 
 public interface ChatChannelUserService {
 

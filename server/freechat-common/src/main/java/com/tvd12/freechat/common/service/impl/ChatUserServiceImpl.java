@@ -1,72 +1,57 @@
 package com.tvd12.freechat.common.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
-import com.tvd12.ezyfox.function.EzyApply;
+import com.tvd12.ezyfox.util.EzyNext;
 import com.tvd12.freechat.common.constant.ChatEntities;
-import com.tvd12.freechat.common.data.ChatNewUser;
-import com.tvd12.freechat.common.data.ChatUser;
+import com.tvd12.freechat.common.entity.ChatUser;
 import com.tvd12.freechat.common.repo.ChatUserRepo;
+import com.tvd12.freechat.common.service.ChatMaxIdService;
 import com.tvd12.freechat.common.service.ChatUserService;
-import com.tvd12.freechat.common.service.HazelcastMapHasMaxIdService;
 
 import lombok.Setter;
 
 @Setter
 @EzySingleton("userService")
-public class ChatUserServiceImpl 
-		extends HazelcastMapHasMaxIdService<String, ChatUser> 
-		implements ChatUserService {
+public class ChatUserServiceImpl implements ChatUserService {
 
 	@EzyAutoBind
 	private ChatUserRepo userRepo;
 	
+	@EzyAutoBind
+	private ChatMaxIdService maxIdService;
+	
 	@Override
 	public void saveUser(ChatUser user) {
-		set(user.getUsername(), user);
+		userRepo.save(user);
 	}
 	
 	@Override
 	public ChatUser getUser(String username) {
-		return get(username);
+		return userRepo.findByField("username", username);
 	}
 	
 	@Override
-	public ChatNewUser createUser(String username, EzyApply<ChatUser> applier) {
-		ChatUser user = getUser(username);
-		if(user != null) 
-			return new ChatNewUser(user, false);
-		ChatUser cuser = getUser(username);
-		if(cuser != null) 
-			return new ChatNewUser(user, false);
-		ChatUser nuser = newUser(username);
-		applier.apply(nuser);
-		map.set(username, nuser);
-		return new ChatNewUser(nuser, true);
-	}
-	
-	@Override
-	public List<ChatUser> getSearchUsers(String keyword, String owner, int skip, int limit) {
-		return userRepo.findByUsername(keyword, owner, skip, limit);
-	}
-	
-	@Override
-	public List<ChatUser> getSuggestionUsers(String owner, int skip, int limit) {
-		return userRepo.findSuggestionUsers(owner, skip, limit);
-	}
-	
-	private ChatUser newUser(String username) {
+	public ChatUser createUser(String username, String password) {
 		ChatUser user = new ChatUser();
-		user.setId(newId(ChatEntities.CHAT_USER));
+		user.setId(maxIdService.incrementAndGet(ChatEntities.CHAT_USER));
 		user.setUsername(username);
+		user.setPassword(password);
+		userRepo.save(user);
 		return user;
 	}
 	
 	@Override
-	protected String getMapName() {
-		return ChatEntities.CHAT_USER;
+	public List<ChatUser> getSearchUsers(String keyword, String owner, int skip, int limit) {
+		String regex = ".*" + keyword + ".*";
+		return userRepo.findByUsernameRegex(keyword, regex, EzyNext.fromSkipLimit(skip, limit));
 	}
+	
+	@Override
+	public List<ChatUser> getSuggestionUsers(String owner, int skip, int limit) {
+		return userRepo.findSuggestionUsers(owner, EzyNext.fromSkipLimit(skip, limit));
+	}
+	
 }

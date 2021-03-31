@@ -2,18 +2,24 @@ package com.tvd12.freechat.repo;
 
 import java.util.List;
 
-import com.tvd12.freechat.data.ChatChannelUser;
+import com.tvd12.ezydata.database.annotation.EzyQuery;
+import com.tvd12.ezydata.mongodb.EzyMongoRepository;
+import com.tvd12.ezyfox.database.annotation.EzyRepository;
+import com.tvd12.ezyfox.util.Next;
+import com.tvd12.freechat.entity.ChatChannelUser;
+import com.tvd12.freechat.entity.ChatChannelUserId;
 
-public interface ChatChannelUserRepo {
+@EzyRepository("channelUserRepo")
+public interface ChatChannelUserRepo 
+		extends EzyMongoRepository<ChatChannelUserId, ChatChannelUser> {
 
-	void save(List<ChatChannelUser> entities);
-	
-	List<ChatChannelUser> findByUser(String user, int skip, int limit);
+	@EzyQuery("{'_id.user': ?0}")
+	List<ChatChannelUser> findByUser(String user, Next next);
 
+	@EzyQuery("{$and: [{'_id.channelId': ?0}, {'_id.user': {$ne: ?1}}]}")
 	List<ChatChannelUser> findByChannelId(long channelId, String user);
 	
-	ChatChannelUser findByChannelIdAndUser(long channelId, String user);
-	
+	@EzyQuery("{$and: [{'_id.channelId': {$in: ?0}}, {'_id.user': {$ne: ?1}}]}")
 	List<ChatChannelUser> findByChannelIds(List<Long> channelIds, String user);
 
 }

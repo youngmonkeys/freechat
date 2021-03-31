@@ -16,13 +16,13 @@ import com.tvd12.ezyfox.core.annotation.EzyClientRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
 import com.tvd12.ezyfox.io.EzyCollections;
 import com.tvd12.freechat.constant.ChatErrors;
-import com.tvd12.freechat.data.ChatChannel;
-import com.tvd12.freechat.data.ChatChannelUser;
-import com.tvd12.freechat.data.ChatChannelUserId;
 import com.tvd12.freechat.data.ChatChannelUsers;
-import com.tvd12.freechat.repo.ChatContactRepo;
+import com.tvd12.freechat.entity.ChatChannel;
+import com.tvd12.freechat.entity.ChatChannelUser;
+import com.tvd12.freechat.entity.ChatChannelUserId;
 import com.tvd12.freechat.service.ChatChannelService;
 import com.tvd12.freechat.service.ChatChannelUserService;
+import com.tvd12.freechat.service.ChatContactService;
 
 import lombok.Setter;
 
@@ -38,7 +38,7 @@ public class ChatAddContactsHandler
 	private Set<String> target;
 	
 	@EzyAutoBind
-	private ChatContactRepo contactRepo;
+	private ChatContactService contactService;
 	
 	@EzyAutoBind
 	private ChatChannelService channelService;
@@ -50,17 +50,17 @@ public class ChatAddContactsHandler
 	protected void execute() throws EzyBadRequestException {
 		if(target.size() > 30)
 			throw new EzyBadRequestException(ChatErrors.TOO_MANY_CONTACTS, "too many contacts");
-		int currentContactCount = contactRepo.countContact(user.getName());
+		int currentContactCount = contactService.getContactCount(user.getName());
 		int total = currentContactCount + target.size();
 		if(total > 30)
 			throw new EzyBadRequestException(ChatErrors.FULL_CONTACTS, "full contacts");
 
-		Set<String> prevContacts = contactRepo.getContactNames(user.getName(), 0, 30);
+		Set<String> prevContacts = contactService.getContactNames(user.getName(), 0, 30);
 		Set<String> targetFilter = filterContacts(target, prevContacts);
 		if (EzyCollections.isEmpty(targetFilter))
 			return;
 
-		Set<String> newContacts = contactRepo.addContacts(user.getName(), targetFilter);
+		Set<String> newContacts = contactService.addContacts(user.getName(), targetFilter);
 		List<ChatChannelUsers> channelUsers = addChannels(newContacts);
 		response(channelUsers);
 	}

@@ -2,9 +2,7 @@ package com.tvd12.freechat.common.service;
 
 import java.util.List;
 
-import com.tvd12.ezyfox.function.EzyApply;
-import com.tvd12.freechat.common.data.ChatNewUser;
-import com.tvd12.freechat.common.data.ChatUser;
+import com.tvd12.freechat.common.entity.ChatUser;
 
 public interface ChatUserService {
 
@@ -12,7 +10,7 @@ public interface ChatUserService {
 	
 	ChatUser getUser(String username);
 	
-	ChatNewUser createUser(String username, EzyApply<ChatUser> applier);
+	ChatUser createUser(String username, String password);
 
 	List<ChatUser> getSearchUsers(String keyword, String owner, int skip, int limit);
 	

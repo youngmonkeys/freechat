@@ -16,14 +16,14 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<core.version>1.1.3</core.version>
+		<ezy.version>1.1.4</ezy.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.tvd12</groupId>
 			<artifactId>ezyfox-server-core</artifactId>
-			<version>${core.version}</version>
+			<version>${ezy.version}</version>
 		</dependency>
 	</dependencies>
 	<profiles>

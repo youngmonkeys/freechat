@@ -15,7 +15,6 @@ import com.tvd12.ezyfox.core.annotation.EzyClientRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
 import com.tvd12.ezyfox.io.EzyCollections;
 import com.tvd12.ezyfox.io.EzyStrings;
-
 import com.tvd12.freechat.data.ChatChannelUsers;
 import com.tvd12.freechat.service.ChatChannelUserService;
 import lombok.Setter;

@@ -1,5 +1,6 @@
-package com.tvd12.freechat.data;
+package com.tvd12.freechat.entity;
 
+import com.tvd12.ezydata.database.annotation.EzyCollectionId;
 import com.tvd12.ezyfox.util.EzyEquals;
 import com.tvd12.ezyfox.util.EzyHashCodes;
 
@@ -12,6 +13,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@EzyCollectionId
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatContactId {

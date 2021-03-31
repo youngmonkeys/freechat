@@ -10,41 +10,61 @@ import com.tvd12.ezyfox.binding.annotation.EzyValue;
 import com.tvd12.ezyfox.core.annotation.EzyClientRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
 import com.tvd12.ezyfoxserver.entity.EzyUser;
+import com.tvd12.freechat.common.service.ChatMaxIdService;
 import com.tvd12.freechat.common.service.ChatUserService;
+import com.tvd12.freechat.constant.ChatEntities;
+import com.tvd12.freechat.entity.ChatMessage;
 import com.tvd12.freechat.service.ChatBotQuestionService;
+import com.tvd12.freechat.service.ChatMessageService;
 
 import lombok.Setter;
 
+@Setter
 @EzyPrototype
 @EzyClientRequestListener(CHAT_SYSTEM_MESSAGE)
 @EzyObjectBinding(write = false)
-@Setter
-public class ChatSystemMessageHandler 
+public class ChatBotMessageHandler 
 		extends ChatClientRequestHandler 
 		implements EzyDataBinding {
 
 	@EzyValue
 	private String message;
 	
+	@EzyValue
+	private String clientMessageId = "";
 	
 	@EzyAutoBind
 	private ChatUserService userService;
+
+	@EzyAutoBind
+	private ChatMaxIdService maxIdService;
+	
+	@EzyAutoBind
+	private ChatMessageService messageService;
 	
 	@EzyAutoBind
 	private ChatBotQuestionService chatBotQuestionService;
-
+	
 	@Override
 	protected void execute() throws EzyBadRequestException {
-		response(user);
+		String answer = chatBotQuestionService.randomQuestion();
+		messageService.save(new ChatMessage(
+			maxIdService.incrementAndGet(ChatEntities.CHAT_MESSAGE),
+			true, message, 0L, user.getName(), clientMessageId
+		));
+		messageService.save(new ChatMessage(
+			maxIdService.incrementAndGet(ChatEntities.CHAT_MESSAGE),
+			true, answer, 0L, "Bot", ""
+		));
+		response(user, answer);
 	}
 	
-	private void response(EzyUser user) {
-		String question = chatBotQuestionService.randomQuestion();
+	private void response(EzyUser user, String answer) {
 		responseFactory.newObjectResponse()
 			.command(CHAT_SYSTEM_MESSAGE)
 			.user(user)
-			.param("from", "System")
-			.param("message", question)
+			.param("from", "Bot")
+			.param("message", answer)
 			.param("channelId", 0)
 			.execute();
 	}

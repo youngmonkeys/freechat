@@ -10,8 +10,10 @@ import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.io.EzyLists;
 import com.tvd12.ezyfox.util.EzyHashMapSet;
 import com.tvd12.ezyfox.util.EzyMapSet;
-import com.tvd12.freechat.data.ChatChannelUser;
+import com.tvd12.ezyfox.util.Next;
 import com.tvd12.freechat.data.ChatChannelUsers;
+import com.tvd12.freechat.entity.ChatChannelUser;
+import com.tvd12.freechat.entity.ChatChannelUserId;
 import com.tvd12.freechat.repo.ChatChannelUserRepo;
 import com.tvd12.freechat.service.ChatChannelUserService;
 
@@ -31,7 +33,7 @@ public class ChatChannelUserServiceImpl implements ChatChannelUserService {
 	
 	@Override
 	public ChatChannelUser getChannelUser(long channelId, String user) {
-		return channelUserRepo.findByChannelIdAndUser(channelId, user);
+		return channelUserRepo.findById(new ChatChannelUserId(channelId, user));
 	}
 	
 	@Override
@@ -43,7 +45,8 @@ public class ChatChannelUserServiceImpl implements ChatChannelUserService {
 	
 	@Override
 	public List<Long> getChannelsIdOfUser(String user, int skip, int limit) {
-		List<ChatChannelUser> list = channelUserRepo.findByUser(user, skip, limit);
+		Next next = Next.fromSkipLimit(skip, limit);
+		List<ChatChannelUser> list = channelUserRepo.findByUser(user, next);
 		List<Long> answer = EzyLists.newArrayList(list, i -> i.getId().getChannelId());
 		return answer;
 	}

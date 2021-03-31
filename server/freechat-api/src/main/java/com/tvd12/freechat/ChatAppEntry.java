@@ -1,25 +1,18 @@
 package com.tvd12.freechat;
 
-import static com.tvd12.ezyfox.util.EzyAutoImplAnnotations.getBeanName;
-
 import java.util.Map;
+import java.util.Properties;
 
-import com.hazelcast.core.HazelcastInstance;
 import com.mongodb.MongoClient;
-import com.tvd12.ezydata.hazelcast.factory.EzyMapTransactionFactory;
-import com.tvd12.ezydata.morphia.EzyDataStoreBuilder;
-import com.tvd12.ezydata.morphia.bean.EzyMorphiaRepositoriesImplementer;
+import com.tvd12.ezydata.database.EzyDatabaseContext;
+import com.tvd12.ezydata.mongodb.EzyMongoDatabaseContextBuilder;
+import com.tvd12.ezydata.mongodb.loader.EzyMongoClientLoader;
 import com.tvd12.ezyfox.bean.EzyBeanContextBuilder;
 import com.tvd12.ezyfoxserver.context.EzyAppContext;
 import com.tvd12.ezyfoxserver.context.EzyZoneContext;
 import com.tvd12.ezyfoxserver.setting.EzyAppSetting;
 import com.tvd12.ezyfoxserver.support.entry.EzySimpleAppEntry;
 import com.tvd12.ezyfoxserver.support.factory.EzyAppResponseFactory;
-import com.tvd12.freechat.config.ChatAppConfig;
-import com.tvd12.properties.file.mapping.PropertiesMapper;
-import com.tvd12.properties.file.reader.BaseFileReader;
-
-import dev.morphia.Datastore;
 
 public class ChatAppEntry extends EzySimpleAppEntry {
 
@@ -35,21 +28,16 @@ public class ChatAppEntry extends EzySimpleAppEntry {
 	
 	@Override
 	protected void setupBeanContext(EzyAppContext context, EzyBeanContextBuilder builder) {
-		EzyAppSetting setting = context.getApp().getSetting();
-		String appConfigFile = getConfigFile(setting);
-		ChatAppConfig appConfig = readAppConfig(appConfigFile);
-		String databaseName = appConfig.getDatabaseName(); 
 		EzyZoneContext zoneContext = context.getParent();
+		Properties mongoProperties = zoneContext.getProperty("mongoProperties");
 		MongoClient mongoClient = zoneContext.get(MongoClient.class);
-		HazelcastInstance hzInstance = zoneContext.get(HazelcastInstance.class);
-		EzyMapTransactionFactory mapTransactionFactory = zoneContext.get(EzyMapTransactionFactory.class);
-		Datastore datastore = newDatastore(mongoClient, databaseName);
-		builder.addSingleton("mongoClient", mongoClient);
-		builder.addSingleton("datastore", datastore);
-		builder.addSingleton("hzInstance", hzInstance);
-		builder.addSingleton("hazelcastInstance", hzInstance);
-		builder.addSingleton("mapTransactionFactory", mapTransactionFactory);
-		addAutoImplMongoRepo(builder, datastore);
+		EzyDatabaseContext databaseContext = newDatabaseContext(
+				mongoClient,
+				mongoProperties
+		);
+        Map<String, Object> repos = databaseContext.getRepositoriesByName();
+        for(String repoName : repos.keySet())
+        	builder.addSingleton(repoName, repos.get(repoName));
 	}
 	
 	protected String getConfigFile(EzyAppSetting setting) {
@@ -89,33 +77,18 @@ public class ChatAppEntry extends EzySimpleAppEntry {
 		};
 	}
 	
-	private void addAutoImplMongoRepo(EzyBeanContextBuilder builder, Datastore datastore) {
-		Map<Class<?>, Object> additionalRepo = implementMongoRepo(datastore);
-		for (Class<?> repoType : additionalRepo.keySet()) {
-			builder.addSingleton(getBeanName(repoType), additionalRepo.get(repoType));
-		}
-	}
-
-	private Map<Class<?>, Object> implementMongoRepo(Datastore datastore) {
-		return new EzyMorphiaRepositoriesImplementer()
-				.scan("com.tvd12.freechat.repo")
-				.implement(datastore);
-	}
-
-	private Datastore newDatastore(MongoClient mongoClient, String databaseName) {
-		return EzyDataStoreBuilder.dataStoreBuilder()
-				.mongoClient(mongoClient).databaseName(databaseName)
-				.scan("com.tvd12.freechat.data")
-				.build();
-	}
-	
-	private ChatAppConfig readAppConfig(String appConfigFile) {
-		return new PropertiesMapper()
-				.file(appConfigFile)
-				.context(getClass())
-				.clazz(ChatAppConfig.class)
-				.reader(new BaseFileReader())
-				.map();
-	}
-
+	private EzyDatabaseContext newDatabaseContext(
+			MongoClient mongoClient,
+			Properties properties) {
+		String databaseName = properties.getProperty(EzyMongoClientLoader.DATABASE);
+        return new EzyMongoDatabaseContextBuilder()
+                .properties(properties)
+                .mongoClient(mongoClient)
+                .databaseName(databaseName)
+                .scan("com.tvd12.freechat.common.entity")
+                .scan("com.tvd12.freechat.common.repo")
+                .scan("com.tvd12.freechat.entity")
+                .scan("com.tvd12.freechat.repo")
+                .build();
+    }
 }
