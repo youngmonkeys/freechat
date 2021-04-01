@@ -1,6 +1,7 @@
 package com.tvd12.freechat.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.tvd12.freechat.data.ChatChannelUsers;
 import com.tvd12.freechat.entity.ChatChannelUser;
@@ -18,5 +19,7 @@ public interface ChatChannelUserService {
 	List<ChatChannelUsers> getChannelsOfUser(String user, int skip, int limit);
 	
 	List<ChatChannelUsers> getChannelsOfUser(List<Long> channelIds, String user);
+	
+	Set<String> getContactedUsers(String user, int skip, int limit);
 	
 }

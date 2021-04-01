@@ -1,6 +1,7 @@
 package com.tvd12.freechat.common.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
@@ -44,14 +45,17 @@ public class ChatUserServiceImpl implements ChatUserService {
 	}
 	
 	@Override
-	public List<ChatUser> getSearchUsers(String keyword, String owner, int skip, int limit) {
+	public List<ChatUser> getSearchUsers(
+			Set<String> excludeUsers,
+			String keyword, int skip, int limit) {
 		String regex = ".*" + keyword + ".*";
-		return userRepo.findByUsernameRegex(keyword, regex, EzyNext.fromSkipLimit(skip, limit));
+		return userRepo.findByUsernameRegex(
+				excludeUsers, regex, EzyNext.fromSkipLimit(skip, limit));
 	}
 	
 	@Override
-	public List<ChatUser> getSuggestionUsers(String owner, int skip, int limit) {
-		return userRepo.findSuggestionUsers(owner, EzyNext.fromSkipLimit(skip, limit));
+	public List<ChatUser> getSuggestionUsers(Set<String> excludeUsers, int skip, int limit) {
+		return userRepo.findSuggestionUsers(excludeUsers, EzyNext.fromSkipLimit(skip, limit));
 	}
 	
 }

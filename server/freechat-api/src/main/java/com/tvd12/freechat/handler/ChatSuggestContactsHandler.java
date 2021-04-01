@@ -3,6 +3,7 @@ package com.tvd12.freechat.handler;
 import static com.tvd12.freechat.constant.ChatCommands.SUGGEST_CONTACTS;
 
 import java.util.List;
+import java.util.Set;
 
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
@@ -13,6 +14,7 @@ import com.tvd12.ezyfox.io.EzyLists;
 import com.tvd12.freechat.common.entity.ChatUser;
 import com.tvd12.freechat.common.service.ChatUserService;
 import com.tvd12.freechat.data.ChatContactUser;
+import com.tvd12.freechat.service.ChatChannelUserService;
 
 import lombok.Setter;
 
@@ -26,9 +28,13 @@ public class ChatSuggestContactsHandler
 	@EzyAutoBind
 	private ChatUserService userService;
 	
+	@EzyAutoBind
+	private ChatChannelUserService channelUserService;
+	
 	@Override
 	protected void execute() throws EzyBadRequestException {
-		List<ChatUser> users = userService.getSuggestionUsers(user.getName(), 0, 30);
+		Set<String> excludeUsers = channelUserService.getContactedUsers(user.getName(), 0, 30);
+		List<ChatUser> users = userService.getSuggestionUsers(excludeUsers, 0, 30);
 		response(users);
 	}
 	

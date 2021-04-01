@@ -14,10 +14,12 @@ import com.tvd12.ezyfox.io.EzyStrings;
 import com.tvd12.freechat.common.entity.ChatUser;
 import com.tvd12.freechat.common.service.ChatUserService;
 import com.tvd12.freechat.data.ChatContactUser;
+import com.tvd12.freechat.service.ChatChannelUserService;
 
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Setter
 @EzyPrototype
@@ -33,6 +35,9 @@ public class ChatSearchContactsUsersHandler
 
 	@EzyAutoBind
 	private ChatUserService userService;
+	
+	@EzyAutoBind
+	private ChatChannelUserService channelUserService;
 
 	@Override
 	protected void preExecute() {
@@ -47,7 +52,8 @@ public class ChatSearchContactsUsersHandler
 			response(Lists.newArrayList());
 			return;
 		}
-		List<ChatUser> users = userService.getSearchUsers(keyword, user.getName(), skip, limit);
+		Set<String> excludeUsers = channelUserService.getContactedUsers(user.getName(), 0, 30);
+		List<ChatUser> users = userService.getSearchUsers(excludeUsers, keyword, skip, limit);
 		response(users);
 	}
 
