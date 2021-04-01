@@ -221,7 +221,7 @@ class MessageView extends React.Component {
             message: "",
             keyword: "",
             contacts : [
-                {channel: {channelId: 0, users: ["System"]}, lastMessage: ""}
+                {channel: {channelId: 0, users: ["Bot"]}, lastMessage: ""}
             ],
             targetContact : 0,
             messagess : {[0] : [{value: "message 1st", reply: false}, {value: "message 2nd", reply: true}]},
@@ -241,7 +241,7 @@ class MessageView extends React.Component {
     componentDidMount() {
         this.messageController.addDefaultView("systemMessage", (msg) => {
             console.log("view add rev system message now");
-            this.addReceivedSystemMessage(msg);
+            this.addReceivedBotMessage(msg);
         });
 
         this.messageController.addDefaultView("userMessage", (msg) => {
@@ -304,7 +304,7 @@ class MessageView extends React.Component {
     searchContacts(contacts) {
         const {messagess} = this.state;
         const contactMap = this.contactDict;
-        var searchContacts = [{channel: {channelId: 0, users: ["System"]}, lastMessage: ""}];
+        var searchContacts = [{channel: {channelId: 0, users: ["Bot"]}, lastMessage: ""}];
         contacts.forEach(function(contactSearched) {
             const contactOld = contactMap[contactSearched.channelId];
             if(contactOld) {
@@ -346,7 +346,7 @@ class MessageView extends React.Component {
         this.setState({ messagess: messagess });
     }
 
-    addReceivedSystemMessage(msg) {
+    addReceivedBotMessage(msg) {
         const { contacts, messagess } = this.state;
         const messages = messagess[0];
         const contact = this.contactDict[0];
