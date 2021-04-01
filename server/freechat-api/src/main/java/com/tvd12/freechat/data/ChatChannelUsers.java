@@ -22,4 +22,8 @@ public class ChatChannelUsers {
 		this(channelId, Sets.newHashSet(user));
 	}
 	
+	public ChatChannelUsers clone(String user) {
+		return new ChatChannelUsers(channelId, user);
+	}
+	
 }

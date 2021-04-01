@@ -3,6 +3,7 @@ package com.tvd12.freechat.handler;
 import static com.tvd12.freechat.constant.ChatCommands.ADD_CONTACTS;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -96,12 +97,19 @@ public class ChatAddContactsHandler
 		return answer;
 	}
 	
-	private void response(List<ChatChannelUsers> newContacts) {
+	private void response(List<ChatChannelUsers> channelUsers) {
 		responseFactory.newArrayResponse()
 			.command(ADD_CONTACTS)
-			.data(newContacts)
+			.data(channelUsers)
 			.user(user)
 			.execute();
+		for(ChatChannelUsers chanelUser : channelUsers) {
+			responseFactory.newArrayResponse()
+			.command(ADD_CONTACTS)
+			.data(Arrays.asList(chanelUser.clone(user.getName())))
+			.usernames(chanelUser.getUsers())
+			.execute();
+		}
 	}
 	
 }
