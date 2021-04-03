@@ -15,8 +15,8 @@ class LoginView extends React.Component {
         this.connection = models.connection;
         if(!this.connection) {
             this.connection = {
-                username : "dungtv",
-                password : "123456"
+                username : "",
+                password : ""
             };
             models.connection = this.connection;
         }

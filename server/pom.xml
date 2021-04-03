@@ -56,6 +56,6 @@
 	 	<module>freechat-api</module>
 		<module>freechat-entry</module>
 		<module>freechat-common</module>
-    <module>freechat-startup</module>
+    	<module>freechat-startup</module>
   </modules>
 </project>
