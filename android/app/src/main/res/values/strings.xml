@@ -3,13 +3,15 @@
     <string name="username">username</string>
     <string name="password">password</string>
     <string name="Login">Login</string>
-    <string name="default_username"></string>
-    <string name="default_password"></string>
+    <string name="default_username">example</string>
+    <string name="default_password">123456</string>
     <string name="young_monkeys">young monkeys</string>
     <string name="hello_world">hello world</string>
     <string name="avatar">avatar</string>
-    <string name="enter_message">Enter message</string>
+    <string name="enter_message">enter message</string>
     <string name="enter_keyword">Enter keyword</string>
+    <string name="Enter_message">enter message</string>
     <string name="Send">Send</string>
     <string name="send">send</string>
+    <string name="authentication_failed">Wrong username or password</string>
 </resources>

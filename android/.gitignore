@@ -1,14 +1,14 @@
 *.iml
 .gradle
 /local.properties
+.idea/
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
 /build
 /captures
 .externalNativeBuild
-gradlew
 gradle/
-.idea/
+gradlew
 gradlew.bat
-gradle.properties
+app/proguard-rules.pro
