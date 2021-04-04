@@ -5,16 +5,21 @@ a socket chat application
 
 Free Chat is a socket chat application. It uses #ezyfox-server and it's client SDKs
 
-# Documentation
-
-[https://youngmonkeys.org/freechat/](https://youngmonkeys.org/asset/freechat/)
-
 # It supports
 
 - ReactJS
 - Android Java
 - Android Kotlin (developing)
 - iOS swift (developing)
+
+# Documentation
+
+[https://youngmonkeys.org/freechat/](https://youngmonkeys.org/asset/freechat/)
+
+# Guide
+1. [Use embedded ezyfox-server](https://youngmonkeys.org/use-embedded-server/)
+1. [Use ES6 client sdk](https://youngmonkeys.org/ezyfox-es6-client-sdk/)
+1. [User to ezydata-mongodb](https://youngmonkeys.org/introduce-to-ezymongo/)
  
  # ReactJS build
  
