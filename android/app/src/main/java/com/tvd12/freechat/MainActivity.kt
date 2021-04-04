@@ -8,23 +8,15 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.tvd12.ezyfoxserver.client.EzyClient
-import com.tvd12.ezyfoxserver.client.request.EzyLoginRequest
-import com.tvd12.ezyfoxserver.client.request.EzyRequest
 import com.tvd12.freechat.socket.SocketClientProxy
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var client: EzyClient
 
     private lateinit var loadingView: View
     private lateinit var usernameView: EditText
     private lateinit var passwordView: EditText
     private lateinit var loginButtonView: Button
     private lateinit var connectionController: Controller
-
-    private val host = "ws.tvd12.com"
-//    private val host = "192.168.51.103"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,10 +87,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun setViewControllers() {
         loginButtonView.setOnClickListener {
-            val factory = SocketClientProxy.getInstance()
-            client = factory.newClient(newLoginRequest())
-            client.connect(host, 3005)
-            loadingView.visibility = View.VISIBLE
+            val connectionData = Mvc.getInstance()
+                .getModel()
+                .get<MutableMap<String, Any>>("connection")!!
+            val oldUsername = connectionData["username"]
+            val newUsername = usernameView.text.toString()
+            val socketClient = SocketClientProxy.getInstance()
+            if (oldUsername == newUsername && socketClient.isConnected()) {
+                startMessageActivity()
+            }
+            else {
+                loadingView.visibility = View.VISIBLE
+                connectionData["username"] = newUsername
+                connectionData["password"] = passwordView.text.toString()
+                SocketClientProxy.getInstance().connectToServer()
+            }
         }
     }
 
@@ -114,14 +117,6 @@ class MainActivity : AppCompatActivity() {
             "try connect: $count",
                 Toast.LENGTH_LONG)
         toast.show()
-    }
-
-    private fun newLoginRequest(): EzyRequest {
-        return EzyLoginRequest(
-                "freechat",
-                usernameView.text.toString(),
-                passwordView.text.toString()
-        )
     }
 
     private fun startMessageActivity() {

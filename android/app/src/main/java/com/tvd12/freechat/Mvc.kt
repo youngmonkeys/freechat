@@ -5,6 +5,7 @@ package com.tvd12.freechat
  */
 
 class Mvc private constructor() {
+    private val model = Model()
     private val controllers: MutableMap<Any, Any>
 
     init {
@@ -12,12 +13,15 @@ class Mvc private constructor() {
         this.addController("connection")
         this.addController("contact")
         this.addController("message")
+        this.model.set("connection", HashMap<String, Any>())
     }
 
     companion object {
         private val INSTANCE = Mvc()
         fun getInstance() : Mvc = INSTANCE
     }
+
+    fun getModel() = model
 
     private fun addController(name: String) : Controller {
         val controller = Controller()
@@ -77,4 +81,16 @@ class Controller {
 interface IView {
 
     fun update(viewId: String, data: Any?)
+}
+
+class Model {
+    private val dataByName = HashMap<String, Any>()
+
+    @Suppress("UNCHECKED_CAST")
+    operator fun <T> get(name: String): T? =
+        dataByName[name] as T
+
+    fun set(name: String, data: Any) {
+        dataByName[name] = data
+    }
 }

@@ -4,6 +4,7 @@ import com.tvd12.ezyfoxserver.client.EzyClient
 import com.tvd12.ezyfoxserver.client.EzyClients
 import com.tvd12.ezyfoxserver.client.config.EzyClientConfig
 import com.tvd12.ezyfoxserver.client.constant.EzyCommand
+import com.tvd12.ezyfoxserver.client.constant.EzyDisconnectReason
 import com.tvd12.ezyfoxserver.client.entity.EzyApp
 import com.tvd12.ezyfoxserver.client.entity.EzyArray
 import com.tvd12.ezyfoxserver.client.entity.EzyData
@@ -14,17 +15,23 @@ import com.tvd12.ezyfoxserver.client.event.EzyLostPingEvent
 import com.tvd12.ezyfoxserver.client.event.EzyTryConnectEvent
 import com.tvd12.ezyfoxserver.client.handler.*
 import com.tvd12.ezyfoxserver.client.request.EzyAppAccessRequest
+import com.tvd12.ezyfoxserver.client.request.EzyLoginRequest
 import com.tvd12.ezyfoxserver.client.request.EzyRequest
 import com.tvd12.freechat.Mvc
 import com.tvd12.freechat.constant.Commands
 import com.tvd12.freechat.data.MessageReceived
+import com.tvd12.freechat.manager.StateManager
 
 /**
  * Created by tavandung12 on 10/7/18.
  */
 
+const val ZONE_NAME = "freechat"
+const val APP_NAME = "freechat"
+
 class SocketClientProxy private constructor() {
 
+    private val client = newClient()
     private val mvc : Mvc = Mvc.getInstance()
 
     companion object {
@@ -40,29 +47,41 @@ class SocketClientProxy private constructor() {
     }
 
     inner class ExDisconnectionHandler : EzyDisconnectionHandler() {
-        override fun preHandle(event: EzyDisconnectionEvent) {
+        override fun postHandle(event: EzyDisconnectionEvent) {
             val controller = mvc.getController("connection")
-            if(shouldReconnect(event)) {
-                controller.updateViews("show-loading", null)
+            val disconnectReason = event.reason
+            if (disconnectReason == EzyDisconnectReason.CLOSE.id) {
+                if (StateManager.getInstance().reconnnect) {
+                    client.reconnect()
+                    StateManager.getInstance().reconnnect = false
+                }
+            }
+            else if(disconnectReason == EzyDisconnectReason.UNAUTHORIZED.id) {
+                controller.updateViews("show-authentication", null)
             }
             else {
-                controller.updateViews("show-authentication", null)
+                controller.updateViews("show-loading", null)
             }
         }
     }
 
-    inner class ExHandshakeHandler(
-            private val loginRequest: EzyRequest
-    ) : EzyHandshakeHandler() {
+    inner class ExHandshakeHandler : EzyHandshakeHandler() {
 
         override fun getLoginRequest(): EzyRequest {
-            return loginRequest
+            val connectionData = Mvc.getInstance()
+                .getModel()
+                .get<Map<String, Any>>("connection")!!
+            return EzyLoginRequest(
+                ZONE_NAME,
+                connectionData["username"] as String,
+                connectionData["password"] as String
+            )
         }
     }
 
     inner class ExLoginSuccessHandler : EzyLoginSuccessHandler() {
         override fun handleLoginSuccess(responseData: EzyData?) {
-            val request = EzyAppAccessRequest("freechat")
+            val request = EzyAppAccessRequest(APP_NAME)
             client.send(request)
         }
     }
@@ -136,9 +155,9 @@ class SocketClientProxy private constructor() {
         }
     }
 
-    fun newClient(loginRequest: EzyRequest) : EzyClient {
+    private fun newClient() : EzyClient {
         val config = EzyClientConfig.builder()
-                .zoneName("freechat")
+                .zoneName(ZONE_NAME)
                 .build()
         val clients = EzyClients.getInstance()
         val client = clients.defaultClient ?: clients.newDefaultClient(config)
@@ -146,13 +165,13 @@ class SocketClientProxy private constructor() {
         setup.addEventHandler(EzyEventType.CONNECTION_SUCCESS, ExConnectionSuccessHandler())
         setup.addEventHandler(EzyEventType.CONNECTION_FAILURE, EzyConnectionFailureHandler())
         setup.addEventHandler(EzyEventType.DISCONNECTION, ExDisconnectionHandler())
-        setup.addDataHandler(EzyCommand.HANDSHAKE, ExHandshakeHandler(loginRequest))
+        setup.addDataHandler(EzyCommand.HANDSHAKE, ExHandshakeHandler())
         setup.addDataHandler(EzyCommand.LOGIN, ExLoginSuccessHandler())
         setup.addDataHandler(EzyCommand.APP_ACCESS, ExAccessAppHandler())
         setup.addEventHandler(EzyEventType.LOST_PING, LostPingEventHandler())
         setup.addEventHandler(EzyEventType.TRY_CONNECT, TryConnectEventHandler())
 
-        val appSetup = setup.setupApp("freechat")
+        val appSetup = setup.setupApp(APP_NAME)
 
         appSetup.addDataHandler(Commands.SUGGEST_CONTACTS, SuggestContactsResponseHandler())
         appSetup.addDataHandler(Commands.SEARCH_CONTACTS, SearchContactsResponseHandler())
@@ -163,4 +182,17 @@ class SocketClientProxy private constructor() {
         return client
     }
 
+    fun connectToServer() {
+        val host = "ws.tvd12.com"
+        if (client.isConnected) {
+            StateManager.getInstance().reconnnect = true
+            client.disconnect()
+        }
+        else {
+            client.connect(host, 3005)
+        }
+    }
+
+    fun isConnected() = client.isConnected
 }
+
