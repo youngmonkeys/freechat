@@ -9,7 +9,7 @@ import java.util.*
  * Created by tavandung12 on 10/7/18.
  */
 
-class MessageReceived : Message {
+class MessageReceived : Message("") {
 
     var from: String? = null
 
@@ -21,9 +21,6 @@ class MessageReceived : Message {
             return answer
         }
 
-    }
-
-    constructor() : super("") {
     }
 
     override fun deserialize(data: EzyObject) {

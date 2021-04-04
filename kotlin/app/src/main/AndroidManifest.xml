@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".ContactActivity" />
         <activity android:name=".MessageActivity" />
+        <activity android:name=".ContactSearchActivity" />
     </application>
 
 </manifest>

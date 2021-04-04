@@ -6,7 +6,7 @@ import com.tvd12.ezyfoxserver.client.constant.EzyConstant
  * Created by tavandung12 on 10/5/18.
  */
 
-enum class MessageType private constructor(private val id: Int) : EzyConstant {
+enum class MessageType constructor(private val id: Int) : EzyConstant {
     SENDING(1),
     SENT(2),
     RECEIVED(3);

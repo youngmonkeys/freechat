@@ -9,19 +9,14 @@ import vn.team.freechat_kotlin.constant.Commands
  * Created by tavandung12 on 10/6/18.
  */
 
-class SendUserMessageRequest : EzyRequest {
-
-    private val to : String
+class SendUserMessageRequest(
+    private val channelId: Long,
     private val message: String
-
-    constructor(to: String, message: String) {
-        this.to = to;
-        this.message = message
-    }
+) : EzyRequest {
 
     override fun serialize() : EzyData {
         return EzyEntityFactory.newObjectBuilder()
-                .append("to", to)
+                .append("channelId", channelId)
                 .append("message", message)
                 .build()
     }

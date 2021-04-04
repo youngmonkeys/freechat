@@ -12,41 +12,36 @@ import vn.team.freechat_kotlin.data.Message
 import vn.team.freechat_kotlin.data.MessageReceived
 import vn.team.freechat_kotlin.data.MessageSent
 import java.util.*
-import java.util.Collection
 
 
 /**
  * Created by tavandung12 on 10/5/18.
  */
 
-class MessageListAdapter : RecyclerView.Adapter<MessageHolder<Message>> {
+class MessageListAdapter(
+    context: Context
+) : RecyclerView.Adapter<MessageHolder<Message>>() {
 
-    private val context : Context
-    private val inflater : LayoutInflater
     private val items : MutableList<Message>
+    private val inflater : LayoutInflater = LayoutInflater.from(context)
 
     companion object {
-        private val VIEW_TYPE_MESSAGE_SEDING = 1
-        private val VIEW_TYPE_MESSAGE_SENT = 2
-        private val VIEW_TYPE_MESSAGE_RECEIVED = 3
+        private const val VIEW_TYPE_MESSAGE_SEDING = 1
+        private const val VIEW_TYPE_MESSAGE_SENT = 2
+        private const val VIEW_TYPE_MESSAGE_RECEIVED = 3
     }
 
-    constructor(context: Context) : super() {
-        this.context = context
-        this.inflater = LayoutInflater.from(context)
-        this.items = ArrayList<Message>()
+    init {
+        this.items = ArrayList()
     }
 
     fun addItem(item: Message) {
         this.items.add(item)
     }
 
-    fun addItems(items: Collection<Message>) {
-        this.items.addAll(items)
-    }
-
-    override fun onCreateViewHolder(parent : ViewGroup?, viewType: Int) : MessageHolder<Message> {
-        var view : View?
+    @Suppress("UNCHECKED_CAST")
+    override fun onCreateViewHolder(parent : ViewGroup, viewType: Int) : MessageHolder<Message> {
+        val view : View?
         return when (viewType) {
             VIEW_TYPE_MESSAGE_SENT -> {
                 view = inflater.inflate(R.layout.component_message_item_sent, parent, false)
@@ -57,14 +52,14 @@ class MessageListAdapter : RecyclerView.Adapter<MessageHolder<Message>> {
                 MessageReceivedHolder(view) as MessageHolder<Message>
             }
             else -> {
-                throw IllegalArgumentException ("has no view with type: " + viewType)
+                throw IllegalArgumentException ("has no view with type: $viewType")
             }
         }
     }
 
-    override fun onBindViewHolder(holder: MessageHolder<Message>?, position: Int) {
+    override fun onBindViewHolder(holder: MessageHolder<Message>, position: Int) {
         val message = getItem(position)
-        (holder as MessageHolder<Message>).bind(message)
+        holder.bind(message)
     }
 
     override fun getItemCount() : Int {
@@ -72,8 +67,7 @@ class MessageListAdapter : RecyclerView.Adapter<MessageHolder<Message>> {
     }
 
     private fun getItem(position: Int) : Message {
-        val item = items[position]
-        return item
+        return items[position]
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -83,35 +77,26 @@ class MessageListAdapter : RecyclerView.Adapter<MessageHolder<Message>> {
     }
 }
 
-open class MessageHolder<E> : RecyclerView.ViewHolder {
+open class MessageHolder<E>(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private val messageView : TextView
-    private val timeView : TextView
-
-    constructor(itemView: View) : super(itemView) {
-        this.messageView = itemView.findViewById(R.id.message)
-        this.timeView = itemView.findViewById(R.id.time)
-    }
+    private val timeView : TextView = itemView.findViewById(R.id.time)
+    private val messageView : TextView = itemView.findViewById(R.id.message)
 
     open fun bind(message: E) {
         val m = message as Message
-        this.messageView.text = m.message;
+        this.messageView.text = m.message
         this.timeView.text = m.getSendTimeString()
     }
 }
 
-class MessageSentHolder : MessageHolder<MessageSent> {
+class MessageSentHolder(itemView: View) : MessageHolder<MessageSent>(itemView)
 
-    constructor(itemView: View) : super(itemView)
-}
-
-class MessageReceivedHolder : MessageHolder<MessageReceived> {
+class MessageReceivedHolder(itemView: View) : MessageHolder<MessageReceived>(itemView) {
 
     private var avatarView: ImageView? = null
     private var fromView: TextView? = null
 
-
-    constructor(itemView: View) : super(itemView) {
+    init {
         this.avatarView = itemView.findViewById(R.id.avatar)
         this.fromView = itemView.findViewById(R.id.from)
     }

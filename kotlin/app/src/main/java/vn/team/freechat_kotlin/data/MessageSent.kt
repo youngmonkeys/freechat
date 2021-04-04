@@ -7,17 +7,9 @@ import vn.team.freechat_kotlin.constant.MessageType
  * Created by tavandung12 on 10/7/18.
  */
 
-class MessageSent : Message {
-
-    private var to : String
-
-    constructor(message: String, to: String) : super(message) {
-        this.to = to
-    }
-
-    fun getTo() : String {
-        return to
-    }
+class MessageSent(
+    message: String
+) : Message(message) {
 
     override  fun getType() : EzyConstant {
         return MessageType.SENT

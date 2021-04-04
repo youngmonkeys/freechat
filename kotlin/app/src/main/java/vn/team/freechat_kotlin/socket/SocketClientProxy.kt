@@ -1,8 +1,7 @@
-package vn.team.freechat_kotlin.factory
+package vn.team.freechat_kotlin.socket
 
 import com.tvd12.ezyfoxserver.client.EzyClient
 import com.tvd12.ezyfoxserver.client.EzyClients
-import com.tvd12.ezyfoxserver.client.setup.EzySetup
 import com.tvd12.ezyfoxserver.client.config.EzyClientConfig
 import com.tvd12.ezyfoxserver.client.constant.EzyCommand
 import com.tvd12.ezyfoxserver.client.entity.EzyApp
@@ -14,7 +13,7 @@ import com.tvd12.ezyfoxserver.client.event.EzyEventType
 import com.tvd12.ezyfoxserver.client.event.EzyLostPingEvent
 import com.tvd12.ezyfoxserver.client.event.EzyTryConnectEvent
 import com.tvd12.ezyfoxserver.client.handler.*
-import com.tvd12.ezyfoxserver.client.request.EzyAccessAppRequest
+import com.tvd12.ezyfoxserver.client.request.EzyAppAccessRequest
 import com.tvd12.ezyfoxserver.client.request.EzyRequest
 import vn.team.freechat_kotlin.Mvc
 import vn.team.freechat_kotlin.constant.Commands
@@ -24,15 +23,13 @@ import vn.team.freechat_kotlin.data.MessageReceived
  * Created by tavandung12 on 10/7/18.
  */
 
-class ClientFactory {
+class SocketClientProxy private constructor() {
 
     private val mvc : Mvc = Mvc.getInstance()
 
-    private constructor()
-
     companion object {
-        private val INSTANCE = ClientFactory()
-        fun getInstance() : ClientFactory = INSTANCE
+        private val INSTANCE = SocketClientProxy()
+        fun getInstance() : SocketClientProxy = INSTANCE
     }
 
     inner class ExConnectionSuccessHandler : EzyConnectionSuccessHandler() {
@@ -45,16 +42,18 @@ class ClientFactory {
     inner class ExDisconnectionHandler : EzyDisconnectionHandler() {
         override fun preHandle(event: EzyDisconnectionEvent) {
             val controller = mvc.getController("connection")
-            controller.updateViews("show-loading", null)
+            if(shouldReconnect(event)) {
+                controller.updateViews("show-loading", null)
+            }
+            else {
+                controller.updateViews("show-authentication", null)
+            }
         }
     }
 
-    inner class ExHandshakeHandler : EzyHandshakeHandler {
-        private val loginRequest : EzyRequest
-
-        constructor(loginRequest: EzyRequest) {
-            this.loginRequest = loginRequest
-        }
+    inner class ExHandshakeHandler(
+            private val loginRequest: EzyRequest
+    ) : EzyHandshakeHandler() {
 
         override fun getLoginRequest(): EzyRequest {
             return loginRequest
@@ -63,7 +62,7 @@ class ClientFactory {
 
     inner class ExLoginSuccessHandler : EzyLoginSuccessHandler() {
         override fun handleLoginSuccess(responseData: EzyData?) {
-            val request = EzyAccessAppRequest("freechat")
+            val request = EzyAppAccessRequest("freechat")
             client.send(request)
         }
     }
@@ -89,19 +88,41 @@ class ClientFactory {
         }
     }
 
+    inner class SuggestContactsResponseHandler : EzyAppDataHandler<EzyObject> {
+        override fun handle(app: EzyApp, data: EzyObject) {
+            val contacts = data.get("users", EzyArray::class.java)
+            val contactController = mvc.getController("contact")
+            contactController.updateViews("search-contacts", contacts)
+        }
+    }
+
+    inner class SearchContactsResponseHandler : EzyAppDataHandler<EzyObject> {
+        override fun handle(app: EzyApp, data: EzyObject) {
+            val contacts = data.get("users", EzyArray::class.java)
+            val contactController = mvc.getController("contact")
+            contactController.updateViews("search-contacts", contacts)
+        }
+    }
+
+    inner class AddContactsResponseHandler : EzyAppDataHandler<EzyArray> {
+        override fun handle(app: EzyApp, data: EzyArray) {
+            val contactController = mvc.getController("contact")
+            contactController.updateViews("add-contacts", data)
+        }
+    }
+
+    inner class ContactsResponseHandler : EzyAppDataHandler<EzyArray> {
+        override fun handle(app: EzyApp, data: EzyArray) {
+            val controller = mvc.getController("contact")
+            controller.updateViews("add-contacts", data)
+        }
+    }
+
     inner class ReceivedMessageHandler : EzyAppDataHandler<EzyObject> {
         override fun handle(app: EzyApp, data: EzyObject) {
             val controller = mvc.getController("message")
             val message = MessageReceived.create(data)
             controller.updateViews("add-message", message)
-        }
-    }
-
-    inner class ContactsResponseHandler : EzyAppDataHandler<EzyObject> {
-        override fun handle(app: EzyApp, data: EzyObject) {
-            val controller = mvc.getController("contact")
-            val usernames = data.get<EzyArray>("contacts")
-            controller.updateViews("add-contacts", usernames)
         }
     }
 
@@ -133,6 +154,9 @@ class ClientFactory {
 
         val appSetup = setup.setupApp("freechat")
 
+        appSetup.addDataHandler(Commands.SUGGEST_CONTACTS, SuggestContactsResponseHandler())
+        appSetup.addDataHandler(Commands.SEARCH_CONTACTS, SearchContactsResponseHandler())
+        appSetup.addDataHandler(Commands.ADD_CONTACTS, AddContactsResponseHandler())
         appSetup.addDataHandler(Commands.CHAT_GET_CONTACTS, ContactsResponseHandler())
         appSetup.addDataHandler(Commands.CHAT_SYSTEM_MESSAGE, SystemMessageHandler())
         appSetup.addDataHandler(Commands.CHAT_USER_MESSAGE, ReceivedMessageHandler())

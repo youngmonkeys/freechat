@@ -21,7 +21,7 @@ open class AppActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         client = EzyClients.getInstance().defaultClient
-        zone = client!!.zone
-        app = zone!!.appManager.app
+        zone = client?.zone
+        app = zone?.appManager?.app
     }
 }

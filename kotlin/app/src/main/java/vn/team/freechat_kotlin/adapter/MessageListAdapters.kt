@@ -8,12 +8,12 @@ import java.util.*
  * Created by tavandung12 on 10/6/18.
  */
 
-class MessageListAdapters {
+class MessageListAdapters private constructor() {
 
-    private val apdapters: MutableMap<String, MessageListAdapter>
+    private val adapters: MutableMap<Long, MessageListAdapter>
 
-    private constructor() {
-        this.apdapters = HashMap()
+    init {
+        this.adapters = HashMap()
     }
 
     companion object {
@@ -21,15 +21,13 @@ class MessageListAdapters {
         fun getInstance() : MessageListAdapters = INSTANCE
     }
 
-    fun getAdapter(context: Context, targetName: String): MessageListAdapter {
-        synchronized(apdapters) {
-            var adapter: MessageListAdapter? = apdapters[targetName]
-            if (adapter == null) {
-                adapter = MessageListAdapter(context)
-                apdapters.put(targetName, adapter)
-            }
-            return adapter
+    fun getAdapter(context: Context, channelId: Long): MessageListAdapter {
+        var adapter: MessageListAdapter? = adapters[channelId]
+        if (adapter == null) {
+            adapter = MessageListAdapter(context)
+            adapters[channelId] = adapter
         }
+        return adapter
     }
 
 }

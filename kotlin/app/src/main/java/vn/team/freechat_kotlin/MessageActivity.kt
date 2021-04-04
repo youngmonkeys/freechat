@@ -13,8 +13,10 @@ import vn.team.freechat_kotlin.adapter.MessageListAdapters
 import vn.team.freechat_kotlin.data.Message
 import vn.team.freechat_kotlin.data.MessageReceived
 import vn.team.freechat_kotlin.data.MessageSent
+import vn.team.freechat_kotlin.manager.StateManager
 import vn.team.freechat_kotlin.request.SendSystemMessageRequest
 import vn.team.freechat_kotlin.request.SendUserMessageRequest
+import vn.team.freechat_kotlin.socket.SocketRequests
 
 /**
  * Created by tavandung12 on 10/5/18.
@@ -22,22 +24,22 @@ import vn.team.freechat_kotlin.request.SendUserMessageRequest
 
 class MessageActivity : AppActivity() {
 
-    private var targetContact: String? = null
-    private var messageController: Controller?  = null
-    private var connectionController: Controller? = null
+    private var targetChannelId: Long = 0L
+    private lateinit var messageController: Controller
+    private lateinit var  connectionController: Controller
 
-    private var loadingView: View? = null
-    private var backButtonView: View? = null
-    private var headerView: View? = null
-    private var targetBoxView: View? = null
-    private var targetNameView: TextView? = null
-    private var targetLastMessageView: TextView? = null
-    private var chatboxView: View? = null
-    private var messageInputView: EditText? = null
-    private var sendButtonView: ImageButton? = null
-    private var messageListView: RecyclerView? = null
-    private var messageListAdapter: MessageListAdapter? = null
-    private var messageListLayoutManager: LinearLayoutManager? = null
+    private lateinit var  loadingView: View
+    private lateinit var  backButtonView: View
+    private lateinit var  headerView: View
+    private lateinit var  targetBoxView: View
+    private lateinit var  targetNameView: TextView
+    private lateinit var  targetLastMessageView: TextView
+    private lateinit var  chatboxView: View
+    private lateinit var  messageInputView: EditText
+    private lateinit var  sendButtonView: ImageButton
+    private lateinit var  messageListView: RecyclerView
+    private lateinit var  messageListAdapter: MessageListAdapter
+    private lateinit var  messageListLayoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,91 +51,97 @@ class MessageActivity : AppActivity() {
     }
 
     override fun onStart() {
-        super.onStart();
-        connectionController?.addView("show-loading",  object : IView {
+        super.onStart()
+        connectionController.addView("show-loading",  object : IView {
             override fun update(viewId: String, data: Any?) {
-                loadingView?.visibility = View.VISIBLE
+                loadingView.visibility = View.VISIBLE
             }
         })
-        connectionController?.addView("hide-loading", object : IView {
+        connectionController.addView("hide-loading", object : IView {
             override fun update(viewId: String, data: Any?) {
-                loadingView?.visibility = View.GONE
+                loadingView.visibility = View.GONE
             }
         })
-        messageController?.addView("add-message", object : IView {
+        messageController.addView("add-message", object : IView {
             override fun update(viewId: String, data: Any?) {
                 val message = data as MessageReceived
-                addMessageItem(message);
-                targetLastMessageView?.text = message.message
+                addMessageItem(message)
+                targetLastMessageView.text = message.message
             }
         })
     }
 
     override fun onStop() {
-        super.onStop();
-        loadingView?.visibility = View.GONE
-        messageController?.removeView("add-message")
+        super.onStop()
+        loadingView.visibility = View.GONE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        messageController.removeView("add-message")
     }
 
     private fun initComponents() {
         val mvc = Mvc.getInstance()
-        targetContact = intent.getStringExtra("targetContact")
-        messageController = mvc.getController("message");
+        targetChannelId = StateManager.getInstance().currentChatContact.channelId
+        messageController = mvc.getController("message")
         connectionController = mvc.getController("connection")
     }
 
     private fun initViews() {
         loadingView = findViewById(R.id.loading)
         headerView = findViewById(R.id.header)
-        backButtonView = headerView?.findViewById(R.id.back)
-        targetBoxView = headerView?.findViewById(R.id.targetBox)
-        targetNameView = targetBoxView?.findViewById(R.id.targetName)
-        targetLastMessageView = targetBoxView?.findViewById(R.id.lastMessage)
+        backButtonView = headerView.findViewById(R.id.back)
+        targetBoxView = headerView.findViewById(R.id.targetBox)
+        targetNameView = targetBoxView.findViewById(R.id.targetName)
+        targetLastMessageView = targetBoxView.findViewById(R.id.lastMessage)
         messageListView = findViewById(R.id.messageList)
         chatboxView = findViewById(R.id.chatbox)
-        messageInputView = chatboxView?.findViewById(R.id.messageInput)
-        sendButtonView = chatboxView?.findViewById(R.id.sendButton)
-        targetNameView?.setText(targetContact)
-        targetLastMessageView?.setText("")
+        messageInputView = chatboxView.findViewById(R.id.messageInput)
+        sendButtonView = chatboxView.findViewById(R.id.sendButton)
+        targetLastMessageView.text = ""
 
         val adapters = MessageListAdapters.getInstance()
-        messageListAdapter = adapters.getAdapter(this, targetContact!!)
-        messageListView?.setAdapter(messageListAdapter)
+        messageListAdapter = adapters.getAdapter(this, targetChannelId)
+        messageListView.adapter = messageListAdapter
         messageListLayoutManager = newMessageListLayoutManager()
-        messageListView?.setLayoutManager(messageListLayoutManager)
+        messageListView.layoutManager = messageListLayoutManager
     }
 
     private fun setViewsData() {
-        targetNameView?.setText(targetContact)
-        targetLastMessageView?.setText("")
+        targetLastMessageView.text = ""
+        targetNameView.text = StateManager.getInstance().currentChatContact.getUsersString()
     }
 
     private fun setupViewControllers() {
-        backButtonView?.setOnClickListener({ _ ->
-                backToContactView()
-        });
-        sendButtonView?.setOnClickListener({ _ ->
-            val messageText = messageInputView?.getText().toString()
-            val request : EzyRequest
-            if(targetContact.equals("System", true))
-                request = SendSystemMessageRequest(messageText)
-            else
-                request = SendUserMessageRequest(targetContact!!, messageText)
-            app!!.send(request);
-            val message = MessageSent(messageText, targetContact!!)
-            addMessageItem(message);
-            messageInputView?.setText("")
-        });
+        backButtonView.setOnClickListener {
+            backToContactView()
+        }
+        sendButtonView.setOnClickListener {
+            val messageText = messageInputView.text.toString()
+            if (targetChannelId == 0L) {
+                SocketRequests.sendSystemMessage(messageText)
+            }
+            else {
+                SocketRequests.sendUserMessage(
+                    targetChannelId,
+                    messageText
+                )
+            }
+            val message = MessageSent(messageText)
+            addMessageItem(message)
+            messageInputView.setText("")
+        }
     }
 
     private fun addMessageItem(message: Message) {
-        messageListAdapter?.addItem(message);
-        messageListAdapter?.notifyDataSetChanged()
-        messageListView?.smoothScrollToPosition(messageListAdapter?.getItemCount()!!)
+        messageListAdapter.addItem(message)
+        messageListAdapter.notifyDataSetChanged()
+        messageListView.smoothScrollToPosition(messageListAdapter.itemCount!!)
     }
 
     private fun backToContactView() {
-        onBackPressed();
+        onBackPressed()
     }
 
     private fun newMessageListLayoutManager() : LinearLayoutManager {

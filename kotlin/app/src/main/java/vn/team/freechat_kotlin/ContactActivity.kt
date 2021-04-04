@@ -1,15 +1,19 @@
 package vn.team.freechat_kotlin
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import com.tvd12.ezyfoxserver.client.entity.EzyArray
 import vn.team.freechat_kotlin.adapter.ContactListAdapter
+import vn.team.freechat_kotlin.extension.getStrings
+import vn.team.freechat_kotlin.extension.map
+import vn.team.freechat_kotlin.manager.StateManager
 import vn.team.freechat_kotlin.model.ContactListItemModel
-import vn.team.freechat_kotlin.request.GetContactsRequest
-import java.util.*
+import vn.team.freechat_kotlin.socket.SocketRequests
 
 /**
  * Created by tavandung12 on 10/1/18.
@@ -17,16 +21,19 @@ import java.util.*
 
 class ContactActivity : AppActivity() {
 
-    private var username: String? = null
-    private var connectionController: Controller? = null
-    private var contactController: Controller? = null
+    private lateinit var username: String
+    private lateinit var connectionController: Controller
+    private lateinit var contactController: Controller
 
-    private var loadingView : View? = null
-    private var profileBox: View? = null
-    private var profileUsernameView: TextView? = null
-    private var profileStatusMessageView: TextView? = null
-    private var contactListView: ListView? = null
-    private var contactListAdapter: ContactListAdapter? = null
+    private lateinit var loadingView : View
+    private lateinit var profileBox: View
+    private lateinit var searchButton: ImageButton
+    private lateinit var contactButton: ImageButton
+    private lateinit var groupButton: ImageButton
+    private lateinit var profileUsernameView: TextView
+    private lateinit var profileStatusMessageView: TextView
+    private lateinit var contactListView: ListView
+    private lateinit var contactListAdapter: ContactListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,32 +42,36 @@ class ContactActivity : AppActivity() {
         initViews()
         setViewsData()
         setViewControllers()
-        sendGetContactsRequest()
     }
 
     override fun onStart() {
         super.onStart()
-        connectionController?.addView("show-loading", object : IView {
+        connectionController.addView("show-loading", object : IView {
             override fun update(viewId: String, data: Any?) {
-                loadingView?.visibility = View.VISIBLE
+                loadingView.visibility = View.VISIBLE
             }
         })
-        connectionController?.addView("hide-loading", object : IView {
+        connectionController.addView("hide-loading", object : IView {
             override fun update(viewId: String, data: Any?) {
-                loadingView?.visibility = View.GONE
+                loadingView.visibility = View.GONE
             }
         })
-        contactController?.addView("add-contacts", object : IView {
+        contactController.addView("add-contacts", object : IView {
             override fun update(viewId: String, data: Any?) {
                 addContacts(data as EzyArray)
             }
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        sendGetContactsRequest()
+    }
+
     override fun onStop() {
         super.onStop()
-        loadingView?.setVisibility(View.GONE)
-        contactController?.removeView("add-contacts")
+        loadingView.visibility = View.GONE
+        contactController.removeView("add-contacts")
     }
 
     private fun initComponents() {
@@ -73,43 +84,56 @@ class ContactActivity : AppActivity() {
     private fun initViews() {
         loadingView = findViewById(R.id.loading)
         profileBox = findViewById(R.id.profileBox)
-        profileUsernameView = profileBox?.findViewById(R.id.username)
-        profileStatusMessageView = profileBox?.findViewById(R.id.statusMessage)
+        searchButton = findViewById(R.id.search)
+        groupButton = findViewById(R.id.group)
+        contactButton = findViewById(R.id.contact)
+        profileUsernameView = profileBox.findViewById(R.id.username)
+        profileStatusMessageView = profileBox.findViewById(R.id.statusMessage)
         contactListView = findViewById(R.id.contactList)
         contactListAdapter = ContactListAdapter(this)
-        contactListView?.adapter = contactListAdapter
+        contactListView.adapter = contactListAdapter
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setViewsData() {
-        profileUsernameView?.text = username
-        profileStatusMessageView?.text = "hello world"
+        profileUsernameView.text = username
+        profileStatusMessageView.text = "hello world"
     }
 
     private fun setViewControllers() {
-        contactListView?.setOnItemClickListener {_, view: View, _, _ ->
-            loadingView?.visibility = View.VISIBLE
-            onContactItemClick(view)
+        searchButton.setOnClickListener { onSearchButtonClick() }
+        groupButton.setOnClickListener { onSearchButtonClick() }
+        contactButton.setOnClickListener { onSearchButtonClick() }
+        contactListView.setOnItemClickListener {parent, _, position, _ ->
+            loadingView.visibility = View.VISIBLE
+            val item = parent.adapter.getItem(position) as ContactListItemModel
+            onContactItemClick(item)
         }
     }
 
-    private fun addContacts(usernames: EzyArray) {
-        val models = ArrayList<ContactListItemModel>()
-        if(usernames.isEmpty) return
-        for (i in 1..usernames.size())
-            models.add(ContactListItemModel(usernames.get(i - 1, String::class.java), ""))
-        contactListAdapter?.addItemModels(models)
-        contactListAdapter?.notifyDataSetChanged()
+    private fun addContacts(contacts: EzyArray) {
+        val models = contacts.map {
+            ContactListItemModel(
+                channelId = it.get("channelId", Long::class.java),
+                users = it.getStrings("users")
+            )
+        }
+        contactListAdapter.addItemModels(models)
+        contactListAdapter.notifyDataSetChanged()
     }
 
     private fun sendGetContactsRequest() {
-        app?.send(GetContactsRequest(0, 50))
+        SocketRequests.sendGetContacts()
     }
 
-    private fun onContactItemClick(view: View) {
-        val usernameView = view.findViewById<TextView>(R.id.username)
-        val username = usernameView.getText().toString()
+    private fun onSearchButtonClick() {
+        val intent = Intent(this, ContactSearchActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun onContactItemClick(item: ContactListItemModel) {
+        StateManager.getInstance().currentChatContact = item
         val intent = Intent(this, MessageActivity::class.java)
-        intent.putExtra("targetContact", username)
         startActivity(intent)
     }
 }

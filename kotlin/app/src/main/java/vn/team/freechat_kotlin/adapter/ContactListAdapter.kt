@@ -1,6 +1,7 @@
 package vn.team.freechat_kotlin.adapter
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -14,45 +15,48 @@ import vn.team.freechat_kotlin.model.ContactListItemModel
  * Created by tavandung12 on 10/3/18.
  */
 
-class ContactListAdapter : BaseAdapter {
+class ContactListAdapter(context: Context) : BaseAdapter() {
 
-    private val inflater : LayoutInflater
-    private val items : MutableList<ContactListItemModel>
+    private val contacts : MutableList<ContactListItemModel>
+    private val contactByChannelId: MutableMap<Long, ContactListItemModel>
+    private val inflater : LayoutInflater = LayoutInflater.from(context)
 
-    constructor(context: Context) : super() {
-        this.inflater = LayoutInflater.from(context);
-        this.items = ArrayList<ContactListItemModel>()
-        this.items.add(ContactListItemModel("System", ""))
+    init {
+        this.contacts = ArrayList()
+        this.contactByChannelId = HashMap()
+        this.contacts.add(ContactListItemModel(0L, listOf("Bot")))
     }
 
-    fun addItemModel(model: ContactListItemModel) {
-        items.add(model);
+    fun addItemModels(itemModels: Collection<ContactListItemModel>) {
+        itemModels.forEach {
+            if (!contactByChannelId.containsKey(it.channelId)) {
+                contacts.add(it)
+                contactByChannelId[it.channelId] = it
+            }
+        }
     }
 
-    fun addItemModels(itemModels: Collection<ContactListItemModel> ) {
-        items.addAll(itemModels);
-    }
-
+    @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?) : View {
         val view = inflater.inflate(R.layout.component_contact_list_item, parent, false)
         val usernameView = view.findViewById<TextView>(R.id.username)
         val lastMessageView = view.findViewById<TextView>(R.id.lastMessage)
-        val model = items.get(position)
-        usernameView.setText(model.getUsername())
-        lastMessageView.setText(model.getLastMessage())
+        val model = contacts[position]
+        usernameView.text = model.getUsersString()
+        lastMessageView.text = model.lastMessage
         return view
     }
 
     override fun getCount(): Int {
-        return items.size
+        return contacts.size
     }
 
     override fun getItem(position: Int): ContactListItemModel {
-        return items[position]
+        return contacts[position]
     }
 
     override fun getItemId(position: Int): Long {
-        val item = items[position]
-        return item.getId()
+        val item = contacts[position]
+        return item.channelId
     }
 }

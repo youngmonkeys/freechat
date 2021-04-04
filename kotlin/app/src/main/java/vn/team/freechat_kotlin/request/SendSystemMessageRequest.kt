@@ -9,21 +9,17 @@ import vn.team.freechat_kotlin.constant.Commands
  * Created by tavandung12 on 10/5/18.
  */
 
-public class SendSystemMessageRequest : EzyRequest {
-
+class SendSystemMessageRequest(
     private val message: String
-
-    public constructor(message: String) {
-        this.message = message
-    }
+) : EzyRequest {
 
     override fun serialize() : EzyData {
         return EzyEntityFactory.newObjectBuilder()
                 .append("message", message)
-                .build();
+                .build()
     }
 
     override fun getCommand() : String {
-        return Commands.CHAT_SYSTEM_MESSAGE;
+        return Commands.CHAT_SYSTEM_MESSAGE
     }
 }
