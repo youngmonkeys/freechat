@@ -160,7 +160,7 @@ class SocketClientProxy private constructor() {
                 .zoneName(ZONE_NAME)
                 .build()
         val clients = EzyClients.getInstance()
-        val client = clients.defaultClient ?: clients.newDefaultClient(config)
+        val client = clients.newClient(config)
         val setup = client.setup()
         setup.addEventHandler(EzyEventType.CONNECTION_SUCCESS, ExConnectionSuccessHandler())
         setup.addEventHandler(EzyEventType.CONNECTION_FAILURE, EzyConnectionFailureHandler())

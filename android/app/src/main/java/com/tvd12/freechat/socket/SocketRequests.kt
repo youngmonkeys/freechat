@@ -5,8 +5,6 @@ import com.tvd12.ezyfoxserver.client.EzyClients
 import com.tvd12.ezyfoxserver.client.entity.EzyApp
 import com.tvd12.ezyfoxserver.client.factory.EzyEntityFactory
 
-import java.util.Arrays
-
 import com.tvd12.freechat.constant.Commands
 import com.tvd12.freechat.request.GetContactsRequest
 import com.tvd12.freechat.request.SendSystemMessageRequest
@@ -23,7 +21,7 @@ class SocketRequests private constructor() {
         }
 
         fun sendAddContact(user: String) {
-            sendAddContacts(Arrays.asList(user))
+            sendAddContacts(listOf(user))
         }
 
         fun sendSearchContacts(keyword: String) {
@@ -36,7 +34,7 @@ class SocketRequests private constructor() {
             }
         }
 
-        fun sendAddContacts(users: Collection<String>) {
+        private fun sendAddContacts(users: Collection<String>) {
             val app = getApp()
             if(app != null) {
                 val data = EzyEntityFactory.newObjectBuilder()
