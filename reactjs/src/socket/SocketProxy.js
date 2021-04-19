@@ -1,7 +1,7 @@
 // import Ezy from '../lib/ezyfox-server-es6-client'
 import Ezy from 'ezyfox-es6-client';
 import Mvc from 'mvc-es6';
-import {Command} from "./SocketConstants";
+import {Command, SOCKET_URL} from "./SocketConstants";
 
 class SocketProxy {
 
@@ -109,8 +109,7 @@ class SocketProxy {
     }
 
     connect() {
-        let url = "wss://ws.tvd12.com/ws";
-        // let url = "ws://localhost:2208/ws";
+        let url = SOCKET_URL;
         let client = this.getClient();
         client.connect(url);
     }

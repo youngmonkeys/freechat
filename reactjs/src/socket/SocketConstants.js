@@ -7,3 +7,7 @@ export const Command = {
     SEARCH_CONTACTS: '9',
     SEARCH_CONTACTS_USER: '10'
 }
+
+export const SOCKET_URL = "wss://ws.tvd12.com/ws";
+// export const SOCKET_URL = "ws://localhost:2208/ws"
+// ;
