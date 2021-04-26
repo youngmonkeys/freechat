@@ -69,6 +69,7 @@ class SocketProxy {
 
         let messageController = mvc.getController("message");
         let contactController = mvc.getController("contact");
+        let updatePasswordController = mvc.getController("updatePassword");
 
         setupApp.addDataHandler(Command.SUGGEST_CONTACTS, function (app, data) {
             console.log("handle suggestion contacts: " + JSON.stringify(data));
@@ -106,7 +107,17 @@ class SocketProxy {
         });
 
         setupApp.addDataHandler(Command.UPDATE_PASSWORD, function (app, data) {
+            // data: [STATUS, MESSAGE], e.g., ["error", "Wrong old password"]
             console.log("handle update user password: " + JSON.stringify(data))
+            if (data[0] === "error") {
+                updatePasswordController.updateViews("updatePasswordError", data[1]);
+            }
+            if (data[0] === "success") {
+                console.log('den day roi success');
+                updatePasswordController.updateViews("updatePasswordSuccess", data[1]);
+                updatePasswordController.updateViews("doneUpdatePassword", null);
+                // what to do when updating password successfully!
+            }
         });
 
         return client;

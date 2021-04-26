@@ -4,6 +4,8 @@ import Mvc from 'mvc-es6';
 import AddContactView from './AddContactView';
 import SocketProxy from '../../socket/SocketProxy';
 import SocketRequest from '../../socket/SocketRequest';
+import UpdatePasswordView from "./UpdatePasswordView";
+import ToastView from "../components/ToastView";
 
 class MessageItemView extends React.Component {
     constructor(props) {
@@ -373,6 +375,10 @@ class MessageView extends React.Component {
         this.toggleAddContactView();
     }
 
+    onUpdatePasswordClick(e) {
+        this.toggleUpdatePasswordView();
+    }
+
     handleToggle = () => {
         const { toggle } = this.state;
         this.setState ({
@@ -386,6 +392,7 @@ class MessageView extends React.Component {
         const messages = messagess[targetContact] || [];
         return (
             <div className="messages-wrapper">
+                <ToastView/>
                 <header className="main-nav">
                     <div className="navbar-left">
                         <ul className="left-branding">
@@ -448,13 +455,10 @@ class MessageView extends React.Component {
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i className="icon-gear" aria-hidden="true"></i> <span>Settings</span>                                        </button>
                                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <span className="dropdown-item" href="#">Update password</span>
+                                            <span className="dropdown-item" onClick={this.onUpdatePasswordClick.bind(this)}>Update password</span>
                                             <span className="dropdown-item" href="#">Another action</span>
                                         </div>
                                     </div>
-                                    {/*<button id="setting">*/}
-                                    {/*    <i className="icon-gear" aria-hidden="true"></i> <span>Settings</span>*/}
-                                    {/*</button>*/}
                                 </div>
                             </div>
                         </div>
@@ -494,6 +498,7 @@ class MessageView extends React.Component {
                 </footer>
                 <a id="scrollTop" href="#top"><i className="icon-arrow-up12"></i></a>
                 <AddContactView parent={this} />
+                <UpdatePasswordView parent={this}/>
             </div>
         );
     }

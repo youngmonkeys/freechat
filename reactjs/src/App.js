@@ -40,6 +40,7 @@ class App extends Component {
     this.mvc.newController("chat");
     this.mvc.newController("router");
     this.mvc.newController("login");
+    this.mvc.newController("updatePassword")
     this.mvc.models.chat = {};
 
     // setup socket
@@ -77,7 +78,7 @@ class App extends Component {
     };
     window.history.pushState('', '', currentViewURI);
     return (
-     
+
         <div>
             {view}
         </div>
@@ -93,8 +94,8 @@ const AuthRoute = ({component: Component, ...rest}) => {
   return (
     <Route
       {...rest}
-      render = {props => authenticated === true 
-        ? (<Component {...props} {...rest} />) 
+      render = {props => authenticated === true
+        ? (<Component {...props} {...rest} />)
         : (<Redirect to="/" />)
       }
     />

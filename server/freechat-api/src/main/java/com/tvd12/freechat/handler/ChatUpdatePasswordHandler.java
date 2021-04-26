@@ -38,13 +38,13 @@ public class ChatUpdatePasswordHandler extends ChatClientRequestHandler implemen
 
     @Override
     protected void execute() throws EzyBadRequestException {
-        logger.info("Den day roi, old password = " + oldPassword);
-
         ChatUser chatUser = userService.getUser(user.getName());
         String cryptOldPassword = EzySHA256.cryptUtfToLowercase(oldPassword);
 
         if (!chatUser.getPassword().equals(cryptOldPassword)) {
-            throw new EzyBadRequestException(ChatErrors.WRONG_PASSWORD, "wrong old password");
+            responseWrongOldPassword();
+//            throw new EzyBadRequestException(ChatErrors.WRONG_PASSWORD, "wrong old password");
+            return;
         }
 
         chatUser.setPassword(EzySHA256.cryptUtfToLowercase(newPassword));
@@ -52,9 +52,21 @@ public class ChatUpdatePasswordHandler extends ChatClientRequestHandler implemen
         responseOk();
     }
 
+    private void responseWrongOldPassword() {
+        List<String> data = new ArrayList<>();
+        data.add("error");
+        data.add("Wrong old password");
+        responseFactory.newArrayResponse()
+                .command(UPDATE_PASSWORD)
+                .user(user)
+                .data(data)
+                .execute();
+    }
+
     private void responseOk() {
         List<String> data = new ArrayList<>();
-        data.add("Successfully updated!");
+        data.add("success");
+        data.add("Successfully updated password!");
         responseFactory.newArrayResponse()
                 .command(UPDATE_PASSWORD)
                 .user(user)
