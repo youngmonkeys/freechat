@@ -113,10 +113,8 @@ class SocketProxy {
                 updatePasswordController.updateViews("updatePasswordError", data[1]);
             }
             if (data[0] === "success") {
-                console.log('den day roi success');
                 updatePasswordController.updateViews("updatePasswordSuccess", data[1]);
                 updatePasswordController.updateViews("doneUpdatePassword", null);
-                // what to do when updating password successfully!
             }
         });
 
