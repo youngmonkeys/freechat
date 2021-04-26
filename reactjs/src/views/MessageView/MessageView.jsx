@@ -450,13 +450,12 @@ class MessageView extends React.Component {
                                         <i className="icon-user-plus" data-toggle="modal" data-target="#addContactsModel" aria-hidden="true"></i>
                                         <span>Add contact</span>
                                     </button>
-                                    <div class="dropdown">
+                                    <div className="dropdown">
                                         <button id="setting" className="btn dropdown-toggle"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i className="icon-gear" aria-hidden="true"></i> <span>Settings</span>                                        </button>
                                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <span className="dropdown-item" onClick={this.onUpdatePasswordClick.bind(this)}>Update password</span>
-                                            <span className="dropdown-item" href="#">Another action</span>
                                         </div>
                                     </div>
                                 </div>

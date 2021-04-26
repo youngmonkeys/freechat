@@ -42,9 +42,7 @@ public class ChatUpdatePasswordHandler extends ChatClientRequestHandler implemen
         String cryptOldPassword = EzySHA256.cryptUtfToLowercase(oldPassword);
 
         if (!chatUser.getPassword().equals(cryptOldPassword)) {
-            responseWrongOldPassword();
-//            throw new EzyBadRequestException(ChatErrors.WRONG_PASSWORD, "wrong old password");
-            return;
+            throw new EzyBadRequestException(ChatErrors.WRONG_PASSWORD, "wrong old password");
         }
 
         chatUser.setPassword(EzySHA256.cryptUtfToLowercase(newPassword));
@@ -52,25 +50,10 @@ public class ChatUpdatePasswordHandler extends ChatClientRequestHandler implemen
         responseOk();
     }
 
-    private void responseWrongOldPassword() {
-        List<String> data = new ArrayList<>();
-        data.add("error");
-        data.add("Wrong old password");
-        responseFactory.newArrayResponse()
-                .command(UPDATE_PASSWORD)
-                .user(user)
-                .data(data)
-                .execute();
-    }
-
     private void responseOk() {
-        List<String> data = new ArrayList<>();
-        data.add("success");
-        data.add("Successfully updated password!");
         responseFactory.newArrayResponse()
                 .command(UPDATE_PASSWORD)
                 .user(user)
-                .data(data)
                 .execute();
     }
 }

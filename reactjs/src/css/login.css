@@ -15,10 +15,11 @@
 }
 .login-title .text-light {
     font-size: 24px;
-    /*margin-bottom: 25px;*/
+    margin-bottom: 25px;
     font-weight: 700;
 }
-.login-title .text-small {
+
+.text-small {
     font-size: 14px;
     color: white;
     margin-bottom: 24px
@@ -26,6 +27,13 @@
 
 .login-options .checkbox label {
     color: white;
+}
+
+.text-small {
+    font-size: 14px;
+    color: white;
+    margin-bottom: 24px;
+    text-align: center;
 }
 
 @media (min-width: 768px) {

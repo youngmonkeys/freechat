@@ -32,6 +32,15 @@ class UpdatePasswordView extends React.Component {
         });
     }
 
+    onKeyDown(e) {
+        if (e.key === 'Enter')
+            this.onSubmitClick();
+
+        if (e.key === 'Esc') {
+            this.setState({show: false});
+        }
+    }
+
     onSubmitClick() {
         const {oldPassword, newPassword} = this.state;
         SocketRequest.requestUpdatePassword(oldPassword, newPassword);
@@ -59,12 +68,14 @@ class UpdatePasswordView extends React.Component {
                             <label htmlFor="oldPassword">Old password</label>
                             <input type="password" className="form-control" id="oldPassword"
                                    onChange={this.onOldPasswordChange.bind(this)}
+                                   onKeyDown={this.onKeyDown.bind(this)}
                                    placeholder="Old password" value={oldPassword}/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="newPassword">New password</label>
                             <input type="password" className="form-control" id="newPassword"
                                    onChange={this.onNewPasswordChange.bind(this)}
+                                   onKeyDown={this.onKeyDown.bind(this)}
                                    placeholder="New password" value={newPassword}/>
                         </div>
                         <button type="button" className="btn btn-primary"

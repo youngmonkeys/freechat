@@ -27,7 +27,7 @@ class ToastView extends React.Component {
             this.showToast(true);
         });
 
-        this.updatePasswordController.addDefaultView("updatePasswordSuccess", e => {
+        this.updatePasswordController.addDefaultView("updatePasswordSuccess", () => {
             this.message = "Update password successfully!";
             this.showToast(false);
         });

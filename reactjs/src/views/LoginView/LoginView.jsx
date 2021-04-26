@@ -55,9 +55,6 @@ class LoginView extends React.Component {
                     <Component.ToastView />
                     <div className="login-title">
                         <h1 className="text-light">Login to your account </h1>
-                        <div className="text-small">
-                            Just login, register automatically
-                        </div>
                     </div>
                     <div>
                         <div className="input-group mb-3">
@@ -82,6 +79,9 @@ class LoginView extends React.Component {
                             </div>
                         </div>
                         <button className="btn btn-info btn-block" onClick={this.onLogin}>Login</button>
+                        <div className="text-small">
+                            Just login, register automatically!
+                        </div>
                     </div>
                 </div>
             </div>

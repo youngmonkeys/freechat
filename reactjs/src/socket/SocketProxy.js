@@ -1,7 +1,7 @@
 // import Ezy from '../lib/ezyfox-server-es6-client'
 import Ezy from 'ezyfox-es6-client';
 import Mvc from 'mvc-es6';
-import {Command, SOCKET_URL} from "./SocketConstants";
+import {Command, ErrorCodes, SOCKET_URL} from "./SocketConstants";
 
 class SocketProxy {
 
@@ -107,14 +107,15 @@ class SocketProxy {
         });
 
         setupApp.addDataHandler(Command.UPDATE_PASSWORD, function (app, data) {
-            // data: [STATUS, MESSAGE], e.g., ["error", "Wrong old password"]
             console.log("handle update user password: " + JSON.stringify(data))
-            if (data[0] === "error") {
+            updatePasswordController.updateViews("updatePasswordSuccess", null);
+            updatePasswordController.updateViews("doneUpdatePassword", null);
+        });
+
+        setupApp.addDataHandler(Command.ERROR, function (app, data) {
+            let errorCode = data[0];
+            if (errorCode === ErrorCodes.WRONG_PASSWORD) {
                 updatePasswordController.updateViews("updatePasswordError", data[1]);
-            }
-            if (data[0] === "success") {
-                updatePasswordController.updateViews("updatePasswordSuccess", data[1]);
-                updatePasswordController.updateViews("doneUpdatePassword", null);
             }
         });
 
