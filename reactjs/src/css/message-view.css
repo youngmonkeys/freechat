@@ -63,6 +63,14 @@
 .left-branding button i {
     color: #1C2B36;
 }
+
+.dropdown .dropdown-menu {
+    box-shadow: none;
+}
+.dropdown .dropdown-menu .dropdown-item {
+    font-size: 14px;
+}
+
 @media (min-width: 992px) {
     .left-branding button {
         display: none;

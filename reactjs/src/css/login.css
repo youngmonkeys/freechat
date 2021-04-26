@@ -1,5 +1,6 @@
 .login-div-wrap {
     height: 100vh;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,8 +15,13 @@
 }
 .login-title .text-light {
     font-size: 24px;
-    margin-bottom: 25px;
+    /*margin-bottom: 25px;*/
     font-weight: 700;
+}
+.login-title .text-small {
+    font-size: 14px;
+    color: white;
+    margin-bottom: 24px
 }
 
 .login-options .checkbox label {

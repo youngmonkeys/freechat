@@ -13,8 +13,8 @@ class MessageItemView extends React.Component {
     render() {
         const {data} = this.props;
         return (
-            data.reply 
-            ? 
+            data.reply
+            ?
             (
                 <li className="replies">
                     <img src={require('../../images/50x50.png')} alt="" />
@@ -32,7 +32,7 @@ class MessageItemView extends React.Component {
     }
 }
 
-class MessageListView extends React.Component { 
+class MessageListView extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -40,7 +40,7 @@ class MessageListView extends React.Component {
     componentWillUpdate(nextProps) {
         // check scroll logic
     }
-    
+
     componentDidUpdate() {
         this.scrollToBottom();
     }
@@ -181,19 +181,19 @@ class MyShortProfileView extends React.Component {
                     <div id="status-options">
                     <ul>
                         <li id="status-online" className="active">
-                            <span className="status-circle"></span> 
+                            <span className="status-circle"></span>
                             <p>Online</p>
                         </li>
                         <li id="status-away">
-                            <span className="status-circle"></span> 
+                            <span className="status-circle"></span>
                             <p>Away</p>
                         </li>
                         <li id="status-busy">
-                            <span className="status-circle"></span> 
+                            <span className="status-circle"></span>
                             <p>Busy</p>
                         </li>
                         <li id="status-offline">
-                            <span className="status-circle"></span> 
+                            <span className="status-circle"></span>
                             <p>Offline</p>
                         </li>
                     </ul>
@@ -443,7 +443,18 @@ class MessageView extends React.Component {
                                         <i className="icon-user-plus" data-toggle="modal" data-target="#addContactsModel" aria-hidden="true"></i>
                                         <span>Add contact</span>
                                     </button>
-                                    <button id="setting"><i className="icon-gear" aria-hidden="true"></i> <span>Settings</span></button>
+                                    <div class="dropdown">
+                                        <button id="setting" className="btn dropdown-toggle"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i className="icon-gear" aria-hidden="true"></i> <span>Settings</span>                                        </button>
+                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <span className="dropdown-item" href="#">Update password</span>
+                                            <span className="dropdown-item" href="#">Another action</span>
+                                        </div>
+                                    </div>
+                                    {/*<button id="setting">*/}
+                                    {/*    <i className="icon-gear" aria-hidden="true"></i> <span>Settings</span>*/}
+                                    {/*</button>*/}
                                 </div>
                             </div>
                         </div>
@@ -453,14 +464,14 @@ class MessageView extends React.Component {
                             <MessageListView messages={messages} />
                             <div className="message-input">
                                 <div className="wrap">
-                                    <input type="text" 
-                                        value={message}  
-                                        placeholder="Write your message..." 
+                                    <input type="text"
+                                        value={message}
+                                        placeholder="Write your message..."
                                         onChange={this.onMessageChange.bind(this)}
-                                        onKeyDown={this.addAndSendMessage.bind(this)}  /> 
+                                        onKeyDown={this.addAndSendMessage.bind(this)}  />
                                     <i className="icon-attachment attachment" aria-hidden="true"></i>
-                                    <button className="submit" 
-                                        id="buttonSendMessage" 
+                                    <button className="submit"
+                                        id="buttonSendMessage"
                                         onClick={this.addAndSendMessage.bind(this)}>
                                         <i className="icon-paperplane" aria-hidden="true"></i>
                                     </button>
@@ -469,7 +480,7 @@ class MessageView extends React.Component {
                         </div>
                         </div>
                     </div>
-                </section>   
+                </section>
                 <footer className="footer-container">
                     <div className="row">
                         <div className="col-md-12 col-sm-12">
@@ -483,7 +494,7 @@ class MessageView extends React.Component {
                 </footer>
                 <a id="scrollTop" href="#top"><i className="icon-arrow-up12"></i></a>
                 <AddContactView parent={this} />
-            </div>  
+            </div>
         );
     }
 }

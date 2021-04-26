@@ -55,6 +55,9 @@ class LoginView extends React.Component {
                     <Component.ToastView />
                     <div className="login-title">
                         <h1 className="text-light">Login to your account </h1>
+                        <div className="text-small">
+                            Just login, register automatically
+                        </div>
                     </div>
                     <div>
                         <div className="input-group mb-3">
@@ -68,7 +71,7 @@ class LoginView extends React.Component {
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon-password"><i className="icon-key"></i></span>
                             </div>
-                            <input type="password" className="form-control" placeholder="password" aria-label="password" aria-describedby="basic-addon-password" 
+                            <input type="password" className="form-control" placeholder="password" aria-label="password" aria-describedby="basic-addon-password"
                                 value={password} onChange={this.onPasswordChange} onKeyDown={this.onKeyDown} />
                         </div>
                         <div className="login-options">

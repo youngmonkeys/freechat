@@ -105,6 +105,10 @@ class SocketProxy {
             contactController.updateViews("searchContactsUsers", data['users']);
         });
 
+        setupApp.addDataHandler(Command.UPDATE_PASSWORD, function (app, data) {
+            console.log("handle update user password: " + JSON.stringify(data))
+        });
+
         return client;
     }
 
