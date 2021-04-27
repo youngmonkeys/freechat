@@ -17,9 +17,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build": "react-scripts build && BUILDVERSION=$(date +%Y-%m-%d)-$(date +%T) && sed -i -- 's/%BUILDVERSION%/'$BUILDVERSION'/g' build/index.html && echo Build Version = $BUILDVERSION"
   },
   "browserslist": {
     "production": [
