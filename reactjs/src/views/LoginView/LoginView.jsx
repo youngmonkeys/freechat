@@ -68,7 +68,7 @@ class LoginView extends React.Component {
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon-password"><i className="icon-key"></i></span>
                             </div>
-                            <input type="password" className="form-control" placeholder="password" aria-label="password" aria-describedby="basic-addon-password" 
+                            <input type="password" className="form-control" placeholder="password" aria-label="password" aria-describedby="basic-addon-password"
                                 value={password} onChange={this.onPasswordChange} onKeyDown={this.onKeyDown} />
                         </div>
                         <div className="login-options">
@@ -79,6 +79,9 @@ class LoginView extends React.Component {
                             </div>
                         </div>
                         <button className="btn btn-info btn-block" onClick={this.onLogin}>Login</button>
+                        <div className="text-small">
+                            Just login, register automatically!
+                        </div>
                     </div>
                 </div>
             </div>

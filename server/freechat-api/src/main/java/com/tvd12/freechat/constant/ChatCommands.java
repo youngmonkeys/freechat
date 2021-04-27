@@ -12,6 +12,7 @@ public final class ChatCommands {
 	public static final String CHAT_CHANNEL_MESSAGE			= "8";
 	public static final String SEARCH_CONTACTS				= "9";
 	public static final String SEARCH_CONTACTS_USERS		= "10";
+	public static final String UPDATE_PASSWORD				= "11";
 
 	private ChatCommands() {
 	}

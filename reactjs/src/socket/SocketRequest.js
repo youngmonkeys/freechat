@@ -8,6 +8,13 @@ class SocketRequestClass {
         this.getApp().sendRequest(Command.SUGGEST_CONTACTS);
     }
 
+    requestUpdatePassword(oldPassword, newPassword) {
+        this.getApp().sendRequest(
+            Command.UPDATE_PASSWORD,
+            {"oldPassword": oldPassword, "newPassword": newPassword}
+        );
+    }
+
     searchContacts(keyword, skip, limit) {
         this.getApp().sendRequest(
             Command.SEARCH_CONTACTS,

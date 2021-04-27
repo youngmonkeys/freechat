@@ -1,5 +1,6 @@
 .login-div-wrap {
     height: 100vh;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,8 +19,21 @@
     font-weight: 700;
 }
 
+.text-small {
+    font-size: 14px;
+    color: white;
+    margin-bottom: 24px
+}
+
 .login-options .checkbox label {
     color: white;
+}
+
+.text-small {
+    font-size: 14px;
+    color: white;
+    margin-bottom: 24px;
+    text-align: center;
 }
 
 @media (min-width: 768px) {

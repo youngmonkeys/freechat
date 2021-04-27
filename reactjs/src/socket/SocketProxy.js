@@ -1,7 +1,7 @@
 // import Ezy from '../lib/ezyfox-server-es6-client'
 import Ezy from 'ezyfox-es6-client';
 import Mvc from 'mvc-es6';
-import {Command, SOCKET_URL} from "./SocketConstants";
+import {Command, ErrorCodes, SOCKET_URL} from "./SocketConstants";
 
 class SocketProxy {
 
@@ -69,6 +69,7 @@ class SocketProxy {
 
         let messageController = mvc.getController("message");
         let contactController = mvc.getController("contact");
+        let updatePasswordController = mvc.getController("updatePassword");
 
         setupApp.addDataHandler(Command.SUGGEST_CONTACTS, function (app, data) {
             console.log("handle suggestion contacts: " + JSON.stringify(data));
@@ -103,6 +104,19 @@ class SocketProxy {
         setupApp.addDataHandler(Command.SEARCH_CONTACTS_USER, function (app, data) {
             console.log("handle search contacts users: " + JSON.stringify(data));
             contactController.updateViews("searchContactsUsers", data['users']);
+        });
+
+        setupApp.addDataHandler(Command.UPDATE_PASSWORD, function (app, data) {
+            console.log("handle update user password: " + JSON.stringify(data))
+            updatePasswordController.updateViews("updatePasswordSuccess", null);
+            updatePasswordController.updateViews("doneUpdatePassword", null);
+        });
+
+        setupApp.addDataHandler(Command.ERROR, function (app, data) {
+            let errorCode = data[0];
+            if (errorCode === ErrorCodes.WRONG_PASSWORD) {
+                updatePasswordController.updateViews("updatePasswordError", data[1]);
+            }
         });
 
         return client;
