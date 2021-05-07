@@ -3,8 +3,8 @@ package com.tvd12.freechat.common.repo;
 import java.util.List;
 import java.util.Set;
 
-import com.tvd12.ezydata.database.annotation.EzyQuery;
 import com.tvd12.ezydata.mongodb.EzyMongoRepository;
+import com.tvd12.ezyfox.database.annotation.EzyQuery;
 import com.tvd12.ezyfox.database.annotation.EzyRepository;
 import com.tvd12.ezyfox.util.Next;
 import com.tvd12.freechat.common.entity.ChatUser;

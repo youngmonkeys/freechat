@@ -12,7 +12,6 @@ import com.tvd12.ezyfoxserver.context.EzyAppContext;
 import com.tvd12.ezyfoxserver.context.EzyZoneContext;
 import com.tvd12.ezyfoxserver.setting.EzyAppSetting;
 import com.tvd12.ezyfoxserver.support.entry.EzySimpleAppEntry;
-import com.tvd12.ezyfoxserver.support.factory.EzyAppResponseFactory;
 
 public class ChatAppEntry extends EzySimpleAppEntry {
 
@@ -66,14 +65,6 @@ public class ChatAppEntry extends EzySimpleAppEntry {
 	protected String[] getScanableBindingPackages() {
 		return new String[] {
 			"com.tvd12.freechat"
-		};
-	}
-	
-	@SuppressWarnings("rawtypes")
-	@Override
-	protected Class[] getSingletonClasses() {
-		return new Class[] {
-			EzyAppResponseFactory.class
 		};
 	}
 	

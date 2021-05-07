@@ -3,7 +3,7 @@ package com.tvd12.freechat.test.game;
 import static com.tvd12.freechat.test.game.GameCommands.JOIN_ROOM;
 
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
-import com.tvd12.ezyfox.core.annotation.EzyClientRequestListener;
+import com.tvd12.ezyfox.core.annotation.EzyRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
 import com.tvd12.freechat.handler.ChatClientRequestHandler;
 
@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Setter
 @EzyPrototype
-@EzyClientRequestListener(JOIN_ROOM)
+@EzyRequestListener(JOIN_ROOM)
 public class GameJoinRoomHandler 
 		extends ChatClientRequestHandler {
 

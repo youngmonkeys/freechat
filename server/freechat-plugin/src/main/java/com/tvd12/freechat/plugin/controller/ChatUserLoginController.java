@@ -2,7 +2,7 @@ package com.tvd12.freechat.plugin.controller;
 
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
-import com.tvd12.ezyfox.core.annotation.EzyServerEventHandler;
+import com.tvd12.ezyfox.core.annotation.EzyEventHandler;
 import com.tvd12.ezyfox.io.EzyStrings;
 import com.tvd12.ezyfox.sercurity.EzySHA256;
 import com.tvd12.ezyfoxserver.constant.EzyEventNames;
@@ -20,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EzySingleton
-@EzyServerEventHandler(EzyEventNames.USER_LOGIN)
+@EzyEventHandler(EzyEventNames.USER_LOGIN)
 public class ChatUserLoginController 
 		extends EzyAbstractPluginEventController<EzyUserLoginEvent> {
 

@@ -39,13 +39,13 @@ public class ChatContactServiceImpl implements ChatContactService {
 	
 	@Override
 	public int getContactCount(String actor) {
-		return contactRepo.countContactByActor(actor, actor);
+		return contactRepo.countContactByActor(actor);
 	}
 	
 	@Override
 	public Set<String> getContactNames(String actor, int skip, int limit) {
 		List<ChatContact> contacts = contactRepo.findContactsByActor(
-				actor, actor,
+				actor,
 				Next.fromSkipLimit(skip, limit)
 		);
 		return EzySets.newHashSet(contacts, c ->

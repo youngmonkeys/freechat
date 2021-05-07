@@ -2,12 +2,15 @@ package com.tvd12.freechat.handler;
 
 import static com.tvd12.freechat.constant.ChatCommands.SEARCH_CONTACTS_USERS;
 
+import java.util.List;
+import java.util.Set;
+
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
 import com.tvd12.ezyfox.binding.EzyDataBinding;
 import com.tvd12.ezyfox.binding.annotation.EzyObjectBinding;
 import com.tvd12.ezyfox.collect.Lists;
-import com.tvd12.ezyfox.core.annotation.EzyClientRequestListener;
+import com.tvd12.ezyfox.core.annotation.EzyRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
 import com.tvd12.ezyfox.io.EzyLists;
 import com.tvd12.ezyfox.io.EzyStrings;
@@ -18,13 +21,10 @@ import com.tvd12.freechat.service.ChatChannelUserService;
 
 import lombok.Setter;
 
-import java.util.List;
-import java.util.Set;
-
 @Setter
 @EzyPrototype
 @EzyObjectBinding
-@EzyClientRequestListener(SEARCH_CONTACTS_USERS)
+@EzyRequestListener(SEARCH_CONTACTS_USERS)
 public class ChatSearchContactsUsersHandler
 		extends ChatClientRequestHandler 
 		implements EzyDataBinding {

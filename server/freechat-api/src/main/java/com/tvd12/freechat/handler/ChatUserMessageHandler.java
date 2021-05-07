@@ -6,7 +6,7 @@ import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
 import com.tvd12.ezyfox.binding.EzyDataBinding;
 import com.tvd12.ezyfox.binding.annotation.EzyObjectBinding;
-import com.tvd12.ezyfox.core.annotation.EzyClientRequestListener;
+import com.tvd12.ezyfox.core.annotation.EzyRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
 import com.tvd12.freechat.common.service.ChatMaxIdService;
 import com.tvd12.freechat.constant.ChatEntities;
@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 @EzyPrototype
 @EzyObjectBinding
-@EzyClientRequestListener(CHAT_USER_MESSAGE)
+@EzyRequestListener(CHAT_USER_MESSAGE)
 public class ChatUserMessageHandler 
 		extends ChatClientRequestHandler 
 		implements EzyDataBinding {

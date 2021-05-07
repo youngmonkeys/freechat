@@ -1,7 +1,7 @@
 package com.tvd12.freechat.common.entity;
 
-import com.tvd12.ezydata.database.annotation.EzyCollection;
 import com.tvd12.ezyfox.annotation.EzyId;
+import com.tvd12.ezyfox.database.annotation.EzyCollection;
 
 import lombok.Getter;
 import lombok.Setter;

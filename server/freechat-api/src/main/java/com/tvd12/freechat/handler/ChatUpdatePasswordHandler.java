@@ -7,22 +7,20 @@ import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
 import com.tvd12.ezyfox.binding.EzyDataBinding;
 import com.tvd12.ezyfox.binding.annotation.EzyObjectBinding;
 import com.tvd12.ezyfox.binding.annotation.EzyValue;
-import com.tvd12.ezyfox.core.annotation.EzyClientRequestListener;
+import com.tvd12.ezyfox.core.annotation.EzyRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
 import com.tvd12.ezyfox.sercurity.EzySHA256;
 import com.tvd12.freechat.common.entity.ChatUser;
 import com.tvd12.freechat.common.service.ChatUserService;
 import com.tvd12.freechat.constant.ChatErrors;
-import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Setter;
 
 
 @Setter
 @EzyPrototype
 @EzyObjectBinding
-@EzyClientRequestListener(UPDATE_PASSWORD)
+@EzyRequestListener(UPDATE_PASSWORD)
 public class ChatUpdatePasswordHandler extends ChatClientRequestHandler implements EzyDataBinding {
 
     // EzyValue: get value from object with key "oldPassword"

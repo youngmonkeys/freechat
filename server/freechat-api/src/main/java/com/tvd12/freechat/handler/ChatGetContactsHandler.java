@@ -8,7 +8,7 @@ import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
 import com.tvd12.ezyfox.binding.EzyDataBinding;
 import com.tvd12.ezyfox.binding.annotation.EzyObjectBinding;
-import com.tvd12.ezyfox.core.annotation.EzyClientRequestListener;
+import com.tvd12.ezyfox.core.annotation.EzyRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
 import com.tvd12.freechat.data.ChatChannelUsers;
 import com.tvd12.freechat.service.ChatChannelUserService;
@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @EzyPrototype
 @EzyObjectBinding(write = false)
-@EzyClientRequestListener(command = CHAT_GET_CONTACTS)
+@EzyRequestListener(command = CHAT_GET_CONTACTS)
 public class ChatGetContactsHandler 
 		extends ChatClientRequestHandler
 		implements EzyDataBinding {
