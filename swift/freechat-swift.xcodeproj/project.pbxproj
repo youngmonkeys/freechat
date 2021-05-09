@@ -32,7 +32,6 @@
 		E9BE31D52187FB88009F9800 /* EzyArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30BC2187FB88009F9800 /* EzyArray.cpp */; };
 		E9BE31D62187FB88009F9800 /* EzyValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30BD2187FB88009F9800 /* EzyValue.cpp */; };
 		E9BE31D72187FB88009F9800 /* EzyUser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30C12187FB88009F9800 /* EzyUser.cpp */; };
-		E9BE31D82187FB88009F9800 /* EzyJson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30C22187FB88009F9800 /* EzyJson.cpp */; };
 		E9BE31D92187FB88009F9800 /* EzyPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30C32187FB88009F9800 /* EzyPlugin.cpp */; };
 		E9BE31DA2187FB88009F9800 /* EzyMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30C82187FB88009F9800 /* EzyMessage.cpp */; };
 		E9BE31DB2187FB88009F9800 /* EzyDataDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30C92187FB88009F9800 /* EzyDataDecoder.cpp */; };
@@ -1153,7 +1152,6 @@
 				E9BE31D92187FB88009F9800 /* EzyPlugin.cpp in Sources */,
 				E9BE31E82187FB88009F9800 /* EzyAutoReleasePool.cpp in Sources */,
 				E9BE3231218803F2009F9800 /* EzyNativeStrings.mm in Sources */,
-				E9BE31D82187FB88009F9800 /* EzyJson.cpp in Sources */,
 				E901F270230DAE5D00C98CC5 /* EzyPluginDataHandlers.cpp in Sources */,
 				E9BE321B218803DE009F9800 /* EzyMethodNames.mm in Sources */,
 				E9B365ED23D2B5CF0007F3C1 /* EzyNSNumber.m in Sources */,
