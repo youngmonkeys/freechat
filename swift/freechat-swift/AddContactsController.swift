@@ -10,17 +10,20 @@ import UIKit
 
 class AddContactsController: UIViewController, UITableViewDataSource {
 
-    private var contactDatas: [ContactCellData] = [];
+    private var contactDatas: [AddContactCellData] = [];
     
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var contactTable: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         contactTable.dataSource = self;
         let mvc = Mvc.getInstance()
+        let connectionModel = mvc.getModel().get(name: "connection") as! Model
+        usernameLabel.text = connectionModel.get(name: "username") as? String
         let controller = mvc.getController(name: "contact")
-        controller.addView(action: "add-contacts", view: AddContactsView(parent: self))
-        SocketRequests.sendGetContacts()
+        controller.addView(action: "search-contacts", view: AddContactsView(parent: self))
+        SocketRequests.sendGetSuggestContacts()
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -32,10 +35,10 @@ class AddContactsController: UIViewController, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell") as! ContactTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell") as! AddContactTableViewCell
         let contactData = contactDatas[indexPath.row]
-        cell.setUsername(value: contactData.getUsersString())
-        cell.setLastMessage(value: contactData.lastMessage)
+        cell.setUsername(value: contactData.username)
+        cell.setFullName(value: contactData.fullName)
         return cell
     }
     
@@ -49,9 +52,9 @@ class AddContactsController: UIViewController, UITableViewDataSource {
             for contact in contacts {
                 let c = contact as! NSDictionary
                 parent.contactDatas.append(
-                    ContactCellData(
-                        channelId: c["channelId"] as! Int64,
-                        users: c["users"] as! NSArray
+                    AddContactCellData(
+                        username: c["username"] as! String,
+                        fullName: c["fullName"] as! String
                     )
                 )
             }

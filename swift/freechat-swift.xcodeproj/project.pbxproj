@@ -41,6 +41,7 @@
 		F102F34026495F53001D9061 /* SocketRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F33F26495F53001D9061 /* SocketRequests.swift */; };
 		F102F34226498C81001D9061 /* AddContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F34126498C81001D9061 /* AddContactsController.swift */; };
 		F102F3442649940F001D9061 /* ViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F3432649940F001D9061 /* ViewManager.swift */; };
+		F102F346264A5FCF001D9061 /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F345264A5FCF001D9061 /* AddContactTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -413,6 +414,7 @@
 		F102F33F26495F53001D9061 /* SocketRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketRequests.swift; sourceTree = "<group>"; };
 		F102F34126498C81001D9061 /* AddContactsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsController.swift; sourceTree = "<group>"; };
 		F102F3432649940F001D9061 /* ViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewManager.swift; sourceTree = "<group>"; };
+		F102F345264A5FCF001D9061 /* AddContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1011,6 +1013,7 @@
 				E9FDCF7E2186B48B00EBC4EE /* ContactsController.swift */,
 				F102F34126498C81001D9061 /* AddContactsController.swift */,
 				E97991CD2186F7A700436B73 /* ContactTableViewCell.swift */,
+				F102F345264A5FCF001D9061 /* AddContactTableViewCell.swift */,
 				E9BE324F21887CC1009F9800 /* Mvc.swift */,
 				F102F33D264953D4001D9061 /* Constants.swift */,
 				F102F33F26495F53001D9061 /* SocketRequests.swift */,
@@ -1127,6 +1130,7 @@
 				E9BE324621882927009F9800 /* EzyConstants.swift in Sources */,
 				E9BE3212218801E8009F9800 /* EzyMethodProxy.mm in Sources */,
 				E97991CE2186F7A700436B73 /* ContactTableViewCell.swift in Sources */,
+				F102F346264A5FCF001D9061 /* AddContactTableViewCell.swift in Sources */,
 				F102F33C26493F40001D9061 /* SocketProxy.swift in Sources */,
 				E9BE324C2188321D009F9800 /* EzyHandlers.swift in Sources */,
 				E97EDB1922F70E2000202705 /* EzyLogger.swift in Sources */,

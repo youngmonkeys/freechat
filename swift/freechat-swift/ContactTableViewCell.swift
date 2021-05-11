@@ -28,10 +28,6 @@ class ContactTableViewCell: UITableViewCell {
     @IBOutlet weak var avatarView: UIImageView!
     @IBOutlet weak var usernameView: UILabel!
     @IBOutlet weak var lastMessageView: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

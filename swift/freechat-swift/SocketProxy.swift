@@ -29,6 +29,7 @@ public class SocketProxy {
             .addDataHandler(cmd: EzyCommand.HANDSHAKE, handler: ExHandshakeHandler())
         _ = setup.setupApp(appName: ZONE_APP_NAME)
             .addDataHandler(cmd: Commands.GET_CONTACTS, handler: GetContactsResponseHandler())
+            .addDataHandler(cmd: Commands.SUGGEST_CONTACTS, handler: SuggestContactsResponseHandler())
         Thread.current.name = "main";
         clients.processEvents()
     }
@@ -80,3 +81,12 @@ class GetContactsResponseHandler : EzyAbstractAppDataHandler<NSArray> {
         controller.updateViews(action: "add-contacts", data: data)
     }
 };
+
+class SuggestContactsResponseHandler : EzyAbstractAppDataHandler<NSDictionary> {
+    override func process(app: EzyApp, data: NSDictionary) {
+        let contacts = data["users"] as! NSArray
+        let mvc = Mvc.getInstance()
+        let contactController = mvc.getController(name: "contact")
+        contactController.updateViews(action: "search-contacts", data: contacts)
+    }
+}

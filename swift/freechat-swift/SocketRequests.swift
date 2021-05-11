@@ -16,6 +16,10 @@ public class SocketRequests {
         getApp()?.sendRequest(cmd: "5", data: requestData)
     }
     
+    public static func sendGetSuggestContacts() {
+        getApp()?.sendReqest(cmd: Commands.SUGGEST_CONTACTS)
+    }
+    
     private static func getApp() -> EzyApp? {
         return EzyClients.getInstance()
             .getDefaultClient()

@@ -109,6 +109,13 @@
                                             <constraint firstAttribute="width" constant="44" id="Wgu-Hd-Yun"/>
                                         </constraints>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehx-Iz-gmb">
+                                        <rect key="frame" x="57" y="6" width="63" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="3nE-Xg-8iV">
                                         <rect key="frame" x="120" y="3" width="250" height="44"/>
                                         <constraints>
@@ -200,9 +207,9 @@
                                                 </tableViewCellContentView>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <connections>
-                                                    <outlet property="avatarView" destination="GOV-hM-Qdd" id="EMW-uC-3Nj"/>
-                                                    <outlet property="lastMessageView" destination="aka-1F-jEM" id="C3O-Gu-9YY"/>
-                                                    <outlet property="usernameView" destination="os6-Ge-LRi" id="Qvg-Uc-fRc"/>
+                                                    <outlet property="avatarView" destination="GOV-hM-Qdd" id="EcH-3C-U7T"/>
+                                                    <outlet property="lastMessageView" destination="aka-1F-jEM" id="hI7-SJ-n97"/>
+                                                    <outlet property="usernameView" destination="os6-Ge-LRi" id="xp3-qp-Elk"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -256,6 +263,7 @@
                     <navigationItem key="navigationItem" id="IyY-KC-Aur"/>
                     <connections>
                         <outlet property="contactTable" destination="ukY-eM-JKc" id="gt4-V8-50n"/>
+                        <outlet property="usernameLabel" destination="ehx-Iz-gmb" id="jv7-ZS-lxJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nKI-yG-bx4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -291,6 +299,13 @@
                                         </constraints>
                                         <textInputTraits key="textInputTraits"/>
                                     </searchBar>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yw-Xv-jKg">
+                                        <rect key="frame" x="57" y="3" width="63" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -310,7 +325,7 @@
                                         <rect key="frame" x="0.0" y="5" width="375" height="537"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="contactCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="contactCell" id="x6E-VR-uce" customClass="ContactTableViewCell" customModule="freechat_swift" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="contactCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="contactCell" id="x6E-VR-uce" customClass="AddContactTableViewCell" customModule="freechat_swift" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="24.5" width="375" height="54"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="x6E-VR-uce" id="ytk-5Y-VGp">
@@ -332,7 +347,7 @@
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="full name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2D-LA-cbv" userLabel="last message">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="full name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2D-LA-cbv" userLabel="fullName">
                                                                             <rect key="frame" x="12" y="19" width="101" height="21"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="150" id="J2p-ZH-hLk"/>
@@ -374,9 +389,9 @@
                                                 </tableViewCellContentView>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <connections>
-                                                    <outlet property="avatarView" destination="Mwd-F8-MSr" id="IE6-ue-c9F"/>
-                                                    <outlet property="lastMessageView" destination="C2D-LA-cbv" id="BSE-jG-eOp"/>
-                                                    <outlet property="usernameView" destination="V9T-tC-zrC" id="JTA-YH-iQN"/>
+                                                    <outlet property="avatarView" destination="Mwd-F8-MSr" id="iAL-ct-eB0"/>
+                                                    <outlet property="fullNameView" destination="C2D-LA-cbv" id="orZ-jD-Xqh"/>
+                                                    <outlet property="usernameView" destination="V9T-tC-zrC" id="0pp-Pf-sOc"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -430,11 +445,12 @@
                     <navigationItem key="navigationItem" id="eCd-da-8dG"/>
                     <connections>
                         <outlet property="contactTable" destination="tOJ-Pi-YE3" id="iGv-Jc-LJY"/>
+                        <outlet property="usernameLabel" destination="8yw-Xv-jKg" id="38y-cC-vPy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qj5-Kb-SPD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1718" y="33"/>
+            <point key="canvasLocation" x="1717.5999999999999" y="32.833583208395808"/>
         </scene>
     </scenes>
     <resources>

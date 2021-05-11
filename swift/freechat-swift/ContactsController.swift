@@ -12,12 +12,15 @@ class ContactsController: UIViewController, UITableViewDataSource {
 
     private var contactDatas: [ContactCellData] = [];
     
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var contactTable: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         contactTable.dataSource = self;
         let mvc = Mvc.getInstance()
+        let connectionModel = mvc.getModel().get(name: "connection") as! Model
+        usernameLabel.text = connectionModel.get(name: "username") as? String
         let controller = mvc.getController(name: "contact")
         controller.addView(action: "add-contacts", view: AddContactsView(parent: self))
         SocketRequests.sendGetContacts()
