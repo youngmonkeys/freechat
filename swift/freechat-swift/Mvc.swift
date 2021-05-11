@@ -9,15 +9,20 @@
 import Foundation
 
 public class Mvc {
+    private var model = Model()
     private var controllers : [String: Controller]
     private static let INSTANCE = Mvc()
     
-    public static func getInstance() -> Mvc! {
+    public static func getInstance() -> Mvc {
         return INSTANCE;
     }
     
     private init() {
         controllers = [String: Controller]()
+    }
+    
+    public func getModel() -> Model {
+        return model
     }
     
     public func addController(name: String, controller: Controller) {
@@ -41,6 +46,10 @@ public class Controller {
         views = [String: [String : View]]()
     }
     
+    public func addView(action: String, view: View) {
+        addView(action: action, viewId: action, view: view)
+    }
+    
     public func addView(action: String, viewId: String, view: View) {
         var available = views[action]
         if(available == nil) {
@@ -57,6 +66,14 @@ public class Controller {
         }
     }
     
+    public func updateViews(action: String) {
+        updateViews(action: action, data: 0)
+    }
+    
+    public func updateViews(action: String, data: Any) {
+        updateViews(action: action, component: action, data: data)
+    }
+    
     public func updateViews(action: String, component: String, data: Any) {
         let available = views[action]
         if(available != nil) {
@@ -64,5 +81,17 @@ public class Controller {
                 v.update(component: component, data: data)
             }
         }
+    }
+}
+
+public class Model {
+    private let dataByName = NSMutableDictionary()
+    
+    public func get(name: String) -> Any? {
+        return dataByName[name]
+    }
+    
+    public func set(name: String, value: Any) -> Void {
+        dataByName[name] = value
     }
 }

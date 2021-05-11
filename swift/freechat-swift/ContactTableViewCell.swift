@@ -9,14 +9,17 @@
 import UIKit
 
 class ContactCellData : NSObject {
-    var username : String!
-    var lastMessage : String!
+    let channelId: Int64
+    let users : NSArray
+    var lastMessage : String = ""
     
-    override init() {}
+    init(channelId: Int64, users: NSArray) {
+        self.channelId = channelId
+        self.users = users.copy() as! NSArray
+    }
     
-    init(username: String, lastMessage: String) {
-        self.username = username;
-        self.lastMessage = lastMessage;
+    func getUsersString() -> String {
+        return users.componentsJoined(by: ", ")
     }
 }
 

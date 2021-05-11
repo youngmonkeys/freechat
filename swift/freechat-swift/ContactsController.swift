@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactViewController: UIViewController, UITableViewDataSource, View {
+class ContactsController: UIViewController, UITableViewDataSource {
 
     private var contactDatas: [ContactCellData] = [];
     
@@ -18,25 +18,11 @@ class ContactViewController: UIViewController, UITableViewDataSource, View {
         super.viewDidLoad()
         contactTable.dataSource = self;
         let mvc = Mvc.getInstance()
-        let controller = mvc?.getController(name: "contact")
-        controller?.addView(action: "init", viewId: "self", view: self)
-        let clients = EzyClients.getInstance()
-        let client = clients?.getDefaultClient()
-        let app = client?.zone?.getApp()
-        let dict = NSMutableDictionary()
-        dict["skip"] = 0;
-        dict["limit"] = 100;
-        app!.sendRequest(cmd: "5", data: dict)
+        let controller = mvc.getController(name: "contact")
+        controller.addView(action: "add-contacts", view: AddContactsView(parent: self))
+        SocketRequests.sendGetContacts()
     }
-    
-    func update(component: String, data: Any) {
-        let contacts = data as! NSArray
-        for contact in contacts {
-            contactDatas.append(ContactCellData(username: contact as! String, lastMessage: "empty"))
-        }
-        contactTable.reloadData()
-    }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -48,8 +34,28 @@ class ContactViewController: UIViewController, UITableViewDataSource, View {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell") as! ContactTableViewCell
         let contactData = contactDatas[indexPath.row]
-        cell.setUsername(value: contactData.username)
+        cell.setUsername(value: contactData.getUsersString())
         cell.setLastMessage(value: contactData.lastMessage)
         return cell
+    }
+    
+    class AddContactsView: View {
+        unowned let parent: ContactsController
+        init(parent: ContactsController) {
+            self.parent = parent
+        }
+        func update(component: String, data: Any) {
+            let contacts = data as! NSArray
+            for contact in contacts {
+                let c = contact as! NSDictionary
+                parent.contactDatas.append(
+                    ContactCellData(
+                        channelId: c["channelId"] as! Int64,
+                        users: c["users"] as! NSArray
+                    )
+                )
+            }
+            parent.contactTable.reloadData()
+        }
     }
 }

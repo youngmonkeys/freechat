@@ -7,60 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E901F26F230DAE5D00C98CC5 /* EzyPluginDataHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E901F26C230DAE5D00C98CC5 /* EzyPluginDataHandler.cpp */; };
-		E901F270230DAE5D00C98CC5 /* EzyPluginDataHandlers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E901F26D230DAE5D00C98CC5 /* EzyPluginDataHandlers.cpp */; };
-		E901F273230DAE8100C98CC5 /* EzyThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E901F271230DAE8100C98CC5 /* EzyThread.cpp */; };
 		E97991CE2186F7A700436B73 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97991CD2186F7A700436B73 /* ContactTableViewCell.swift */; };
-		E97EDB1022F6D7AA00202705 /* EzyMainEventsLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E97EDB0E22F6D7AA00202705 /* EzyMainEventsLoop.cpp */; };
-		E97EDB1422F6D7C300202705 /* EzyScheduleAtFixedRate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E97EDB1322F6D7C200202705 /* EzyScheduleAtFixedRate.cpp */; };
 		E97EDB1922F70E2000202705 /* EzyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97EDB1822F70E2000202705 /* EzyLogger.swift */; };
-		E9AFBB4C231440FF00D9831A /* EzySetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9AFBB4A231440FF00D9831A /* EzySetup.cpp */; };
 		E9B365ED23D2B5CF0007F3C1 /* EzyNSNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B365EC23D2B5CF0007F3C1 /* EzyNSNumber.m */; };
-		E9BE31C72187FB88009F9800 /* EzyEventHandlers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30982187FB88009F9800 /* EzyEventHandlers.cpp */; };
-		E9BE31C82187FB88009F9800 /* EzyDataHandlers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30992187FB88009F9800 /* EzyDataHandlers.cpp */; };
-		E9BE31C92187FB88009F9800 /* EzyEventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE309D2187FB88009F9800 /* EzyEventHandler.cpp */; };
-		E9BE31CA2187FB88009F9800 /* EzyAppDataHandlers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE309F2187FB88009F9800 /* EzyAppDataHandlers.cpp */; };
-		E9BE31CB2187FB88009F9800 /* EzyAppDataHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30A12187FB88009F9800 /* EzyAppDataHandler.cpp */; };
-		E9BE31CC2187FB88009F9800 /* EzyDataHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30A22187FB88009F9800 /* EzyDataHandler.cpp */; };
-		E9BE31CD2187FB88009F9800 /* EzyLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30A62187FB88009F9800 /* EzyLogger.cpp */; };
-		E9BE31CE2187FB88009F9800 /* EzyClientConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30AC2187FB88009F9800 /* EzyClientConfig.cpp */; };
-		E9BE31D02187FB88009F9800 /* EzyApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30B12187FB88009F9800 /* EzyApp.cpp */; };
-		E9BE31D12187FB88009F9800 /* EzyString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30B22187FB88009F9800 /* EzyString.cpp */; };
-		E9BE31D22187FB88009F9800 /* EzyZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30B42187FB88009F9800 /* EzyZone.cpp */; };
-		E9BE31D32187FB88009F9800 /* EzyPrimitive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30B52187FB88009F9800 /* EzyPrimitive.cpp */; };
-		E9BE31D42187FB88009F9800 /* EzyObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30B82187FB88009F9800 /* EzyObject.cpp */; };
-		E9BE31D52187FB88009F9800 /* EzyArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30BC2187FB88009F9800 /* EzyArray.cpp */; };
-		E9BE31D62187FB88009F9800 /* EzyValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30BD2187FB88009F9800 /* EzyValue.cpp */; };
-		E9BE31D72187FB88009F9800 /* EzyUser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30C12187FB88009F9800 /* EzyUser.cpp */; };
-		E9BE31D92187FB88009F9800 /* EzyPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30C32187FB88009F9800 /* EzyPlugin.cpp */; };
-		E9BE31DA2187FB88009F9800 /* EzyMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30C82187FB88009F9800 /* EzyMessage.cpp */; };
-		E9BE31DB2187FB88009F9800 /* EzyDataDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30C92187FB88009F9800 /* EzyDataDecoder.cpp */; };
-		E9BE31DC2187FB88009F9800 /* EzyDataEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30CB2187FB88009F9800 /* EzyDataEncoder.cpp */; };
-		E9BE31DD2187FB88009F9800 /* EzyClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE30CC2187FB88009F9800 /* EzyClient.cpp */; };
-		E9BE31DE2187FB88009F9800 /* EzyClients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE315F2187FB88009F9800 /* EzyClients.cpp */; };
-		E9BE31DF2187FB88009F9800 /* EzyPluginManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31632187FB88009F9800 /* EzyPluginManager.cpp */; };
-		E9BE31E02187FB88009F9800 /* EzyAppManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31642187FB88009F9800 /* EzyAppManager.cpp */; };
-		E9BE31E12187FB88009F9800 /* EzyHandlerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31652187FB88009F9800 /* EzyHandlerManager.cpp */; };
-		E9BE31E22187FB88009F9800 /* EzyPingManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31662187FB88009F9800 /* EzyPingManager.cpp */; };
-		E9BE31E32187FB88009F9800 /* EzyConnectionStatus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE316C2187FB88009F9800 /* EzyConnectionStatus.cpp */; };
-		E9BE31E42187FB88009F9800 /* EzyCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE316E2187FB88009F9800 /* EzyCommand.cpp */; };
-		E9BE31E52187FB88009F9800 /* EzyDisconnectReason.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31722187FB88009F9800 /* EzyDisconnectReason.cpp */; };
-		E9BE31E62187FB88009F9800 /* EzyConnectionFailedReason.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31732187FB88009F9800 /* EzyConnectionFailedReason.cpp */; };
-		E9BE31E72187FB88009F9800 /* EzyReleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE319E2187FB88009F9800 /* EzyReleasePool.cpp */; };
-		E9BE31E82187FB88009F9800 /* EzyAutoReleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE319F2187FB88009F9800 /* EzyAutoReleasePool.cpp */; };
-		E9BE31E92187FB88009F9800 /* EzyRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31A12187FB88009F9800 /* EzyRequest.cpp */; };
-		E9BE31EA2187FB88009F9800 /* EzyRequestSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31A22187FB88009F9800 /* EzyRequestSerializer.cpp */; };
-		E9BE31EC2187FB88009F9800 /* EzyEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31AB2187FB88009F9800 /* EzyEvent.cpp */; };
-		E9BE31ED2187FB88009F9800 /* EzyEventType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31AC2187FB88009F9800 /* EzyEventType.cpp */; };
-		E9BE31EF2187FB88009F9800 /* EzyRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31B02187FB88009F9800 /* EzyRef.cpp */; };
-		E9BE31F02187FB88009F9800 /* EzyTcpSocketClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31B52187FB88009F9800 /* EzyTcpSocketClient.cpp */; };
-		E9BE31F12187FB88009F9800 /* EzySocketClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31B62187FB88009F9800 /* EzySocketClient.cpp */; };
-		E9BE31F22187FB88009F9800 /* EzySocketAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31B72187FB88009F9800 /* EzySocketAdapter.cpp */; };
-		E9BE31F32187FB88009F9800 /* EzySocketCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31BA2187FB88009F9800 /* EzySocketCore.cpp */; };
-		E9BE31F42187FB88009F9800 /* EzyPingSchedule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31BE2187FB88009F9800 /* EzyPingSchedule.cpp */; };
-		E9BE31F52187FB88009F9800 /* EzySocketPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31C02187FB88009F9800 /* EzySocketPool.cpp */; };
-		E9BE31F62187FB88009F9800 /* EzySocketReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31C12187FB88009F9800 /* EzySocketReader.cpp */; };
-		E9BE31F72187FB88009F9800 /* EzySocketWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31C32187FB88009F9800 /* EzySocketWriter.cpp */; };
 		E9BE31F92187FC4E009F9800 /* EzyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31F82187FC4E009F9800 /* EzyClient.swift */; };
 		E9BE3200218801D0009F9800 /* EzyMethodCallException.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9BE31FE218801D0009F9800 /* EzyMethodCallException.mm */; };
 		E9BE3212218801E8009F9800 /* EzyMethodProxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9BE3202218801E8009F9800 /* EzyMethodProxy.mm */; };
@@ -81,12 +30,35 @@
 		E9BE324C2188321D009F9800 /* EzyHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BE324B2188321D009F9800 /* EzyHandlers.swift */; };
 		E9BE325021887CC1009F9800 /* Mvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BE324F21887CC1009F9800 /* Mvc.swift */; };
 		E9FDCF6D218629FA00EBC4EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FDCF6C218629FA00EBC4EE /* AppDelegate.swift */; };
-		E9FDCF6F218629FA00EBC4EE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FDCF6E218629FA00EBC4EE /* ViewController.swift */; };
+		E9FDCF6F218629FA00EBC4EE /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FDCF6E218629FA00EBC4EE /* LoginController.swift */; };
 		E9FDCF72218629FA00EBC4EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9FDCF70218629FA00EBC4EE /* Main.storyboard */; };
 		E9FDCF74218629FC00EBC4EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9FDCF73218629FC00EBC4EE /* Assets.xcassets */; };
 		E9FDCF77218629FC00EBC4EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9FDCF75218629FC00EBC4EE /* LaunchScreen.storyboard */; };
-		E9FDCF7F2186B48B00EBC4EE /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FDCF7E2186B48B00EBC4EE /* ContactViewController.swift */; };
+		E9FDCF7F2186B48B00EBC4EE /* ContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FDCF7E2186B48B00EBC4EE /* ContactsController.swift */; };
+		F102F338264832C5001D9061 /* libezyfox-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F102F337264832B9001D9061 /* libezyfox-client.a */; };
+		F102F33C26493F40001D9061 /* SocketProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F33B26493F40001D9061 /* SocketProxy.swift */; };
+		F102F33E264953D4001D9061 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F33D264953D4001D9061 /* Constants.swift */; };
+		F102F34026495F53001D9061 /* SocketRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F33F26495F53001D9061 /* SocketRequests.swift */; };
+		F102F34226498C81001D9061 /* AddContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F34126498C81001D9061 /* AddContactsController.swift */; };
+		F102F3442649940F001D9061 /* ViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F3432649940F001D9061 /* ViewManager.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F102F336264832B9001D9061 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F102F332264832B9001D9061 /* ezyfox-client.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1955055260608FD00402511;
+			remoteInfo = "ezyfox-client";
+		};
+		F102F339264832D3001D9061 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F102F332264832B9001D9061 /* ezyfox-client.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F1955054260608FD00402511;
+			remoteInfo = "ezyfox-client";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		E9BE2AE121873101009F9800 /* Embed Frameworks */ = {
@@ -429,12 +401,18 @@
 		E9BE324F21887CC1009F9800 /* Mvc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mvc.swift; sourceTree = "<group>"; };
 		E9FDCF69218629FA00EBC4EE /* freechat-swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "freechat-swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9FDCF6C218629FA00EBC4EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E9FDCF6E218629FA00EBC4EE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E9FDCF6E218629FA00EBC4EE /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		E9FDCF71218629FA00EBC4EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E9FDCF73218629FC00EBC4EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9FDCF76218629FC00EBC4EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E9FDCF78218629FC00EBC4EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E9FDCF7E2186B48B00EBC4EE /* ContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
+		E9FDCF7E2186B48B00EBC4EE /* ContactsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsController.swift; sourceTree = "<group>"; };
+		F102F332264832B9001D9061 /* ezyfox-client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "ezyfox-client.xcodeproj"; path = "client/socket/platform/apple/ezyfox-client.xcodeproj"; sourceTree = "<group>"; };
+		F102F33B26493F40001D9061 /* SocketProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketProxy.swift; sourceTree = "<group>"; };
+		F102F33D264953D4001D9061 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F102F33F26495F53001D9061 /* SocketRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketRequests.swift; sourceTree = "<group>"; };
+		F102F34126498C81001D9061 /* AddContactsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsController.swift; sourceTree = "<group>"; };
+		F102F3432649940F001D9061 /* ViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -442,6 +420,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F102F338264832C5001D9061 /* libezyfox-client.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1007,6 +986,7 @@
 		E9FDCF60218629FA00EBC4EE = {
 			isa = PBXGroup;
 			children = (
+				F102F332264832B9001D9061 /* ezyfox-client.xcodeproj */,
 				E9BE2B1E21877B62009F9800 /* client */,
 				E9FDCF6B218629FA00EBC4EE /* freechat-swift */,
 				E9BE2B10218734AE009F9800 /* Frameworks */,
@@ -1026,10 +1006,15 @@
 			isa = PBXGroup;
 			children = (
 				E9FDCF6C218629FA00EBC4EE /* AppDelegate.swift */,
-				E9FDCF6E218629FA00EBC4EE /* ViewController.swift */,
-				E9FDCF7E2186B48B00EBC4EE /* ContactViewController.swift */,
+				F102F3432649940F001D9061 /* ViewManager.swift */,
+				E9FDCF6E218629FA00EBC4EE /* LoginController.swift */,
+				E9FDCF7E2186B48B00EBC4EE /* ContactsController.swift */,
+				F102F34126498C81001D9061 /* AddContactsController.swift */,
 				E97991CD2186F7A700436B73 /* ContactTableViewCell.swift */,
 				E9BE324F21887CC1009F9800 /* Mvc.swift */,
+				F102F33D264953D4001D9061 /* Constants.swift */,
+				F102F33F26495F53001D9061 /* SocketRequests.swift */,
+				F102F33B26493F40001D9061 /* SocketProxy.swift */,
 				E9FDCF70218629FA00EBC4EE /* Main.storyboard */,
 				E9FDCF73218629FC00EBC4EE /* Assets.xcassets */,
 				E9FDCF75218629FC00EBC4EE /* LaunchScreen.storyboard */,
@@ -1037,6 +1022,14 @@
 				E9FDCF6A218629FA00EBC4EE /* Products */,
 			);
 			path = "freechat-swift";
+			sourceTree = "<group>";
+		};
+		F102F333264832B9001D9061 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F102F337264832B9001D9061 /* libezyfox-client.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1054,6 +1047,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F102F33A264832D3001D9061 /* PBXTargetDependency */,
 			);
 			name = "freechat-swift";
 			productName = "hello-swift";
@@ -1087,12 +1081,28 @@
 			mainGroup = E9FDCF60218629FA00EBC4EE;
 			productRefGroup = E9FDCF6A218629FA00EBC4EE /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F102F333264832B9001D9061 /* Products */;
+					ProjectRef = F102F332264832B9001D9061 /* ezyfox-client.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				E9FDCF68218629FA00EBC4EE /* freechat-swift */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F102F337264832B9001D9061 /* libezyfox-client.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libezyfox-client.a";
+			remoteRef = F102F336264832B9001D9061 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E9FDCF67218629FA00EBC4EE /* Resources */ = {
@@ -1112,86 +1122,48 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9BE31C72187FB88009F9800 /* EzyEventHandlers.cpp in Sources */,
-				E9BE31DE2187FB88009F9800 /* EzyClients.cpp in Sources */,
-				E9BE31C82187FB88009F9800 /* EzyDataHandlers.cpp in Sources */,
-				E9BE31F12187FB88009F9800 /* EzySocketClient.cpp in Sources */,
-				E9BE31F52187FB88009F9800 /* EzySocketPool.cpp in Sources */,
-				E9BE31F62187FB88009F9800 /* EzySocketReader.cpp in Sources */,
 				E9BE3234218803F2009F9800 /* EzyNativeDataDeserializer.mm in Sources */,
-				E9BE31D32187FB88009F9800 /* EzyPrimitive.cpp in Sources */,
 				E9BE31F92187FC4E009F9800 /* EzyClient.swift in Sources */,
-				E9BE31DD2187FB88009F9800 /* EzyClient.cpp in Sources */,
-				E9BE31D72187FB88009F9800 /* EzyUser.cpp in Sources */,
-				E9BE31F72187FB88009F9800 /* EzySocketWriter.cpp in Sources */,
-				E9BE31C92187FB88009F9800 /* EzyEventHandler.cpp in Sources */,
 				E9BE324621882927009F9800 /* EzyConstants.swift in Sources */,
 				E9BE3212218801E8009F9800 /* EzyMethodProxy.mm in Sources */,
-				E9BE31DF2187FB88009F9800 /* EzyPluginManager.cpp in Sources */,
-				E9BE31ED2187FB88009F9800 /* EzyEventType.cpp in Sources */,
-				E9BE31F22187FB88009F9800 /* EzySocketAdapter.cpp in Sources */,
-				E9BE31CB2187FB88009F9800 /* EzyAppDataHandler.cpp in Sources */,
-				E9BE31EA2187FB88009F9800 /* EzyRequestSerializer.cpp in Sources */,
 				E97991CE2186F7A700436B73 /* ContactTableViewCell.swift in Sources */,
+				F102F33C26493F40001D9061 /* SocketProxy.swift in Sources */,
 				E9BE324C2188321D009F9800 /* EzyHandlers.swift in Sources */,
-				E9BE31CE2187FB88009F9800 /* EzyClientConfig.cpp in Sources */,
-				E9BE31E32187FB88009F9800 /* EzyConnectionStatus.cpp in Sources */,
-				E9BE31EF2187FB88009F9800 /* EzyRef.cpp in Sources */,
-				E9BE31CA2187FB88009F9800 /* EzyAppDataHandlers.cpp in Sources */,
-				E9BE31E92187FB88009F9800 /* EzyRequest.cpp in Sources */,
-				E9BE31D62187FB88009F9800 /* EzyValue.cpp in Sources */,
 				E97EDB1922F70E2000202705 /* EzyLogger.swift in Sources */,
-				E9FDCF6F218629FA00EBC4EE /* ViewController.swift in Sources */,
-				E9BE31D12187FB88009F9800 /* EzyString.cpp in Sources */,
-				E9BE31F32187FB88009F9800 /* EzySocketCore.cpp in Sources */,
+				E9FDCF6F218629FA00EBC4EE /* LoginController.swift in Sources */,
 				E9BE32412188176E009F9800 /* EzyEventEmitter.mm in Sources */,
-				E9BE31DC2187FB88009F9800 /* EzyDataEncoder.cpp in Sources */,
 				E9BE325021887CC1009F9800 /* Mvc.swift in Sources */,
-				E9BE31CD2187FB88009F9800 /* EzyLogger.cpp in Sources */,
 				E9FDCF6D218629FA00EBC4EE /* AppDelegate.swift in Sources */,
-				E9BE31D92187FB88009F9800 /* EzyPlugin.cpp in Sources */,
-				E9BE31E82187FB88009F9800 /* EzyAutoReleasePool.cpp in Sources */,
+				F102F3442649940F001D9061 /* ViewManager.swift in Sources */,
+				F102F34226498C81001D9061 /* AddContactsController.swift in Sources */,
+				F102F34026495F53001D9061 /* SocketRequests.swift in Sources */,
 				E9BE3231218803F2009F9800 /* EzyNativeStrings.mm in Sources */,
-				E901F270230DAE5D00C98CC5 /* EzyPluginDataHandlers.cpp in Sources */,
 				E9BE321B218803DE009F9800 /* EzyMethodNames.mm in Sources */,
 				E9B365ED23D2B5CF0007F3C1 /* EzyNSNumber.m in Sources */,
-				E9BE31F02187FB88009F9800 /* EzyTcpSocketClient.cpp in Sources */,
-				E9FDCF7F2186B48B00EBC4EE /* ContactViewController.swift in Sources */,
-				E9BE31F42187FB88009F9800 /* EzyPingSchedule.cpp in Sources */,
+				E9FDCF7F2186B48B00EBC4EE /* ContactsController.swift in Sources */,
 				E9BE3232218803F2009F9800 /* EzyNativeDataSerializer.mm in Sources */,
 				E9BE3233218803F2009F9800 /* EzyClientConfigSerializer.mm in Sources */,
-				E9BE31DB2187FB88009F9800 /* EzyDataDecoder.cpp in Sources */,
-				E9BE31D52187FB88009F9800 /* EzyArray.cpp in Sources */,
-				E9BE31D42187FB88009F9800 /* EzyObject.cpp in Sources */,
 				E9BE3244218826CB009F9800 /* EzySetup.swift in Sources */,
-				E9BE31E02187FB88009F9800 /* EzyAppManager.cpp in Sources */,
-				E9BE31E62187FB88009F9800 /* EzyConnectionFailedReason.cpp in Sources */,
-				E901F26F230DAE5D00C98CC5 /* EzyPluginDataHandler.cpp in Sources */,
-				E9BE31E72187FB88009F9800 /* EzyReleasePool.cpp in Sources */,
-				E9BE31E22187FB88009F9800 /* EzyPingManager.cpp in Sources */,
-				E9BE31E52187FB88009F9800 /* EzyDisconnectReason.cpp in Sources */,
 				E9BE321E218803E5009F9800 /* EzyClientProxy.mm in Sources */,
-				E97EDB1422F6D7C300202705 /* EzyScheduleAtFixedRate.cpp in Sources */,
 				E9BE323D21880F4E009F9800 /* EzyClients.swift in Sources */,
-				E9BE31E42187FB88009F9800 /* EzyCommand.cpp in Sources */,
-				E9BE31CC2187FB88009F9800 /* EzyDataHandler.cpp in Sources */,
 				E9BE324821882A39009F9800 /* EzyEntities.swift in Sources */,
 				E9BE3200218801D0009F9800 /* EzyMethodCallException.mm in Sources */,
 				E9BE3235218803F2009F9800 /* EzyEventSerializer.mm in Sources */,
-				E9AFBB4C231440FF00D9831A /* EzySetup.cpp in Sources */,
-				E9BE31EC2187FB88009F9800 /* EzyEvent.cpp in Sources */,
 				E9BE324A21882CE6009F9800 /* EzyManagers.swift in Sources */,
-				E9BE31D02187FB88009F9800 /* EzyApp.cpp in Sources */,
-				E901F273230DAE8100C98CC5 /* EzyThread.cpp in Sources */,
-				E97EDB1022F6D7AA00202705 /* EzyMainEventsLoop.cpp in Sources */,
 				E9BE3236218803F2009F9800 /* EzyNativeSerializers.mm in Sources */,
-				E9BE31D22187FB88009F9800 /* EzyZone.cpp in Sources */,
-				E9BE31DA2187FB88009F9800 /* EzyMessage.cpp in Sources */,
-				E9BE31E12187FB88009F9800 /* EzyHandlerManager.cpp in Sources */,
+				F102F33E264953D4001D9061 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F102F33A264832D3001D9061 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ezyfox-client";
+			targetProxy = F102F339264832D3001D9061 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E9FDCF70218629FA00EBC4EE /* Main.storyboard */ = {
