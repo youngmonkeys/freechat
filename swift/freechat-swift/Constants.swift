@@ -14,6 +14,7 @@ public class Commands {
     public static let CHAT_BOT_MESSAGE = "4"
     public static let GET_CONTACTS = "5"
     public static let CHAT_USER_MESSAGE = "6"
+    public static let SEARCH_EXISTED_CONTACTS = "9"
     public static let SEARCH_CONTACTS = "10"
 
 }

@@ -68,6 +68,17 @@ class MessagesController:
         return messages.count
     }
     
+    func configureAvatarView(_ avatarView: AvatarView,
+                             for message: MessageType,
+                             at indexPath: IndexPath,
+                             in messagesCollectionView: MessagesCollectionView) {
+        if message.sender.senderId == currentSender().senderId {
+            avatarView.isHidden = true
+        } else {
+            avatarView.backgroundColor = .orange
+        }
+    }
+    
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let messageText = inputBar.inputTextView.text
         let message = Message(sender: me,

@@ -39,6 +39,14 @@ public class SocketRequests {
         getApp()?.send(cmd: Commands.SEARCH_CONTACTS, data: requestData)
     }
     
+    public static func sendSearchExistedContacts(keyword: String) {
+        let requestData = NSMutableDictionary()
+        requestData["skip"] = 0
+        requestData["limit"] = 100
+        requestData["keyword"] = keyword
+        getApp()?.send(cmd: Commands.SEARCH_EXISTED_CONTACTS, data: requestData);
+    }
+    
     public static func sendAddContacts(user: String) {
         let requestData = NSMutableDictionary()
         requestData["target"] = [user]

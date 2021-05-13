@@ -264,6 +264,7 @@
                     <navigationItem key="navigationItem" id="IyY-KC-Aur"/>
                     <connections>
                         <outlet property="contactTable" destination="ukY-eM-JKc" id="gt4-V8-50n"/>
+                        <outlet property="searchBar" destination="3nE-Xg-8iV" id="bXU-bv-YnP"/>
                         <outlet property="usernameLabel" destination="ehx-Iz-gmb" id="jv7-ZS-lxJ"/>
                     </connections>
                 </viewController>

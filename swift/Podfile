@@ -7,6 +7,5 @@ target 'freechat-swift' do
 
   # Pods for freechat-swift
   pod 'MessageKit'
-  pod 'MessageInputBar'
 
 end
