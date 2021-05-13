@@ -30,6 +30,10 @@ public class SocketProxy {
         _ = setup.setupApp(appName: ZONE_APP_NAME)
             .addDataHandler(cmd: Commands.GET_CONTACTS, handler: GetContactsResponseHandler())
             .addDataHandler(cmd: Commands.SUGGEST_CONTACTS, handler: SuggestContactsResponseHandler())
+            .addDataHandler(cmd: Commands.SEARCH_CONTACTS, handler: SuggestContactsResponseHandler())
+            .addDataHandler(cmd: Commands.ADD_CONTACTS, handler: AddContactsResponseHandler())
+            .addDataHandler(cmd: Commands.CHAT_BOT_MESSAGE, handler: BotMessageHandler())
+            .addDataHandler(cmd: Commands.CHAT_USER_MESSAGE, handler: ReceivedMessageHandler())
         Thread.current.name = "main";
         clients.processEvents()
     }
@@ -62,7 +66,7 @@ class ExLoginSuccessHandler : EzyLoginSuccessHandler {
         let array = NSMutableArray()
         array.add(ZONE_APP_NAME)
         array.add(NSDictionary())
-        client!.sendRequest(cmd: EzyCommand.APP_ACCESS, data: array)
+        client!.send(cmd: EzyCommand.APP_ACCESS, data: array)
     }
 };
 
@@ -86,7 +90,41 @@ class SuggestContactsResponseHandler : EzyAbstractAppDataHandler<NSDictionary> {
     override func process(app: EzyApp, data: NSDictionary) {
         let contacts = data["users"] as! NSArray
         let mvc = Mvc.getInstance()
-        let contactController = mvc.getController(name: "contact")
+        let contactController = mvc.getController(name: "search-contact")
         contactController.updateViews(action: "search-contacts", data: contacts)
+    }
+}
+
+class SearchContactsResponseHandler : EzyAbstractAppDataHandler<NSDictionary> {
+    override func process(app: EzyApp, data: NSDictionary) {
+        let contacts = data["users"] as! NSArray
+        let mvc = Mvc.getInstance()
+        let contactController = mvc.getController(name: "search-contact")
+        contactController.updateViews(action: "search-contacts", data: contacts)
+    }
+}
+
+class AddContactsResponseHandler : EzyAbstractAppDataHandler<NSArray> {
+    override func process(app: EzyApp, data: NSArray) {
+        let mvc = Mvc.getInstance()
+        let contactController = mvc.getController(name: "search-contact")
+        contactController.updateViews(action: "add-contacts", data: data)
+    }
+}
+
+class BotMessageHandler : EzyAbstractAppDataHandler<NSDictionary> {
+    override func process(app: EzyApp, data: NSDictionary) {
+        let dict = NSMutableDictionary()
+        dict["from"] = "Bot"
+        dict["message"] = data["message"]
+        let controller = Mvc.getInstance().getController(name: "message")
+        controller.updateViews(action: "add-message", data: dict)
+    }
+}
+
+class ReceivedMessageHandler : EzyAbstractAppDataHandler<NSDictionary> {
+    override func process(app: EzyApp, data: NSDictionary) {
+        let controller = Mvc.getInstance().getController(name: "message")
+        controller.updateViews(action: "add-message", data: data)
     }
 }

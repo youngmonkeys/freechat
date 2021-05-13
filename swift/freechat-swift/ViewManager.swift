@@ -18,9 +18,19 @@ public class ViewManager {
     }
     
     public func showContactsView() {
+        showView(viewId: "contactsNavView")
+    }
+    
+    public func showMessagesView(navigationController: UINavigationController?) {
+        let controller = MessagesController()
+        controller.title = "Message"
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    private func showView(viewId: String) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let contactView = storyboard.instantiateViewController(withIdentifier: "contactsView") as! ContactsController
+        let controller = storyboard.instantiateViewController(withIdentifier: viewId)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window?.rootViewController = contactView
+        appDelegate.window?.rootViewController = controller
     }
 }

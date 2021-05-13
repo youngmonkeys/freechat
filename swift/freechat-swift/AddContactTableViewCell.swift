@@ -24,10 +24,6 @@ class AddContactTableViewCell: UITableViewCell {
     @IBOutlet weak var usernameView: UILabel!
     @IBOutlet weak var fullNameView: UILabel!
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
     func setUsername(value: String) -> Void {
         usernameView.text = value;
     }

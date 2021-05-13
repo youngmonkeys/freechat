@@ -79,6 +79,7 @@
                             <constraint firstItem="CA0-At-iPq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="mLv-le-Qf8"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="7wi-gY-Dbs"/>
                     <connections>
                         <outlet property="passwordView" destination="srD-Hl-VPm" id="3H0-xW-01n"/>
                         <outlet property="usernameView" destination="OOk-2b-IF6" id="a8o-QZ-LGS"/>
@@ -97,10 +98,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_city" translatesAutoresizingMaskIntoConstraints="NO" id="art-w6-U4X">
-                                <rect key="frame" x="0.0" y="50" width="375" height="567"/>
+                                <rect key="frame" x="0.0" y="94" width="375" height="523"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lBs-xW-4ue" userLabel="header">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="50"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar003" translatesAutoresizingMaskIntoConstraints="NO" id="nbe-Sd-oCG">
                                         <rect key="frame" x="5" y="3" width="44" height="44"/>
@@ -137,10 +138,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2o-LI-0WV" userLabel="body">
-                                <rect key="frame" x="0.0" y="50" width="375" height="567"/>
+                                <rect key="frame" x="0.0" y="94" width="375" height="523"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="contactTable" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ukY-eM-JKc" userLabel="contactTable">
-                                        <rect key="frame" x="0.0" y="5" width="375" height="557"/>
+                                        <rect key="frame" x="0.0" y="5" width="375" height="513"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="contactCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="contactCell" id="gcF-Mi-Xyd" customClass="ContactTableViewCell" customModule="freechat_swift" customModuleProvider="target">
@@ -275,14 +276,14 @@
             <objects>
                 <viewController storyboardIdentifier="addContactsView" id="iX3-Zi-Ce0" customClass="AddContactsController" customModule="freechat_swift" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" restorationIdentifier="contactView" id="0L7-vS-lme">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_city" translatesAutoresizingMaskIntoConstraints="NO" id="rpw-8U-Bcy">
-                                <rect key="frame" x="0.0" y="50" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="94" width="375" height="523"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrw-YK-7n6" userLabel="header">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="50"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar003" translatesAutoresizingMaskIntoConstraints="NO" id="18S-YE-Gxj">
                                         <rect key="frame" x="5" y="3" width="44" height="44"/>
@@ -319,10 +320,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FDt-0B-NfS" userLabel="body">
-                                <rect key="frame" x="0.0" y="50" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="94" width="375" height="523"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="contactTable" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tOJ-Pi-YE3" userLabel="contactTable">
-                                        <rect key="frame" x="0.0" y="5" width="375" height="537"/>
+                                        <rect key="frame" x="0.0" y="5" width="375" height="513"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="contactCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="contactCell" id="x6E-VR-uce" customClass="AddContactTableViewCell" customModule="freechat_swift" customModuleProvider="target">
@@ -406,7 +407,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ok7-tA-RAF" userLabel="footer">
-                                <rect key="frame" x="0.0" y="597" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5jU-fy-CcZ">
                                         <rect key="frame" x="158" y="10" width="58" height="30"/>
@@ -445,12 +446,30 @@
                     <navigationItem key="navigationItem" id="eCd-da-8dG"/>
                     <connections>
                         <outlet property="contactTable" destination="tOJ-Pi-YE3" id="iGv-Jc-LJY"/>
+                        <outlet property="searchBar" destination="YPO-Zy-8NJ" id="weK-CL-yGl"/>
                         <outlet property="usernameLabel" destination="8yw-Xv-jKg" id="38y-cC-vPy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qj5-Kb-SPD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1717.5999999999999" y="32.833583208395808"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="f5p-c7-whw">
+            <objects>
+                <navigationController storyboardIdentifier="contactsNavView" id="fV4-pA-JvA" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="4pk-iS-BbI"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uBe-ZI-jL2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="8YD-qg-m4S" kind="relationship" relationship="rootViewController" id="Mpq-sx-m0x"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sjf-iu-KfK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="737" y="-820"/>
         </scene>
     </scenes>
     <resources>

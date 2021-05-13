@@ -11,14 +11,39 @@ public class SocketRequests {
     
     public static func sendGetContacts() {
         let requestData = NSMutableDictionary()
-        requestData["skip"] = 0;
-        requestData["limit"] = 100;
-        getApp()?.sendRequest(cmd: "5", data: requestData)
+        requestData["skip"] = 0
+        requestData["limit"] = 100
+        getApp()?.send(cmd: Commands.GET_CONTACTS, data: requestData)
     }
     
     public static func sendGetSuggestContacts() {
-        getApp()?.sendReqest(cmd: Commands.SUGGEST_CONTACTS)
+        getApp()?.send(cmd: Commands.SUGGEST_CONTACTS)
     }
+    
+    public static func sendBotMessage(message: String) {
+        let requestData = NSMutableDictionary()
+        requestData["message"] = message
+        getApp()?.send(cmd: Commands.CHAT_BOT_MESSAGE, data: requestData)
+    }
+    
+    public static func sendUserMessage(channelId: Int64, message: String) {
+        let requestData = NSMutableDictionary()
+        requestData["channelId"] = channelId
+        requestData["message"] = message
+        getApp()?.send(cmd: Commands.CHAT_USER_MESSAGE, data: requestData)
+    }
+    
+    public static func sendSearchContacts(keyword: String) {
+        let requestData = NSMutableDictionary()
+        requestData["keyword"] = keyword
+        getApp()?.send(cmd: Commands.SEARCH_CONTACTS, data: requestData)
+    }
+    
+    public static func sendAddContacts(user: String) {
+        let requestData = NSMutableDictionary()
+        requestData["target"] = [user]
+        getApp()?.send(cmd: Commands.ADD_CONTACTS, data: requestData)
+     }
     
     private static func getApp() -> EzyApp? {
         return EzyClients.getInstance()

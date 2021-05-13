@@ -9,23 +9,19 @@
 import UIKit
 
 class LoginController: UIViewController {
-
-    private var client: EzyClient?
     
     @IBOutlet weak var usernameView: UITextField!
     @IBOutlet weak var passwordView: UITextField!
-    
-    public required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-        client = nil
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let mvc = Mvc.getInstance()
         mvc.getModel().set(name: "connection", value: Model())
+        mvc.getModel().set(name: "chat", value: Model())
         mvc.addController(name: "contact", controller: Controller())
+        mvc.addController(name: "search-contact", controller: Controller())
         mvc.addController(name: "connection", controller: Controller())
+        mvc.addController(name: "message", controller: Controller())
         class ShowContactsView: View {
             func update(component: String, data: Any) {
                 ViewManager.getInstance().showContactsView()

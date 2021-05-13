@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0CD7D305F61A1DC22A25B4AF /* Pods_freechat_swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0AA74EE10F18FAB793D9E61 /* Pods_freechat_swift.framework */; };
 		E97991CE2186F7A700436B73 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97991CD2186F7A700436B73 /* ContactTableViewCell.swift */; };
 		E97EDB1922F70E2000202705 /* EzyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97EDB1822F70E2000202705 /* EzyLogger.swift */; };
 		E9B365ED23D2B5CF0007F3C1 /* EzyNSNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B365EC23D2B5CF0007F3C1 /* EzyNSNumber.m */; };
@@ -42,6 +43,7 @@
 		F102F34226498C81001D9061 /* AddContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F34126498C81001D9061 /* AddContactsController.swift */; };
 		F102F3442649940F001D9061 /* ViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F3432649940F001D9061 /* ViewManager.swift */; };
 		F102F346264A5FCF001D9061 /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F345264A5FCF001D9061 /* AddContactTableViewCell.swift */; };
+		F102F348264A982A001D9061 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F347264A982A001D9061 /* MessagesController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6624FB7A2AE941A15D0A1839 /* Pods-freechat-swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-freechat-swift.release.xcconfig"; path = "Target Support Files/Pods-freechat-swift/Pods-freechat-swift.release.xcconfig"; sourceTree = "<group>"; };
+		A4EABE535D6BD10E96BF92A4 /* Pods-freechat-swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-freechat-swift.debug.xcconfig"; path = "Target Support Files/Pods-freechat-swift/Pods-freechat-swift.debug.xcconfig"; sourceTree = "<group>"; };
 		E901F26B230DAE5D00C98CC5 /* EzyPluginDataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EzyPluginDataHandler.h; sourceTree = "<group>"; };
 		E901F26C230DAE5D00C98CC5 /* EzyPluginDataHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EzyPluginDataHandler.cpp; sourceTree = "<group>"; };
 		E901F26D230DAE5D00C98CC5 /* EzyPluginDataHandlers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EzyPluginDataHandlers.cpp; sourceTree = "<group>"; };
@@ -408,6 +412,7 @@
 		E9FDCF76218629FC00EBC4EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E9FDCF78218629FC00EBC4EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9FDCF7E2186B48B00EBC4EE /* ContactsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsController.swift; sourceTree = "<group>"; };
+		F0AA74EE10F18FAB793D9E61 /* Pods_freechat_swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_freechat_swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F102F332264832B9001D9061 /* ezyfox-client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "ezyfox-client.xcodeproj"; path = "client/socket/platform/apple/ezyfox-client.xcodeproj"; sourceTree = "<group>"; };
 		F102F33B26493F40001D9061 /* SocketProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketProxy.swift; sourceTree = "<group>"; };
 		F102F33D264953D4001D9061 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -415,6 +420,7 @@
 		F102F34126498C81001D9061 /* AddContactsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsController.swift; sourceTree = "<group>"; };
 		F102F3432649940F001D9061 /* ViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewManager.swift; sourceTree = "<group>"; };
 		F102F345264A5FCF001D9061 /* AddContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactTableViewCell.swift; sourceTree = "<group>"; };
+		F102F347264A982A001D9061 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -423,12 +429,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				F102F338264832C5001D9061 /* libezyfox-client.a in Frameworks */,
+				0CD7D305F61A1DC22A25B4AF /* Pods_freechat_swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6CBBB428C87179D8F1A477E1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A4EABE535D6BD10E96BF92A4 /* Pods-freechat-swift.debug.xcconfig */,
+				6624FB7A2AE941A15D0A1839 /* Pods-freechat-swift.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		E97EDB1122F6D7C200202705 /* concurrent */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,6 +485,7 @@
 		E9BE2B10218734AE009F9800 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F0AA74EE10F18FAB793D9E61 /* Pods_freechat_swift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -992,6 +1009,7 @@
 				E9BE2B1E21877B62009F9800 /* client */,
 				E9FDCF6B218629FA00EBC4EE /* freechat-swift */,
 				E9BE2B10218734AE009F9800 /* Frameworks */,
+				6CBBB428C87179D8F1A477E1 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1011,6 +1029,7 @@
 				F102F3432649940F001D9061 /* ViewManager.swift */,
 				E9FDCF6E218629FA00EBC4EE /* LoginController.swift */,
 				E9FDCF7E2186B48B00EBC4EE /* ContactsController.swift */,
+				F102F347264A982A001D9061 /* MessagesController.swift */,
 				F102F34126498C81001D9061 /* AddContactsController.swift */,
 				E97991CD2186F7A700436B73 /* ContactTableViewCell.swift */,
 				F102F345264A5FCF001D9061 /* AddContactTableViewCell.swift */,
@@ -1042,10 +1061,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9FDCF7B218629FC00EBC4EE /* Build configuration list for PBXNativeTarget "freechat-swift" */;
 			buildPhases = (
+				1F02B6E9EB3D2FC7BE69C7E5 /* [CP] Check Pods Manifest.lock */,
 				E9FDCF65218629FA00EBC4EE /* Sources */,
 				E9FDCF66218629FA00EBC4EE /* Frameworks */,
 				E9FDCF67218629FA00EBC4EE /* Resources */,
 				E9BE2AE121873101009F9800 /* Embed Frameworks */,
+				B0092459FEB03139B3DE788B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1120,6 +1141,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1F02B6E9EB3D2FC7BE69C7E5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-freechat-swift-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B0092459FEB03139B3DE788B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-freechat-swift/Pods-freechat-swift-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-freechat-swift/Pods-freechat-swift-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-freechat-swift/Pods-freechat-swift-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E9FDCF65218629FA00EBC4EE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1140,6 +1203,7 @@
 				E9FDCF6D218629FA00EBC4EE /* AppDelegate.swift in Sources */,
 				F102F3442649940F001D9061 /* ViewManager.swift in Sources */,
 				F102F34226498C81001D9061 /* AddContactsController.swift in Sources */,
+				F102F348264A982A001D9061 /* MessagesController.swift in Sources */,
 				F102F34026495F53001D9061 /* SocketRequests.swift in Sources */,
 				E9BE3231218803F2009F9800 /* EzyNativeStrings.mm in Sources */,
 				E9BE321B218803DE009F9800 /* EzyMethodNames.mm in Sources */,
@@ -1307,6 +1371,7 @@
 		};
 		E9FDCF7C218629FC00EBC4EE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A4EABE535D6BD10E96BF92A4 /* Pods-freechat-swift.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1332,6 +1397,7 @@
 		};
 		E9FDCF7D218629FC00EBC4EE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6624FB7A2AE941A15D0A1839 /* Pods-freechat-swift.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

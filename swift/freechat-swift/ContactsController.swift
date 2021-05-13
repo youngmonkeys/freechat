@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactsController: UIViewController, UITableViewDataSource {
+class ContactsController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     private var contactDatas: [ContactCellData] = [];
     
@@ -17,12 +17,18 @@ class ContactsController: UIViewController, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        contactTable.dataSource = self;
+        contactTable.delegate = self
+        contactTable.dataSource = self
+        contactDatas.append(ContactCellData(channelId: 0, users: ["Bot"]))
         let mvc = Mvc.getInstance()
         let connectionModel = mvc.getModel().get(name: "connection") as! Model
         usernameLabel.text = connectionModel.get(name: "username") as? String
         let controller = mvc.getController(name: "contact")
         controller.addView(action: "add-contacts", view: AddContactsView(parent: self))
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         SocketRequests.sendGetContacts()
     }
 
@@ -41,6 +47,17 @@ class ContactsController: UIViewController, UITableViewDataSource {
         cell.setLastMessage(value: contactData.lastMessage)
         return cell
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (tableView.cellForRow(at: indexPath) != nil) {
+            let chatModel = Mvc.getInstance()
+                .getModel()
+                .get(name: "chat") as! Model
+            chatModel.set(name: "channelId", value: contactDatas[indexPath.row].channelId)
+            chatModel.set(name: "users", value: contactDatas[indexPath.row].users)
+            ViewManager.getInstance().showMessagesView(navigationController: navigationController)
+        }
+    }
     
     class AddContactsView: View {
         unowned let parent: ContactsController
@@ -48,6 +65,7 @@ class ContactsController: UIViewController, UITableViewDataSource {
             self.parent = parent
         }
         func update(component: String, data: Any) {
+            parent.contactDatas.removeAll()
             let contacts = data as! NSArray
             for contact in contacts {
                 let c = contact as! NSDictionary
