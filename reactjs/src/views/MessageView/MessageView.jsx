@@ -503,7 +503,7 @@ class MessageView extends React.Component {
                         </div>
                     </div>
                 </footer>
-                <a id="scrollTop" href="#top"><i className="icon-arrow-up12"></i></a>
+                {/* <a id="scrollTop" href="#top"><i className="icon-arrow-up12"></i></a> */}
                 <AddContactView parent={this} />
                 <UpdatePasswordView parent={this}/>
             </div>
