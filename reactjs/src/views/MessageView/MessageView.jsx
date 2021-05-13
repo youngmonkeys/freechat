@@ -326,14 +326,22 @@ class MessageView extends React.Component {
         console.log('change contact, now target: ' + newTartget);
     }
 
-    addAndSendMessage(e) {
+    addAndSendMessageByEnter(e) {
         if (e.key === 'Enter') {
-            var message = this.state.message;
-            console.log("message input = " + message);
-            this.setState({message : ""});
-            this.addSentMessage({value: message, reply: false});
-            this.sendMessage(message);
+            this.addAndSendMessage()
         }
+    }
+
+    addAndSendMessageByButton(e) {
+        this.addAndSendMessage()
+    }
+
+    addAndSendMessage() {
+        var message = this.state.message;
+        console.log("message input = " + message);
+        this.setState({message : ""});
+        this.addSentMessage({value: message, reply: false});
+        this.sendMessage(message);
     }
 
     sendMessage(msg) {
@@ -471,11 +479,11 @@ class MessageView extends React.Component {
                                         value={message}
                                         placeholder="Write your message..."
                                         onChange={this.onMessageChange.bind(this)}
-                                        onKeyDown={this.addAndSendMessage.bind(this)}  />
+                                        onKeyPress={this.addAndSendMessageByEnter.bind(this)}  />
                                     <i className="icon-attachment attachment" aria-hidden="true"></i>
                                     <button className="submit"
                                         id="buttonSendMessage"
-                                        onClick={this.addAndSendMessage.bind(this)}>
+                                        onClick={this.addAndSendMessageByButton.bind(this)}>
                                         <i className="icon-paperplane" aria-hidden="true"></i>
                                     </button>
                                 </div>
