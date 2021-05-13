@@ -16,14 +16,15 @@ public class SocketProxy {
     private static let INSTANCE = SocketProxy()
     
     private init() {
-        let clients = EzyClients.getInstance()!;
         let config = NSMutableDictionary()
-        config["clientName"] = "first";
+        config["clientName"] = ZONE_APP_NAME;
         config["zoneName"] = ZONE_APP_NAME
-        client = clients.newDefaultClient(config: config)
+        let clients = EzyClients.getInstance()!
+        client = clients.newClient(config: config)
         let setup = client.setup!
             .addEventHandler(eventType: EzyEventType.CONNECTION_SUCCESS, handler: EzyConnectionSuccessHandler())
             .addEventHandler(eventType: EzyEventType.CONNECTION_FAILURE, handler: EzyConnectionFailureHandler())
+            .addEventHandler(eventType: EzyEventType.DISCONNECTION, handler: ExDisconnectionHandler())
             .addDataHandler(cmd: EzyCommand.LOGIN, handler: ExLoginSuccessHandler())
             .addDataHandler(cmd: EzyCommand.APP_ACCESS, handler: ExAppAccessHandler())
             .addDataHandler(cmd: EzyCommand.HANDSHAKE, handler: ExHandshakeHandler())
@@ -47,6 +48,12 @@ public class SocketProxy {
 //        let host = "192.168.1.13"
         let host = "ws.tvd12.com"
         client.connect(host: host, port: 3005)
+    }
+}
+
+class ExDisconnectionHandler: EzyDisconnectionHandler {
+    override func postHandle(event: NSDictionary) {
+        // do something here
     }
 }
 
