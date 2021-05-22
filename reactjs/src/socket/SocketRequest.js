@@ -5,36 +5,36 @@ import {Command} from "./SocketConstants";
 class SocketRequestClass {
 
     requestSuggestionContacts() {
-        this.getApp().sendRequest(Command.SUGGEST_CONTACTS);
+        this.getApp().send(Command.SUGGEST_CONTACTS);
     }
 
     requestUpdatePassword(oldPassword, newPassword) {
-        this.getApp().sendRequest(
+        this.getApp().send(
             Command.UPDATE_PASSWORD,
             {"oldPassword": oldPassword, "newPassword": newPassword}
         );
     }
 
     searchContacts(keyword, skip, limit) {
-        this.getApp().sendRequest(
+        this.getApp().send(
             Command.SEARCH_CONTACTS,
             {keyword: keyword, skip: skip, limit: limit}
         );
     }
 
     searchContactsUsers(keyword, skip, limit) {
-        this.getApp().sendRequest(
+        this.getApp().send(
             Command.SEARCH_CONTACTS_USER,
             {keyword: keyword, skip: skip, limit: limit}
         );
     }
 
     requestAddContacts(target) {
-        this.getApp().sendRequest(Command.ADD_NEW_CONTACTS, {target: target});
+        this.getApp().send(Command.ADD_NEW_CONTACTS, {target: target});
     }
 
     requestGetContacts(skip, limit) {
-        this.getApp().sendRequest(Command.GET_CONTACTS, {skip: skip, limit: limit});
+        this.getApp().send(Command.GET_CONTACTS, {skip: skip, limit: limit});
     }
 
     sendMessageRequest(channelId, message) {
@@ -45,11 +45,11 @@ class SocketRequestClass {
     }
 
     sendSystemMessageRequest(message) {
-        this.getApp().sendRequest(Command.SEND_RECEIVE_SYSTEM_MESSAGE, {message: message});
+        this.getApp().send(Command.SEND_RECEIVE_SYSTEM_MESSAGE, {message: message});
     }
 
     sendUserMessageRequest(target, message) {
-        this.getApp().sendRequest(
+        this.getApp().send(
             Command.SEND_RECEIVE_USER_MESSAGE,
             {message: message, channelId: target}
         );

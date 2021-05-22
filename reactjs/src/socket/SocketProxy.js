@@ -27,7 +27,7 @@ class SocketProxy {
         let loginSuccessHandler = new Ezy.LoginSuccessHandler();
         loginSuccessHandler.handleLoginSuccess = function () {
             let accessAppRequest = ["freechat", []];
-            this.client.sendRequest(Ezy.Command.APP_ACCESS, accessAppRequest);
+            this.client.send(Ezy.Command.APP_ACCESS, accessAppRequest);
         };
 
         let loginErrorHandler = new Ezy.LoginErrorHandler();
