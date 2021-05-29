@@ -1,0 +1,13 @@
+database:
+  mongo:
+    uri: mongodb://freechat-test:123456@127.0.0.1:27017/freechat-test
+    database: freechat-test
+    collection:
+      naming:
+        case: UNDERSCORE
+        ignored_suffix: Entity
+datasource:
+  jdbcUrl: jdbc:mysql://freechat-test:123456@localhost:3306/freechat-test
+  driverClassName: com.mysql.cj.jdbc.Driver
+hibernate:
+  dialect: org.hibernate.dialect.MySQLDialect
