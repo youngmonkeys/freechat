@@ -120,7 +120,10 @@ class ContactListView extends React.Component {
     constructor(props) {
         super(props);
         this.mvc = Mvc.getInstance();
-        this.chatController = this.mvc.getController("chat");
+    }
+
+    componentWillUnmount() {
+        this.mvc.models.chat.currentContactView = null;
     }
 
     render() {
@@ -142,14 +145,30 @@ class ContactListView extends React.Component {
 class CurrentContactView extends React.Component {
     constructor(props) {
         super(props);
+        let mvc = Mvc.getInstance();
+        this.chatController = mvc.getController("chat");
+        this.contactDict = mvc.models.contactDict;
+        this.state = props.data;
+    }
+
+    componentDidMount() {
+        this.chatController.addView("changeTarget", 'profile', (target) => {
+            let channel = this.contactDict[target].channel;
+            console.log("chat profile now is: " + JSON.stringify(channel));
+            this.setState({channel: channel});
+        });
+    }
+
+    componentWillUnmount() {
+        this.chatController.removeView("changeTarget", 'profile');
     }
 
     render() {
-        const {data} = this.props;
+        const {channel} = this.state;
         return (
             <div className="contact-profile">
                 <img src={require('../../images/70x70.png')} alt="" />
-                <div id="divGroupReceiver"><p id="receiver">{data.channel.users[0]}</p></div>
+                <div id="divGroupReceiver"><p id="receiver">{channel.users[0]}</p></div>
                 <div className="social-media">
                     <i className="icon-facebook" aria-hidden="true"></i>
                     <i className="icon-twitter" aria-hidden="true"></i>
@@ -164,7 +183,6 @@ class MyShortProfileView extends React.Component {
     constructor(props) {
         super(props);
         this.parent = props.parent;
-        let mvc = Mvc.getInstance();
         let client = SocketProxy.getInstance().getClient();
         let me = client.me;
         this.data = {
@@ -238,6 +256,8 @@ class MessageView extends React.Component {
         this.chatController = mvc.getController("chat");
         this.messageController = mvc.getController("message");
         this.contactController = mvc.getController("contact");
+
+        mvc.models.contactDict = this.contactDict;
     }
 
     componentDidMount() {
