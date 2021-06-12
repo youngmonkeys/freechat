@@ -134,7 +134,7 @@ class MessageActivity : AppActivity() {
     private fun addMessageItem(message: Message) {
         messageListAdapter.addItem(message)
         messageListAdapter.notifyDataSetChanged()
-        messageListView.smoothScrollToPosition(messageListAdapter.itemCount!!)
+        messageListView.smoothScrollToPosition(messageListAdapter.itemCount)
     }
 
     private fun backToContactView() {
