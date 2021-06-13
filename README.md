@@ -14,9 +14,9 @@ Free Chat is a cross-platform socket chat application, which uses [ezyfox-server
 
 ## ReactJS build
  
- 1. Clone source code
- 2. Move to ```reactjs``` folder
- 3. Run ```npm start```
+1. Clone source code
+2. Move to ```reactjs``` folder
+3. Run ```npm start```
  
 ## Android build
  
@@ -28,42 +28,17 @@ Free Chat is a cross-platform socket chat application, which uses [ezyfox-server
  - Android sdk: 26
  ```
  
- 1. Clone source code
- 2. Move to ```android/socket``` folder
- 3. Clone ```ezyfox-server-android-client``` by commands:
- 
- ```bash
-git init
-git remote add origin https://github.com/youngmonkeys/ezyfox-server-android-client.git
-git pull origin master
-```
-
-4. Import project to ```Android studio```
-5. Build and done
+1. Clone source code
+2. Run ```git submodule update --init --recursive``` to clone submodules
+3. Import project to ```Android studio```
+4. Build and done
 
 ## iOS build
 
 1. Clone source code
-2. Move to ```swift/client```
-3. Clone ```ezyfox-server-swift-client``` by commands:
-
-```bash
-git init
-git remove add origin https://github.com/youngmonkeys/ezyfox-server-swift-client.git
-git pull origin master
-```
-
-4. Move to ```swift/client/socket```
-5. Clone ```ezyfox-server-cpp-client``` by commands:
-
-```bash
-git init
-git remote add origin https://github.com/youngmonkeys/ezyfox-server-cpp-client.git
-git pull origin master
-``` 
-
-6. Open project on ```XCode```
-7. Build and run
+2. Run ```git submodule update --init --recursive``` to clone submodules
+3. Open project on ```XCode```
+4. Build and run
 
 ## Server-side build and run
 
