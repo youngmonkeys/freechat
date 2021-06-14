@@ -3,11 +3,11 @@ package com.tvd12.freechat
 import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.tvd12.freechat.socket.SocketClientProxy
 
 class MainActivity : AppCompatActivity() {
