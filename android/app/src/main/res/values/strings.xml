@@ -14,4 +14,5 @@
     <string name="Send">Send</string>
     <string name="send">send</string>
     <string name="authentication_failed">Wrong username or password</string>
+    <string name="firebase_connection_failed">Wrong username or password Firebase Server</string>
 </resources>

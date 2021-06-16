@@ -16,6 +16,7 @@ import com.tvd12.freechat.entity.ChatMessage;
 import com.tvd12.freechat.service.ChatChannelUserService;
 import com.tvd12.freechat.service.ChatMessageService;
 
+import com.tvd12.freechat.service.NotificationService;
 import lombok.Setter;
 
 @Setter
@@ -29,7 +30,10 @@ public class ChatUserMessageHandler
 	private String message;
 	private long channelId;
 	private String clientMessageId = "";
-	
+
+	@EzyAutoBind
+	private NotificationService notificationService;
+
 	@EzyAutoBind
 	private ChatMaxIdService maxIdService;
 	
@@ -61,6 +65,9 @@ public class ChatUserMessageHandler
 			.param("channelId", channelId)
 			.usernames(channelUsers.getUsers())
 			.execute();
+
+		notificationService.send(new ChatMessage());
+
 	}
 	
 }
