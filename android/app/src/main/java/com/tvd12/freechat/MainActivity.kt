@@ -1,6 +1,5 @@
 package com.tvd12.freechat
 
-import android.R.attr.password
 import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
@@ -13,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.tvd12.freechat.firebase.cloud.message.MyFirebaseMessagingService
 import com.tvd12.freechat.socket.SocketClientProxy
+import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var passwordView: EditText
     private lateinit var loginButtonView: Button
     private lateinit var connectionController: Controller
+    private var myFirebaseMessagingService: MyFirebaseMessagingService = MyFirebaseMessagingService()
 
-    private lateinit var myFirebaseMessagingService: MyFirebaseMessagingService
     private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,38 +42,17 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun readFileLineByLineUsingForEachLine(fileName: String) =
+        File(fileName).forEachLine { println(it) }
+
     override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         // Check if user is signed in (non-null) and update UI accordingly.
-        mAuth = FirebaseAuth.getInstance();
+        //check in file
+        myFirebaseMessagingService.getToken(this,this.baseContext);
 
-        val currentUser = mAuth!!.currentUser
-        if (currentUser != null) {
-            //co user thuc hien lay token
-        } else {
-            //khong co user, thuc hien dang nhap
 
-            mAuth.signInWithEmailAndPassword("toilahtc@gmail.com", "nothingmk")
-                .addOnCompleteListener(
-                    this
-                ) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d("TAG", "signInWithEmail:success")
-                        val user = mAuth.currentUser
-//                        updateUI(user)
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w("TAG", "signInWithEmail:failure", task.exception)
-                        Toast.makeText(
-                            this@MainActivity, "Authentication failed.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-//                        updateUI(null)
-                    }
-                }
-        }
         connectionController.addView("show-loading", object : IView {
             override fun update(viewId: String, data: Any?) {
                 loadingView.visibility = View.VISIBLE
@@ -169,4 +148,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("username", usernameView.text.toString())
         startActivity(intent)
     }
+
+
+
 }
