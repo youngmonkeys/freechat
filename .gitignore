@@ -5,3 +5,15 @@
 */.iml
 logs/
 */logs/
+.gradle/
+.gitignore
+gradle/wrapper/gradle-wrapper.properties
+
+.gradle/6.5/executionHistory/executionHistory.lock
+*.bin
+*.lock
+*.properties
+*.gradle
+*.gradle
+*.jar
+*.properties

@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1030182108711",
-    "project_id": "fifth-battery-233207",
-    "storage_bucket": "fifth-battery-233207.appspot.com"
+    "project_number": "810671594218",
+    "project_id": "message-project-6af76",
+    "storage_bucket": "message-project-6af76.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1030182108711:android:5578851adcdae567b11802",
+        "mobilesdk_app_id": "1:810671594218:android:3d4d445eb2587b796f1593",
         "android_client_info": {
           "package_name": "com.tvd12.freechat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1030182108711-m9mq86j116j7oieo97n6bhkh38gt9h09.apps.googleusercontent.com",
+          "client_id": "810671594218-t5f517m1s9kmengr92gud3rohkq6se6p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBP1u93L-2jzKepQHzRHqmuO3oBcIj4hm4"
+          "current_key": "AIzaSyDEgIlDWFwx_IbMQAYZwsFpAVANjTxxXTc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1030182108711-m9mq86j116j7oieo97n6bhkh38gt9h09.apps.googleusercontent.com",
+              "client_id": "810671594218-t5f517m1s9kmengr92gud3rohkq6se6p.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
