@@ -42,6 +42,11 @@ public class ChatPluginEntry extends EzySimplePluginEntry {
 		Properties mongoProperties = PropertiesUtil.filterPropertiesByKeyPrefix(
 				properties, 
 				EzyMongoClientLoader.PROPERTY_NAME_PREFIX);
+		//		log xem thong tin
+		getLogger().info("getConfigFile(setting): "+getConfigFile(setting));
+		getLogger().info("builder.getProperties(): "+builder.getProperties());
+		getLogger().info("mongoProperties: "+mongoProperties);
+//		end
 		MongoClient mongoClient = newMongoClient(mongoProperties);
 		EzyDatabaseContext databaseContext = newDatabaseContext(
 				mongoClient,
