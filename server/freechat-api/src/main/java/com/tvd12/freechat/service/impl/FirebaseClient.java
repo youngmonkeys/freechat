@@ -1,6 +1,5 @@
-package com.tvd12.freechat.entity;
+package com.tvd12.freechat.service.impl;
 
-import java.io.InputStream;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -10,8 +9,10 @@ import com.google.firebase.messaging.Notification;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.stream.EzyAnywayInputStreamLoader;
 import com.tvd12.ezyfox.util.EzyLoggable;
-
+import com.tvd12.freechat.entity.NotifyMessage;
 import lombok.Setter;
+
+import java.io.InputStream;
 
 @Setter
 @EzySingleton
