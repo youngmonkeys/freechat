@@ -1,4 +1,3 @@
 package com.tvd12.freechat.constant
 
-class Constants {
-}
+const val FIREBASE_TOKEN_KEY = "firebaseToken"
