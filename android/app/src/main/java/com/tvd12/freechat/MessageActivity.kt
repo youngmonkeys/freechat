@@ -1,12 +1,12 @@
 package com.tvd12.freechat
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.tvd12.freechat.adapter.MessageListAdapter
 import com.tvd12.freechat.adapter.MessageListAdapters
 import com.tvd12.freechat.data.Message
