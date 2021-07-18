@@ -19,10 +19,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
         super.onNewToken(token);
         Log.d("newToken", token);
         getSharedPreferences("_", MODE_PRIVATE).edit().putString("fb", token).apply();
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val imgSett = prefs.getString("fb", "");
-
-
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
