@@ -24,7 +24,7 @@ public class FirebaseClient extends EzyLoggable {
         try {
             InputStream inputStream = EzyAnywayInputStreamLoader.builder()
                     .build()
-                    .load("message-project-6af76-firebase-adminsdk-wf3g6-f45c6e3a87.json");
+                    .load("notify-server-sdk-config.json");
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(inputStream))
