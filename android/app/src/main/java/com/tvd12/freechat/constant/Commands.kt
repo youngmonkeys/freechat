@@ -12,5 +12,6 @@ object Commands {
     const val CHAT_GET_CONTACTS = "5"
     const val CHAT_USER_MESSAGE = "6"
     const val SEARCH_CONTACTS = "10"
+    const val CHAT_USER_TOKEN = "12"
 
 }

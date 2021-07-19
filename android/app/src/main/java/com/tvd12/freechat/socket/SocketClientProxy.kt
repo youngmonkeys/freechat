@@ -13,12 +13,14 @@ import com.tvd12.ezyfoxserver.client.event.EzyDisconnectionEvent
 import com.tvd12.ezyfoxserver.client.event.EzyEventType
 import com.tvd12.ezyfoxserver.client.event.EzyLostPingEvent
 import com.tvd12.ezyfoxserver.client.event.EzyTryConnectEvent
+import com.tvd12.ezyfoxserver.client.factory.EzyEntityFactory
 import com.tvd12.ezyfoxserver.client.handler.*
 import com.tvd12.ezyfoxserver.client.request.EzyAppAccessRequest
 import com.tvd12.ezyfoxserver.client.request.EzyLoginRequest
 import com.tvd12.ezyfoxserver.client.request.EzyRequest
 import com.tvd12.freechat.Mvc
 import com.tvd12.freechat.constant.Commands
+import com.tvd12.freechat.constant.FIREBASE_TOKEN_KEY
 import com.tvd12.freechat.data.MessageReceived
 import com.tvd12.freechat.manager.StateManager
 
@@ -74,7 +76,11 @@ class SocketClientProxy private constructor() {
             return EzyLoginRequest(
                 ZONE_NAME,
                 connectionData["username"] as String,
-                connectionData["password"] as String
+                connectionData["password"] as String,
+                EzyEntityFactory.newObjectBuilder()
+                    .append(FIREBASE_TOKEN_KEY, connectionData[FIREBASE_TOKEN_KEY])
+                    .build()
+
             )
         }
     }
@@ -183,7 +189,8 @@ class SocketClientProxy private constructor() {
     }
 
     fun connectToServer() {
-        val host = "ws.tvd12.com"
+//        val host = "ws.tvd12.com"
+        val host = "192.168.0.109"
         if (client.isConnected) {
             StateManager.getInstance().reconnnect = true
             client.disconnect()

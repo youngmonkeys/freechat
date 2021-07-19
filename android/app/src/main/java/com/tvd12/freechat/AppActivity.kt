@@ -1,7 +1,7 @@
 package com.tvd12.freechat
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 import com.tvd12.ezyfoxserver.client.EzyClient
 import com.tvd12.ezyfoxserver.client.EzyClients
