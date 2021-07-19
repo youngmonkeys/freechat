@@ -7,6 +7,7 @@ import com.tvd12.freechat.common.entity.ChatUserFirebaseToken;
 import com.tvd12.freechat.entity.ChatMessage;
 import com.tvd12.freechat.entity.NotifyMessage;
 import com.tvd12.freechat.service.NotificationService;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +31,11 @@ public class NotificationServiceImpl extends EzyLoggable implements Notification
 
         try {
             setUserToken.stream().forEach(userToken -> {
-                fbClient.notify(userToken.getFirebaseToken(), notifyMessage);
+                if (userToken != null) {
+                    fbClient.notify(userToken.getFirebaseToken(), notifyMessage);
+                } else {
+                    logger.info("Co loi khong the lay duoc user token");
+                }
             });
             return true;
         } catch (Exception e) {
