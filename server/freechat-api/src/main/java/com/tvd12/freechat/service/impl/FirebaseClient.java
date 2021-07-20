@@ -13,8 +13,6 @@ import com.tvd12.freechat.entity.NotifyMessage;
 import lombok.Setter;
 import java.io.InputStream;
 
-import java.io.InputStream;
-
 @Setter
 @EzySingleton
 public class FirebaseClient extends EzyLoggable {
