@@ -5,7 +5,6 @@ import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.util.EzyLoggable;
 import com.tvd12.freechat.common.entity.ChatUserFirebaseToken;
 import com.tvd12.freechat.entity.ChatMessage;
-import com.tvd12.freechat.entity.FirebaseClient;
 import com.tvd12.freechat.entity.NotifyMessage;
 import com.tvd12.freechat.service.NotificationService;
 import java.util.HashMap;
