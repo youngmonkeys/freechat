@@ -10,32 +10,30 @@ import com.google.firebase.messaging.Notification;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.stream.EzyAnywayInputStreamLoader;
 import com.tvd12.ezyfox.util.EzyLoggable;
-
 import lombok.Setter;
 
 @Setter
 @EzySingleton
 public class FirebaseClient extends EzyLoggable {
 
-    protected FirebaseMessaging firebaseMessaging;
+    protected final FirebaseMessaging firebaseMessaging;
+    private static final String FIBASE_CONFIG_FILE = "notify-server-sdk-config.json";
 
     public FirebaseClient() {
-
         try {
             InputStream inputStream = EzyAnywayInputStreamLoader.builder()
                     .build()
-                    .load("notify-server-sdk-config.json");
+                    .load(FIBASE_CONFIG_FILE);
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(inputStream))
                     .build();
-            FirebaseApp.initializeApp(options);
 
-            firebaseMessaging = FirebaseMessaging.getInstance();
+            FirebaseApp.initializeApp(options);
         } catch (Exception e) {
-            firebaseMessaging = null;
-            logger.info("Loi khi khoi tao firebase: "+ e.getMessage());
+            logger.warn("create firebase error", e);
         }
+        firebaseMessaging = FirebaseMessaging.getInstance();
     }
 
     public boolean notify(String token, NotifyMessage message) {
@@ -56,6 +54,4 @@ public class FirebaseClient extends EzyLoggable {
             return false;
         }
     }
-
-
 }
