@@ -11,7 +11,6 @@ import com.tvd12.ezyfox.stream.EzyAnywayInputStreamLoader;
 import com.tvd12.ezyfox.util.EzyLoggable;
 import com.tvd12.freechat.entity.NotifyMessage;
 import lombok.Setter;
-
 import java.io.InputStream;
 
 @Setter
