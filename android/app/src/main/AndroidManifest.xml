@@ -28,7 +28,6 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
-                <!--                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>-->
             </intent-filter>
         </service>
     </application>
