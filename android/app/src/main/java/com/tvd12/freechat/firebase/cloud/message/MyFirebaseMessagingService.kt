@@ -11,7 +11,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.tvd12.freechat.MainActivity
 
-class MyFirebaseMessagingService : FirebaseMessagingService(){
+class MyFirebaseMessagingService : FirebaseMessagingService() {
     private lateinit var auth: FirebaseAuth
 
 
@@ -28,28 +28,4 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage!!)
     }
-
-    companion object  fun  getToken(mainActivity: MainActivity,context: Context) {
-
-        auth = Firebase.auth
-
-        val currentUser = auth.currentUser
-        if(currentUser == null){
-        }else{
-            auth.signInWithEmailAndPassword("toilahtc@gmail.com", "123456")
-                .addOnCompleteListener(mainActivity) { task ->
-                    if (task.isSuccessful) {
-                        Log.d("TAG", "signInWithEmail:success")
-                        val user = auth.currentUser
-                    } else {
-                        Log.w("TAG", "signInWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-        }
-    }
-
-
 }
