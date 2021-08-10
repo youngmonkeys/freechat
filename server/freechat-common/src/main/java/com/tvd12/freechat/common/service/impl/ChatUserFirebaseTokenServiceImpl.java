@@ -6,8 +6,10 @@ import com.tvd12.freechat.common.entity.ChatUserFirebaseToken;
 import com.tvd12.freechat.common.repo.ChatUserFirebaseTokenRepo;
 import com.tvd12.freechat.common.service.ChatUserFirebaseTokenService;
 import lombok.Setter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Setter
 @EzySingleton("chatUserFirebaseTokenService")
@@ -23,7 +25,7 @@ public class ChatUserFirebaseTokenServiceImpl implements ChatUserFirebaseTokenSe
 
     @Override
     public ChatUserFirebaseToken getUserFirebaseToken(String username) {
-        ChatUserFirebaseToken chatUserFirebaseToken = chatUserFirebaseTokenRepo.findByField("username", username);
+        ChatUserFirebaseToken chatUserFirebaseToken =chatUserFirebaseTokenRepo.findByField("username",username);
         return chatUserFirebaseToken;
     }
 
@@ -37,7 +39,13 @@ public class ChatUserFirebaseTokenServiceImpl implements ChatUserFirebaseTokenSe
     }
 
     @Override
-    public List<ChatUserFirebaseToken> findChatUserFirebaseTokens(Set<String> setUsername) {
-        return chatUserFirebaseTokenRepo.findByUsernameIn(setUsername);
+    public Set<ChatUserFirebaseToken> findChatUserFirebaseTokens(Set<String> setUsername) {
+        List<ChatUserFirebaseToken> lstChatUserToken = new ArrayList<>();
+        setUsername.stream().forEach(username->{
+            lstChatUserToken.add(chatUserFirebaseTokenRepo.findByField("username",username));
+        });
+        Set<ChatUserFirebaseToken> setChatUserFirebaseTokens = lstChatUserToken.stream().collect(Collectors.toSet());
+
+        return setChatUserFirebaseTokens;
     }
 }
