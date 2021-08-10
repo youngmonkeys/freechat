@@ -1,6 +1,7 @@
 package com.tvd12.freechat.handler;
 
 import static com.tvd12.freechat.constant.ChatCommands.CHAT_USER_MESSAGE;
+
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
 import com.tvd12.ezyfox.binding.EzyDataBinding;
@@ -16,9 +17,11 @@ import com.tvd12.freechat.data.ChatChannelUsers;
 import com.tvd12.freechat.entity.ChatMessage;
 import com.tvd12.freechat.service.ChatChannelUserService;
 import com.tvd12.freechat.service.ChatMessageService;
+
 import com.tvd12.freechat.service.NotificationService;
 import lombok.Setter;
-import java.util.List;
+
+import java.util.Set;
 
 @Setter
 @EzyPrototype
@@ -69,9 +72,9 @@ public class ChatUserMessageHandler
 			.usernames(channelUsers.getUsers())
 			.execute();
 
-		List<ChatUserFirebaseToken> chatUserFirebaseTokens =
+		Set<ChatUserFirebaseToken> chatUserFirebaseTokens =
 				chatUserFirebaseTokenService.findChatUserFirebaseTokens(channelUsers.getUsers());
-		notificationService.notify(chatUserFirebaseTokens, chatMessage);
+		notificationService.notify(chatUserFirebaseTokens,chatMessage);
 	}
 	
 }

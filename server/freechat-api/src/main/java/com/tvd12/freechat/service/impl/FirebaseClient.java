@@ -1,4 +1,4 @@
-package com.tvd12.freechat.service;
+package com.tvd12.freechat.service.impl;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
