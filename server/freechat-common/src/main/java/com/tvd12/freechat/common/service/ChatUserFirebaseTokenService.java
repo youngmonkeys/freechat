@@ -1,7 +1,7 @@
 package com.tvd12.freechat.common.service;
 
 import com.tvd12.freechat.common.entity.ChatUserFirebaseToken;
-
+import java.util.List;
 import java.util.Set;
 
 public interface ChatUserFirebaseTokenService {
@@ -11,5 +11,5 @@ public interface ChatUserFirebaseTokenService {
 
     ChatUserFirebaseToken createUserFirebaseToken(String username, String token);
 
-    Set<ChatUserFirebaseToken> findChatUserFirebaseTokens(Set<String> username);
+    List<ChatUserFirebaseToken> findChatUserFirebaseTokens(Set<String> username);
 }
