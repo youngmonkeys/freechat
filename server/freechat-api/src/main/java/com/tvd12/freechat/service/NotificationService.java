@@ -6,6 +6,6 @@ import java.util.Set;
 
 public interface NotificationService {
 
-    boolean notify(Set<ChatUserFirebaseToken> setUsername, ChatMessage message);
+    void notify(Set<ChatUserFirebaseToken> setUsername, ChatMessage message);
 
 }

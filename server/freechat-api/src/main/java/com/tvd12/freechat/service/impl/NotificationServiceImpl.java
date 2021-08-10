@@ -15,27 +15,21 @@ import java.util.Set;
 public class NotificationServiceImpl extends EzyLoggable implements NotificationService {
 
     @EzyAutoBind
-    private FirebaseClient fbClient;
+    private FirebaseClient firebaseClient;
 
     @Override
-    public boolean notify(Set<ChatUserFirebaseToken> setUserToken, ChatMessage message) {
+    public void notify(Set<ChatUserFirebaseToken> userTokens, ChatMessage message) {
 
-        NotifyMessage notifyMessage = new NotifyMessage();
-        notifyMessage.setBody(message.getMessage());
-        notifyMessage.setTitle("Bạn có tin nhắn mới từ " + message.getSender());
-        notifyMessage.setImageURL("https://ibb.co/R703kxf");
-        Map<String, String> bodyTest = new HashMap<>();
-        bodyTest.put("Nội dung: ", message.getMessage());
-        notifyMessage.setData(bodyTest);
+        NotifyMessage notifyMessage =  NotifyMessage.builder()
+                .body(message.getMessage()).title("You have a new message: " + message.getSender())
+                .imageURL("https://ibb.co/R703kxf").build();
 
         try {
-            setUserToken.stream().forEach(userToken -> {
-                fbClient.notify(userToken.getFirebaseToken(), notifyMessage);
+            userTokens.forEach(userToken -> {
+                firebaseClient.notify(userToken.getFirebaseToken(), notifyMessage);
             });
-            return true;
         } catch (Exception e) {
             logger.error("notify to:  error", e);
-            return false;
         }
     }
 }

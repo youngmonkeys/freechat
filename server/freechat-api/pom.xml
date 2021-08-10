@@ -18,6 +18,7 @@
 		<hibernate.version>5.4.31.Final</hibernate.version>
 		<hikaricp.version>4.0.3</hikaricp.version>
 		<mysql.connector.version>8.0.24</mysql.connector.version>
+		<firebase.version>7.3.0</firebase.version>
 	</properties>
 
 	<dependencies>
@@ -73,9 +74,7 @@
 		<dependency>
 			<groupId>com.google.firebase</groupId>
 			<artifactId>firebase-admin</artifactId>
-			<version>7.3.0</version>
+			<version>${firebase.version}</version>
 		</dependency>
-
-
 	</dependencies>
 </project>
