@@ -5,3 +5,9 @@
 */.iml
 logs/
 */logs/
+.gradle/
+build.gradle
+settings.gradle
+.gitattributes
+android/app/google-services.json
+server/freechat-common/src/main/resources/notify-server-sdk-config.json
