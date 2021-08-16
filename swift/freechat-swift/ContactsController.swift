@@ -79,6 +79,7 @@ class ContactsController:
         }
         func update(component: String, data: Any) {
             parent.contactDatas.removeAll()
+            parent.contactDatas.append(ContactCellData(channelId: 0, users: ["Bot"]))
             let contacts = data as! NSArray
             for contact in contacts {
                 let c = contact as! NSDictionary

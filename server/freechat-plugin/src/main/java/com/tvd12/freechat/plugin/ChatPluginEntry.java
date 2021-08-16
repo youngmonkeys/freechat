@@ -26,12 +26,12 @@ public class ChatPluginEntry extends EzySimplePluginEntry {
 
 	@Override
 	protected void preConfig(EzyPluginContext ctx) {
-		getLogger().info("\n=================== FREE CHAT PLUGIN START CONFIG ================\n");
+		logger.info("\n=================== FREE CHAT PLUGIN START CONFIG ================\n");
 	}
 	
 	@Override
 	protected void postConfig(EzyPluginContext ctx) {
-		getLogger().info("\n=================== FREE CHAT PLUGIN END CONFIG ================\n");
+		logger.info("\n=================== FREE CHAT PLUGIN END CONFIG ================\n");
 	}
 	
 	@Override
