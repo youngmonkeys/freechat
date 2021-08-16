@@ -21,6 +21,7 @@ import com.tvd12.freechat.service.ChatMessageService;
 import com.tvd12.freechat.service.NotificationService;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -72,7 +73,7 @@ public class ChatUserMessageHandler
 			.usernames(channelUsers.getUsers())
 			.execute();
 
-		Set<ChatUserFirebaseToken> chatUserFirebaseTokens =
+		List<ChatUserFirebaseToken> chatUserFirebaseTokens =
 				chatUserFirebaseTokenService.findChatUserFirebaseTokens(channelUsers.getUsers());
 		notificationService.notify(chatUserFirebaseTokens,chatMessage);
 	}

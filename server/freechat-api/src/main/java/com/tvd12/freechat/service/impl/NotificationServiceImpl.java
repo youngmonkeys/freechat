@@ -7,9 +7,8 @@ import com.tvd12.freechat.common.entity.ChatUserFirebaseToken;
 import com.tvd12.freechat.entity.ChatMessage;
 import com.tvd12.freechat.entity.NotifyMessage;
 import com.tvd12.freechat.service.NotificationService;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.List;
 
 @EzySingleton
 public class NotificationServiceImpl extends EzyLoggable implements NotificationService {
@@ -18,7 +17,7 @@ public class NotificationServiceImpl extends EzyLoggable implements Notification
     private FirebaseClient firebaseClient;
 
     @Override
-    public void notify(Set<ChatUserFirebaseToken> userTokens, ChatMessage message) {
+    public void notify(List<ChatUserFirebaseToken> userTokens, ChatMessage message) {
 
         NotifyMessage notifyMessage =  NotifyMessage.builder()
                 .body(message.getMessage()).title("You have a new message: " + message.getSender())
