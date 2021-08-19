@@ -24,7 +24,7 @@
         <activity android:name="com.tvd12.freechat.MessageActivity" />
         <activity android:name="com.tvd12.freechat.ContactSearchActivity" />
         <service
-            android:name=".firebase.cloud.message.MyFirebaseMessagingService" android:enabled="true"
+            android:name=".firebase.MyFirebaseMessagingService" android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
