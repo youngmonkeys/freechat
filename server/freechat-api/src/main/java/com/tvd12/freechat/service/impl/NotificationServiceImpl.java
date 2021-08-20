@@ -5,10 +5,10 @@ import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.util.EzyLoggable;
 import com.tvd12.freechat.common.entity.ChatUserFirebaseToken;
 import com.tvd12.freechat.entity.ChatMessage;
-import com.tvd12.freechat.entity.FirebaseClient;
 import com.tvd12.freechat.entity.NotifyMessage;
 import com.tvd12.freechat.service.NotificationService;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,7 +19,7 @@ public class NotificationServiceImpl extends EzyLoggable implements Notification
     private FirebaseClient firebaseClient;
 
     @Override
-    public void notify(Set<ChatUserFirebaseToken> userTokens, ChatMessage message) {
+    public void notify(List<ChatUserFirebaseToken> userTokens, ChatMessage message) {
 
         NotifyMessage notifyMessage =  NotifyMessage.builder()
                 .body(message.getMessage()).title("You have a new message: " + message.getSender())
