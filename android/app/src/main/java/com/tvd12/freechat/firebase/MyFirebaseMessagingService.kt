@@ -11,7 +11,6 @@ class ChatFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token);
-        getSharedPreferences("_", MODE_PRIVATE).edit().putString("fb", token).apply();
         storeToken(token)
     }
 
