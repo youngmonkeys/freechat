@@ -1,3 +1,7 @@
+[submodule "android-client-sdk"]
+  path = android/socket
+  url = https://github.com/youngmonkeys/ezyfox-server-android-client.git
+  
 [submodule "swift-client-sdk"]
   path = swift/client
   url = https://github.com/youngmonkeys/ezyfox-server-swift-client.git

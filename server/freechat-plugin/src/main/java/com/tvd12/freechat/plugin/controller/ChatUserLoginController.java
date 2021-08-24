@@ -1,5 +1,4 @@
 package com.tvd12.freechat.plugin.controller;
-
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.core.annotation.EzyEventHandler;
@@ -19,7 +18,6 @@ import com.tvd12.freechat.common.service.ChatUserService;
 
 import lombok.Getter;
 import lombok.Setter;
-
 @Getter
 @Setter
 @EzySingleton

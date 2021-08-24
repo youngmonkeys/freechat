@@ -32,5 +32,4 @@
         android:textColor="@color/color95White"
         app:layout_constraintBottom_toTopOf="@+id/message"
         app:layout_constraintRight_toRightOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
