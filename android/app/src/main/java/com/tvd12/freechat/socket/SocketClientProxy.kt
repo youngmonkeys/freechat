@@ -189,8 +189,8 @@ class SocketClientProxy private constructor() {
     }
 
     fun connectToServer() {
-//        val host = "ws.tvd12.com"
-        val host = "192.168.0.109"
+        val host = "ws.tvd12.com"
+//        val host = "192.168.0.109"
         if (client.isConnected) {
             StateManager.getInstance().reconnnect = true
             client.disconnect()

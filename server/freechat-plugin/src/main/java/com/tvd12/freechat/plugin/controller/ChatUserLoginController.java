@@ -1,4 +1,5 @@
 package com.tvd12.freechat.plugin.controller;
+
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzySingleton;
 import com.tvd12.ezyfox.core.annotation.EzyEventHandler;
@@ -18,65 +19,68 @@ import com.tvd12.freechat.common.service.ChatUserService;
 
 import lombok.Getter;
 import lombok.Setter;
+
 @Getter
 @Setter
 @EzySingleton
 @EzyEventHandler(EzyEventNames.USER_LOGIN)
 public class ChatUserLoginController
-		extends EzyAbstractPluginEventController<EzyUserLoginEvent> {
+        extends EzyAbstractPluginEventController<EzyUserLoginEvent> {
 
-	@EzyAutoBind
-	private ChatUserService userService;
+    @EzyAutoBind
+    private ChatUserService userService;
 
-	@EzyAutoBind
-	private ChatUserFirebaseTokenService chatUserFirebaseTokenService;
-	private final String FIREBASE_TOKEN_KEY = "firebaseToken";
-	@Override
-	public void handle(EzyPluginContext ctx, EzyUserLoginEvent event) {
-		logger.info("handle user {} login in", event.getUsername());
+    @EzyAutoBind
+    private ChatUserFirebaseTokenService chatUserFirebaseTokenService;
+    private final String FIREBASE_TOKEN_KEY = "firebaseToken";
 
-		validateEvent(event);
+    @Override
+    public void handle(EzyPluginContext ctx, EzyUserLoginEvent event) {
+        logger.info("handle user {} login in", event.getUsername());
 
-		String username = event.getUsername();
-		String password = encodePassword(event.getPassword());
+        validateEvent(event);
+
+        String username = event.getUsername();
+        String password = encodePassword(event.getPassword());
 
 
 //		get token
-		EzyObject data = (EzyObject)(event.getData());
-		String firebaseToken = data.get(FIREBASE_TOKEN_KEY);
-		logger.info("handle user {} with firebase token {}",event.getUsername(),firebaseToken);
-		if(firebaseToken != null) {
-			ChatUserFirebaseToken userFirebaseToken = new ChatUserFirebaseToken(
-					firebaseToken,
-					username
-			);
-			chatUserFirebaseTokenService.saveUserFirebaseToken(userFirebaseToken);
-		}
+        EzyObject data = (EzyObject) (event.getData());
+        String firebaseToken = data.get(FIREBASE_TOKEN_KEY);
+        logger.info("handle user {} with firebase token {}", event.getUsername(), firebaseToken);
+        if (firebaseToken != null) {
+            ChatUserFirebaseToken userFirebaseToken = new ChatUserFirebaseToken(
+                    firebaseToken,
+                    username
+            );
+            chatUserFirebaseTokenService.saveUserFirebaseToken(userFirebaseToken);
+        }
 
-		ChatUser user = userService.getUser(username);
-		if(user == null)
-			user = userService.createUser(username, password);
+        ChatUser user = userService.getUser(username);
+        if (user == null)
+            user = userService.createUser(username, password);
 
-		if(!user.getPassword().equals(password))
-			throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
+        if (!user.getPassword().equals(password))
+            throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
 
-		user.setOnline(true);
-		userService.saveUser(user);
+        user.setOnline(true);
+        userService.saveUser(user);
 
-		event.setUserProperty("dataId", user.getId());
+        event.setUserProperty("dataId", user.getId());
 
-		logger.info("username and password match, accept user: {}", event.getUsername());
-	}
-	private void validateEvent(EzyUserLoginEvent event) {
-		String password = event.getPassword();
-		if(EzyStrings.isNoContent(password))
-			throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
-		if(password.length() < 6)
-			throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
+        logger.info("username and password match, accept user: {}", event.getUsername());
+    }
 
-	}
+    private void validateEvent(EzyUserLoginEvent event) {
+        String password = event.getPassword();
+        if (EzyStrings.isNoContent(password))
+            throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
+        if (password.length() < 6)
+            throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
 
-	private String encodePassword(String password) {
-		return EzySHA256.cryptUtfToLowercase(password);
-	}
+    }
+
+    private String encodePassword(String password) {
+        return EzySHA256.cryptUtfToLowercase(password);
+    }
 }
