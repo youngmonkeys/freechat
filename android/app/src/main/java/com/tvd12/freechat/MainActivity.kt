@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.tvd12.freechat.constant.FIREBASE_TOKEN_KEY
-import com.tvd12.freechat.firebase.cloud.message.MyFirebaseMessagingService
+import com.tvd12.freechat.firebase.ChatFirebaseMessagingService
 import com.tvd12.freechat.socket.SocketClientProxy
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var passwordView: EditText
     private lateinit var loginButtonView: Button
     private lateinit var connectionController: Controller
-    private var myFirebaseMessagingService: MyFirebaseMessagingService = MyFirebaseMessagingService()
+    private var myFirebaseMessagingService: ChatFirebaseMessagingService = ChatFirebaseMessagingService()
     private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +38,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
-        myFirebaseMessagingService.getToken(this,this.baseContext);
 
         connectionController.addView("show-loading", object : IView {
             override fun update(viewId: String, data: Any?) {
