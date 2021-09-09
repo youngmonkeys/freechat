@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.tvd12</groupId>
 		<artifactId>ezyfox-server</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 	
 	<artifactId>freechat</artifactId>
@@ -16,7 +16,8 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<ezy.version>1.1.9</ezy.version>
+		<ezy.version>1.2.0</ezy.version>
+		<ezy.boot.version>1.0.1</ezy.boot.version>
 	</properties>
 
 	<dependencies>
@@ -32,14 +33,16 @@
 			<build>
 				<plugins>
 					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-antrun-plugin</artifactId>
+						<version>3.0.0</version>
 						<executions>
 							<execution>
 								<phase>install</phase>
 								<configuration>
-									<tasks>
+									<target>
 										<ant antfile="${project.basedir}/build.xml"/>
-									</tasks>
+									</target>
 								</configuration>
 								<goals>
 									<goal>run</goal>

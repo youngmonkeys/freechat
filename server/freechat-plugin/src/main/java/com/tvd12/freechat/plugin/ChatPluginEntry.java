@@ -3,14 +3,9 @@
  */
 package com.tvd12.freechat.plugin;
 
-import java.util.Map;
 import java.util.Properties;
 
-import com.mongodb.MongoClient;
-import com.tvd12.ezydata.database.EzyDatabaseContext;
-import com.tvd12.ezydata.mongodb.EzyMongoDatabaseContextBuilder;
 import com.tvd12.ezydata.mongodb.loader.EzyMongoClientLoader;
-import com.tvd12.ezydata.mongodb.loader.EzySimpleMongoClientLoader;
 import com.tvd12.ezyfox.bean.EzyBeanContextBuilder;
 import com.tvd12.ezyfoxserver.context.EzyPluginContext;
 import com.tvd12.ezyfoxserver.context.EzyZoneContext;
@@ -41,17 +36,9 @@ public class ChatPluginEntry extends EzySimplePluginEntry {
 		Properties properties = builder.getProperties();
 		Properties mongoProperties = PropertiesUtil.filterPropertiesByKeyPrefix(
 				properties, 
-				EzyMongoClientLoader.PROPERTY_NAME_PREFIX);
-		MongoClient mongoClient = newMongoClient(mongoProperties);
-		EzyDatabaseContext databaseContext = newDatabaseContext(
-				mongoClient,
-				mongoProperties
+				EzyMongoClientLoader.PROPERTY_NAME_PREFIX
 		);
-        Map<String, Object> repos = databaseContext.getRepositoriesByName();
-        for(String repoName : repos.keySet())
-        	builder.addSingleton(repoName, repos.get(repoName));
 		EzyZoneContext zoneContext = context.getParent();
-		zoneContext.setProperty(MongoClient.class, mongoClient);
 		zoneContext.setProperty("mongoProperties", mongoProperties);
 	}
 	
@@ -65,29 +52,10 @@ public class ChatPluginEntry extends EzySimplePluginEntry {
 	}
 	
 	@Override
-	protected String[] getScanableBeanPackages() {
+	protected String[] getScanablePackages() {
 		return new String[] {
-			"com.tvd12.freechat.plugin",
-			"com.tvd12.freechat.common.repo",
-			"com.tvd12.freechat.common.service"
+			"com.tvd12.freechat.common",
+			"com.tvd12.freechat.plugin"
 		};
 	}
-
-	private EzyDatabaseContext newDatabaseContext(
-			MongoClient mongoClient,
-			Properties properties) {
-		String databaseName = properties.getProperty(EzyMongoClientLoader.DATABASE);
-        return new EzyMongoDatabaseContextBuilder()
-                .properties(properties)
-                .mongoClient(mongoClient)
-                .databaseName(databaseName)
-                .scan("com.tvd12.freechat.common.entity")
-                .scan("com.tvd12.freechat.common.repo")
-                .build();
-    }
-
-    private MongoClient newMongoClient(Properties properties) {
-        return EzySimpleMongoClientLoader.load(properties);
-    }
-
 }

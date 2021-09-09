@@ -44,6 +44,8 @@
 		F102F3442649940F001D9061 /* ViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F3432649940F001D9061 /* ViewManager.swift */; };
 		F102F346264A5FCF001D9061 /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F345264A5FCF001D9061 /* AddContactTableViewCell.swift */; };
 		F102F348264A982A001D9061 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102F347264A982A001D9061 /* MessagesController.swift */; };
+		F14DC10E26E358B900F70721 /* EzyPingConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14DC10D26E358B900F70721 /* EzyPingConfig.swift */; };
+		F14DC11226E35B0300F70721 /* EzyReconnectConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14DC11126E35B0300F70721 /* EzyReconnectConfig.swift */; };
 		F18F94E7266A1B6F004790E8 /* EzyEncryptionProxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = F18F94E6266A1B6F004790E8 /* EzyEncryptionProxy.mm */; };
 		F18F94EA266A1B83004790E8 /* EzyClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18F94E9266A1B83004790E8 /* EzyClientConfig.swift */; };
 		F18F94F6266A1DCF004790E8 /* NSByArray.m in Sources */ = {isa = PBXBuildFile; fileRef = F18F94F5266A1DCF004790E8 /* NSByArray.m */; };
@@ -244,6 +246,8 @@
 		F102F3432649940F001D9061 /* ViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewManager.swift; sourceTree = "<group>"; };
 		F102F345264A5FCF001D9061 /* AddContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactTableViewCell.swift; sourceTree = "<group>"; };
 		F102F347264A982A001D9061 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
+		F14DC10D26E358B900F70721 /* EzyPingConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EzyPingConfig.swift; sourceTree = "<group>"; };
+		F14DC11126E35B0300F70721 /* EzyReconnectConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EzyReconnectConfig.swift; sourceTree = "<group>"; };
 		F18F94E5266A1B6F004790E8 /* EzyEncryptionProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EzyEncryptionProxy.h; sourceTree = "<group>"; };
 		F18F94E6266A1B6F004790E8 /* EzyEncryptionProxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EzyEncryptionProxy.mm; sourceTree = "<group>"; };
 		F18F94E9266A1B83004790E8 /* EzyClientConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EzyClientConfig.swift; sourceTree = "<group>"; };
@@ -699,6 +703,8 @@
 			isa = PBXGroup;
 			children = (
 				F18F94E9266A1B83004790E8 /* EzyClientConfig.swift */,
+				F14DC10D26E358B900F70721 /* EzyPingConfig.swift */,
+				F14DC11126E35B0300F70721 /* EzyReconnectConfig.swift */,
 			);
 			path = config;
 			sourceTree = "<group>";
@@ -843,6 +849,7 @@
 				E9BE324621882927009F9800 /* EzyConstants.swift in Sources */,
 				E9BE3212218801E8009F9800 /* EzyMethodProxy.mm in Sources */,
 				E9BE324C2188321D009F9800 /* EzyHandlers.swift in Sources */,
+				F14DC10E26E358B900F70721 /* EzyPingConfig.swift in Sources */,
 				E97EDB1922F70E2000202705 /* EzyLogger.swift in Sources */,
 				E9BE32412188176E009F9800 /* EzyEventEmitter.mm in Sources */,
 				E9BE325021887CC1009F9800 /* Mvc.swift in Sources */,
@@ -860,6 +867,7 @@
 				E9BE3200218801D0009F9800 /* EzyMethodCallException.mm in Sources */,
 				E9BE3235218803F2009F9800 /* EzyEventSerializer.mm in Sources */,
 				E9BE324A21882CE6009F9800 /* EzyManagers.swift in Sources */,
+				F14DC11226E35B0300F70721 /* EzyReconnectConfig.swift in Sources */,
 				E9BE3236218803F2009F9800 /* EzyNativeSerializers.mm in Sources */,
 				F102F346264A5FCF001D9061 /* AddContactTableViewCell.swift in Sources */,
 				E9FDCF6F218629FA00EBC4EE /* LoginController.swift in Sources */,
