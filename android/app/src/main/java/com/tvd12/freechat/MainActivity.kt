@@ -21,8 +21,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var passwordView: EditText
     private lateinit var loginButtonView: Button
     private lateinit var connectionController: Controller
-    private var myFirebaseMessagingService: ChatFirebaseMessagingService = ChatFirebaseMessagingService()
-    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                 startMessageActivity()
             }
             else {
-                val prefs: SharedPreferences = getSharedPreferences("_", MODE_PRIVATE)
+                val prefs = getSharedPreferences("_", MODE_PRIVATE)
                 loadingView.visibility = View.VISIBLE
                 connectionData["username"] = newUsername
                 connectionData["password"] = passwordView.text.toString()

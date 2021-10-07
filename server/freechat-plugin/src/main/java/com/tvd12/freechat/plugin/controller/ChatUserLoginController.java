@@ -42,17 +42,10 @@ public class ChatUserLoginController
         String password = encodePassword(event.getPassword());
 
 
-//		get token
-        EzyObject data = (EzyObject) (event.getData());
+        // get token
+        EzyObject data = event.getData();
         String firebaseToken = data.get(FIREBASE_TOKEN_KEY);
-        logger.info("handle user {} with firebase token {}", event.getUsername(), firebaseToken);
-        if (firebaseToken != null) {
-            ChatUserFirebaseToken userFirebaseToken = new ChatUserFirebaseToken(
-                    firebaseToken,
-                    username
-            );
-            chatUserFirebaseTokenService.saveUserFirebaseToken(userFirebaseToken);
-        }
+
 
         ChatUser user = userService.getUser(username);
         if (user == null)
@@ -65,6 +58,15 @@ public class ChatUserLoginController
         userService.saveUser(user);
 
         event.setUserProperty("dataId", user.getId());
+
+        logger.info("handle user {} with firebase token {}", event.getUsername(), firebaseToken);
+        if (firebaseToken != null) {
+            ChatUserFirebaseToken userFirebaseToken = new ChatUserFirebaseToken(
+                    firebaseToken,
+                    username
+            );
+            chatUserFirebaseTokenService.saveUserFirebaseToken(userFirebaseToken);
+        }
 
         logger.info("username and password match, accept user: {}", event.getUsername());
     }
