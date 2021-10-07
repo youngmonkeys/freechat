@@ -17,12 +17,12 @@ public class ChatAppEntry extends EzySimpleAppEntry {
 
 	@Override
 	protected void preConfig(EzyAppContext ctx) {
-		getLogger().info("\n=================== FREE CHAT APP START CONFIG ================\n");
+		logger.info("\n=================== FREE CHAT APP START CONFIG ================\n");
 	}
 	
 	@Override
 	protected void postConfig(EzyAppContext ctx) {
-		getLogger().info("\n=================== FREE CHAT APP END CONFIG ================\n");
+		logger.info("\n=================== FREE CHAT APP END CONFIG ================\n");
 	}
 	
 	@Override
@@ -44,7 +44,7 @@ public class ChatAppEntry extends EzySimpleAppEntry {
 	}
 	
 	public void start() throws Exception {
-		getLogger().info("start free chat app");
+		logger.info("start free chat app");
 	}
 
 	@Override

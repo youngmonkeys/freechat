@@ -7,10 +7,8 @@ import com.tvd12.freechat.common.repo.ChatUserFirebaseTokenRepo;
 import com.tvd12.freechat.common.service.ChatUserFirebaseTokenService;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Setter
 @EzySingleton("chatUserFirebaseTokenService")

@@ -33,5 +33,4 @@
 			<version>${ezy.version}</version>
 		</dependency>
 	</dependencies>
-	
 </project>

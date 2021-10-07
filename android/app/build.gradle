@@ -43,4 +43,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.tvd12:ezyfox-server-android-client:1.0.0'
 }
