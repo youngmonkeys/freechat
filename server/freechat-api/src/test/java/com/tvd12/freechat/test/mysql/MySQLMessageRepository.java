@@ -5,7 +5,7 @@ import com.tvd12.ezyfox.database.annotation.EzyRepository;
 import com.tvd12.freechat.test.entity.ChatMessage;
 
 @EzyRepository
-public interface MySQLMessageRepository 
-		extends EzyDatabaseRepository<Long, ChatMessage> {
+public interface MySQLMessageRepository
+    extends EzyDatabaseRepository<Long, ChatMessage> {
 
 }

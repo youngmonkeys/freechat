@@ -6,12 +6,12 @@ import com.tvd12.ezyfoxserver.controller.EzyServerReadyController;
 import com.tvd12.ezyfoxserver.event.EzyServerReadyEvent;
 
 public class ChatServerReadyController
-		extends EzyLoggable
-		implements EzyServerReadyController {
+    extends EzyLoggable
+    implements EzyServerReadyController {
 
-	@Override
-	public void handle(EzyServerContext ctx, EzyServerReadyEvent event) {
-		logger.info("ChatServerReadyController:: run customer server ready");
-	}
-	
+    @Override
+    public void handle(EzyServerContext ctx, EzyServerReadyEvent event) {
+        logger.info("ChatServerReadyController:: run customer server ready");
+    }
+
 }

@@ -8,34 +8,33 @@ import com.tvd12.freechat.constant.ChatEntities;
 import com.tvd12.freechat.entity.ChatMessage;
 import com.tvd12.freechat.repo.ChatMessageRepo;
 import com.tvd12.freechat.service.ChatMessageService;
-
 import lombok.Setter;
 
 @Setter
 @EzySingleton("messageService")
 public class ChatMessageServiceImpl
-		extends EzyLoggable
-		implements ChatMessageService {
+    extends EzyLoggable
+    implements ChatMessageService {
 
-	@EzyAutoBind
-	private ChatMessageRepo messageRepo;
-	
-	@EzyAutoBind
-	private ChatMaxIdService maxIdService;
-	
-	private void presave(ChatMessage message) {
-		long id = newEntityId();
-		message.setId(id);
-	}
-	
-	private long newEntityId() {
-		return maxIdService.incrementAndGet(ChatEntities.CHAT_MESSAGE);
-	}
+    @EzyAutoBind
+    private ChatMessageRepo messageRepo;
 
-	@Override
-	public void save(ChatMessage message) {
-		presave(message);
-		messageRepo.save(message);
-	}
-	
+    @EzyAutoBind
+    private ChatMaxIdService maxIdService;
+
+    private void presave(ChatMessage message) {
+        long id = newEntityId();
+        message.setId(id);
+    }
+
+    private long newEntityId() {
+        return maxIdService.incrementAndGet(ChatEntities.CHAT_MESSAGE);
+    }
+
+    @Override
+    public void save(ChatMessage message) {
+        presave(message);
+        messageRepo.save(message);
+    }
+
 }

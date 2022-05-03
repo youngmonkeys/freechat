@@ -1,7 +1,5 @@
 package com.tvd12.freechat.handler;
 
-import static com.tvd12.freechat.constant.ChatCommands.CHAT_USER_MESSAGE;
-
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
 import com.tvd12.ezyfox.binding.EzyDataBinding;
@@ -15,52 +13,55 @@ import com.tvd12.freechat.data.ChatChannelUsers;
 import com.tvd12.freechat.entity.ChatMessage;
 import com.tvd12.freechat.service.ChatChannelUserService;
 import com.tvd12.freechat.service.ChatMessageService;
-
 import lombok.Setter;
+
+import static com.tvd12.freechat.constant.ChatCommands.CHAT_USER_MESSAGE;
 
 @Setter
 @EzyPrototype
 @EzyObjectBinding
 @EzyRequestListener(CHAT_USER_MESSAGE)
-public class ChatUserMessageHandler 
-		extends ChatClientRequestHandler 
-		implements EzyDataBinding {
+public class ChatUserMessageHandler
+    extends ChatClientRequestHandler
+    implements EzyDataBinding {
 
-	private String message;
-	private long channelId;
-	private String clientMessageId = "";
-	
-	@EzyAutoBind
-	private ChatMaxIdService maxIdService;
-	
-	@EzyAutoBind
-	private ChatMessageService messageService;
-	
-	@EzyAutoBind
-	private ChatChannelUserService channelUserService;
-	
-	@Override
-	protected void execute() throws EzyBadRequestException {
-		if(message.length() > 255)
-			throw new EzyBadRequestException(ChatErrors.MESSAGE_TOO_LONG, "message too long");
-		
-		ChatChannelUsers channelUsers = 
-				channelUserService.getChannelUsers(channelId, user.getName());
-		if(channelUsers == null)
-			throw new EzyBadRequestException(ChatErrors.CHANNEL_NOT_FOUND, "channel with id: " + channelId + " not found");
-		
-		messageService.save(new ChatMessage(
-				maxIdService.incrementAndGet(ChatEntities.CHAT_MESSAGE),
-				true, message, channelId, user.getName(), clientMessageId
-			));
-		
-		responseFactory.newObjectResponse()
-			.command(CHAT_USER_MESSAGE)
-			.param("from", user.getName())
-			.param("message", message)
-			.param("channelId", channelId)
-			.usernames(channelUsers.getUsers())
-			.execute();
-	}
-	
+    private String message;
+    private long channelId;
+    private String clientMessageId = "";
+
+    @EzyAutoBind
+    private ChatMaxIdService maxIdService;
+
+    @EzyAutoBind
+    private ChatMessageService messageService;
+
+    @EzyAutoBind
+    private ChatChannelUserService channelUserService;
+
+    @Override
+    protected void execute() throws EzyBadRequestException {
+        if (message.length() > 255) {
+            throw new EzyBadRequestException(ChatErrors.MESSAGE_TOO_LONG, "message too long");
+        }
+
+        ChatChannelUsers channelUsers =
+            channelUserService.getChannelUsers(channelId, user.getName());
+        if (channelUsers == null) {
+            throw new EzyBadRequestException(ChatErrors.CHANNEL_NOT_FOUND, "channel with id: " + channelId + " not found");
+        }
+
+        messageService.save(new ChatMessage(
+            maxIdService.incrementAndGet(ChatEntities.CHAT_MESSAGE),
+            true, message, channelId, user.getName(), clientMessageId
+        ));
+
+        responseFactory.newObjectResponse()
+            .command(CHAT_USER_MESSAGE)
+            .param("from", user.getName())
+            .param("message", message)
+            .param("channelId", channelId)
+            .usernames(channelUsers.getUsers())
+            .execute();
+    }
+
 }

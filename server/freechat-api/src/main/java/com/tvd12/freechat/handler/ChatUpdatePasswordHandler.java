@@ -1,7 +1,5 @@
 package com.tvd12.freechat.handler;
 
-import static com.tvd12.freechat.constant.ChatCommands.UPDATE_PASSWORD;
-
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
 import com.tvd12.ezyfox.binding.EzyDataBinding;
@@ -13,8 +11,9 @@ import com.tvd12.ezyfox.sercurity.EzySHA256;
 import com.tvd12.freechat.common.entity.ChatUser;
 import com.tvd12.freechat.common.service.ChatUserService;
 import com.tvd12.freechat.constant.ChatErrors;
-
 import lombok.Setter;
+
+import static com.tvd12.freechat.constant.ChatCommands.UPDATE_PASSWORD;
 
 
 @Setter
@@ -50,8 +49,8 @@ public class ChatUpdatePasswordHandler extends ChatClientRequestHandler implemen
 
     private void responseOk() {
         responseFactory.newArrayResponse()
-                .command(UPDATE_PASSWORD)
-                .user(user)
-                .execute();
+            .command(UPDATE_PASSWORD)
+            .user(user)
+            .execute();
     }
 }

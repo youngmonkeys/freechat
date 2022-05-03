@@ -9,12 +9,12 @@ import com.tvd12.ezyfoxserver.event.EzyServerReadyEvent;
 
 @EzySingleton
 @EzyEventHandler(event = EzyEventNames.SERVER_READY)
-public class ChatServerReadyController 
-		extends EzyAbstractAppEventController<EzyServerReadyEvent> {
+public class ChatServerReadyController
+    extends EzyAbstractAppEventController<EzyServerReadyEvent> {
 
-	@Override
-	public void handle(EzyAppContext ctx, EzyServerReadyEvent event) {
-		logger.info("chat app: fire custom app ready");
-	}
-	
+    @Override
+    public void handle(EzyAppContext ctx, EzyServerReadyEvent event) {
+        logger.info("chat app: fire custom app ready");
+    }
+
 }

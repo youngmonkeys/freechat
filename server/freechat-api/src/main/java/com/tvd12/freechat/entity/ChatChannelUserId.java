@@ -3,12 +3,7 @@ package com.tvd12.freechat.entity;
 import com.tvd12.ezyfox.annotation.EzyId;
 import com.tvd12.ezyfox.util.EzyEquals;
 import com.tvd12.ezyfox.util.EzyHashCodes;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Setter
 @Getter
@@ -18,23 +13,23 @@ import lombok.ToString;
 @AllArgsConstructor
 public class ChatChannelUserId {
 
-	private long channelId;
-	private String user;
-	
-	@Override
-	public boolean equals(Object obj) {
-		return new EzyEquals<ChatChannelUserId>()
-				.function(t -> t.channelId)
-				.function(t -> t.user)
-				.isEquals(this, obj);
-	}
-	
-	@Override
-	public int hashCode() {
-		return new EzyHashCodes()
-				.append(channelId)
-				.append(user)
-				.toHashCode();
-	}
-	
+    private long channelId;
+    private String user;
+
+    @Override
+    public boolean equals(Object obj) {
+        return new EzyEquals<ChatChannelUserId>()
+            .function(t -> t.channelId)
+            .function(t -> t.user)
+            .isEquals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return new EzyHashCodes()
+            .append(channelId)
+            .append(user)
+            .toHashCode();
+    }
+
 }

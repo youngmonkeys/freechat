@@ -9,12 +9,12 @@ import com.tvd12.ezyfoxserver.event.EzyUserAccessAppEvent;
 
 @EzySingleton
 @EzyEventHandler(event = EzyEventNames.USER_ACCESS_APP)
-public class ChatAccessAppController 
-		extends EzyAbstractAppEventController<EzyUserAccessAppEvent> {
+public class ChatAccessAppController
+    extends EzyAbstractAppEventController<EzyUserAccessAppEvent> {
 
-	@Override
-	public void handle(EzyAppContext ctx, EzyUserAccessAppEvent event) {
-		logger.info("chat app: fire user: {} access app", event.getUser());
-	}
-	
+    @Override
+    public void handle(EzyAppContext ctx, EzyUserAccessAppEvent event) {
+        logger.info("chat app: fire user: {} access app", event.getUser());
+    }
+
 }

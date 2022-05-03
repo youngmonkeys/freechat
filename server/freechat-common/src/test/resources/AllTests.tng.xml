@@ -3,8 +3,8 @@
 <suite name="All-Test">
 
     <test name="All">
-    	<packages>
-    		<package name="vn.team.freechat.common.testing"/>
-    	</packages>
+        <packages>
+            <package name="vn.team.freechat.common.testing"/>
+        </packages>
     </test>
 </suite>

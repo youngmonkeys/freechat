@@ -1,10 +1,5 @@
 package com.tvd12.freechat.handler;
 
-import static com.tvd12.freechat.constant.ChatCommands.SEARCH_CONTACTS_USERS;
-
-import java.util.List;
-import java.util.Set;
-
 import com.tvd12.ezyfox.bean.annotation.EzyAutoBind;
 import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
 import com.tvd12.ezyfox.binding.EzyDataBinding;
@@ -18,50 +13,55 @@ import com.tvd12.freechat.common.entity.ChatUser;
 import com.tvd12.freechat.common.service.ChatUserService;
 import com.tvd12.freechat.data.ChatContactUser;
 import com.tvd12.freechat.service.ChatChannelUserService;
-
 import lombok.Setter;
+
+import java.util.List;
+import java.util.Set;
+
+import static com.tvd12.freechat.constant.ChatCommands.SEARCH_CONTACTS_USERS;
 
 @Setter
 @EzyPrototype
 @EzyObjectBinding
 @EzyRequestListener(SEARCH_CONTACTS_USERS)
 public class ChatSearchContactsUsersHandler
-		extends ChatClientRequestHandler 
-		implements EzyDataBinding {
+    extends ChatClientRequestHandler
+    implements EzyDataBinding {
 
-	protected int skip;
-	protected int limit;
-	private String keyword;
+    protected int skip;
+    protected int limit;
+    private String keyword;
 
-	@EzyAutoBind
-	private ChatUserService userService;
-	
-	@EzyAutoBind
-	private ChatChannelUserService channelUserService;
+    @EzyAutoBind
+    private ChatUserService userService;
 
-	@Override
-	protected void preExecute() {
-		if(limit > 30)
-			limit = 30;
-	}
+    @EzyAutoBind
+    private ChatChannelUserService channelUserService;
 
-	@Override
-	protected void execute() throws EzyBadRequestException {
-		logger.debug("searched user by username: {}, skip: {}, limit: {}", keyword, skip, limit);
-		if (EzyStrings.isEmpty(keyword)) {
-			response(Lists.newArrayList());
-			return;
-		}
-		Set<String> excludeUsers = channelUserService.getContactedUsers(user.getName(), 0, 30);
-		List<ChatUser> users = userService.getSearchUsers(excludeUsers, keyword, skip, limit);
-		response(users);
-	}
+    @Override
+    protected void preExecute() {
+        if (limit > 30) {
+            limit = 30;
+        }
+    }
 
-	private void response(List<ChatUser> users) {
-		responseFactory.newObjectResponse()
-			.command(SEARCH_CONTACTS_USERS)
-			.param("users", EzyLists.newArrayList(users, ChatContactUser::new))
-			.session(session)
-			.execute();
-	}
+    @Override
+    protected void execute() throws EzyBadRequestException {
+        logger.debug("searched user by username: {}, skip: {}, limit: {}", keyword, skip, limit);
+        if (EzyStrings.isEmpty(keyword)) {
+            response(Lists.newArrayList());
+            return;
+        }
+        Set<String> excludeUsers = channelUserService.getContactedUsers(user.getName(), 0, 30);
+        List<ChatUser> users = userService.getSearchUsers(excludeUsers, keyword, skip, limit);
+        response(users);
+    }
+
+    private void response(List<ChatUser> users) {
+        responseFactory.newObjectResponse()
+            .command(SEARCH_CONTACTS_USERS)
+            .param("users", EzyLists.newArrayList(users, ChatContactUser::new))
+            .session(session)
+            .execute();
+    }
 }

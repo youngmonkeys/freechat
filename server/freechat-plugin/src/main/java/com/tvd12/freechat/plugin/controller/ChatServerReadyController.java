@@ -9,12 +9,12 @@ import com.tvd12.ezyfoxserver.event.EzyServerReadyEvent;
 
 @EzySingleton
 @EzyEventHandler(event = EzyEventNames.SERVER_READY)
-public class ChatServerReadyController 
-		extends EzyAbstractPluginEventController<EzyServerReadyEvent> {
+public class ChatServerReadyController
+    extends EzyAbstractPluginEventController<EzyServerReadyEvent> {
 
-	@Override
-	public void handle(EzyPluginContext ctx, EzyServerReadyEvent event) {
-		logger.info("freechat plugin: fire custom plugin ready");
-	}
-	
+    @Override
+    public void handle(EzyPluginContext ctx, EzyServerReadyEvent event) {
+        logger.info("freechat plugin: fire custom plugin ready");
+    }
+
 }
