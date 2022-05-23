@@ -24,5 +24,4 @@ public class ChatChannelUsers {
     public ChatChannelUsers clone(String user) {
         return new ChatChannelUsers(channelId, user);
     }
-
 }

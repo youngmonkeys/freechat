@@ -19,14 +19,11 @@ public class ChatBotQuestionRepoFileSystem implements ChatBotQuestionRepo {
 
     @Override
     public String findQuestionByIndex(int index) {
-        String question = questions.get(index);
-        return question;
+        return questions.get(index);
     }
 
     @Override
     public long count() {
-        int size = questions.size();
-        return size;
+        return questions.size();
     }
-
 }

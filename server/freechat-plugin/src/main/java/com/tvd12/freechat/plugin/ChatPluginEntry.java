@@ -1,9 +1,5 @@
-/**
- *
- */
 package com.tvd12.freechat.plugin;
 
-import com.tvd12.ezydata.mongodb.loader.EzyMongoClientLoader;
 import com.tvd12.ezyfox.bean.EzyBeanContextBuilder;
 import com.tvd12.ezyfoxserver.context.EzyPluginContext;
 import com.tvd12.ezyfoxserver.context.EzyZoneContext;
@@ -13,10 +9,6 @@ import com.tvd12.properties.file.util.PropertiesUtil;
 
 import java.util.Properties;
 
-/**
- * @author tavandung12
- *
- */
 public class ChatPluginEntry extends EzySimplePluginEntry {
 
     @Override
@@ -36,7 +28,7 @@ public class ChatPluginEntry extends EzySimplePluginEntry {
         Properties properties = builder.getProperties();
         Properties mongoProperties = PropertiesUtil.filterPropertiesByKeyPrefix(
             properties,
-            EzyMongoClientLoader.PROPERTY_NAME_PREFIX
+            "database.mongo"
         );
         EzyZoneContext zoneContext = context.getParent();
         zoneContext.setProperty("mongoProperties", mongoProperties);
@@ -47,7 +39,7 @@ public class ChatPluginEntry extends EzySimplePluginEntry {
     }
 
     @Override
-    public void start() throws Exception {
+    public void start() {
         logger.info("chat plugin: start");
     }
 

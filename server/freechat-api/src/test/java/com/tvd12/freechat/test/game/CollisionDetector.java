@@ -2,8 +2,7 @@ package com.tvd12.freechat.test.game;
 
 public final class CollisionDetector {
 
-    private CollisionDetector() {
-    }
+    private CollisionDetector() {}
 
     public static boolean check(Body a, Body b) {
         Vec3 pa = a.getPosition();
@@ -33,10 +32,6 @@ public final class CollisionDetector {
         Vec3 pa = a.getPosition();
         Vec3 pb = b.getPosition();
         double disx = pa.x - pb.x;
-        if (disx > b.getWidth()) {
-            return false;
-        }
-        return true;
+        return !(disx > b.getWidth());
     }
-
 }

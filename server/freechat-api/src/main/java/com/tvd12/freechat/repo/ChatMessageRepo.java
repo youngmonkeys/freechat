@@ -7,7 +7,4 @@ import com.tvd12.freechat.entity.ChatMessage;
 
 @EzyAutoImpl("messageRepo")
 public interface ChatMessageRepo
-    extends EzyMongoRepository<Long, ChatMessage> {
-
-
-}
+    extends EzyMongoRepository<Long, ChatMessage> {}

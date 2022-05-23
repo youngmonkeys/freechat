@@ -21,5 +21,4 @@ public interface ChatChannelUserRepo
 
     @EzyQuery("{$and: [{'_id.channelId': {$in: ?0}}, {'_id.user': {$ne: ?1}}]}")
     List<ChatChannelUser> findByChannelIds(List<Long> channelIds, String user);
-
 }

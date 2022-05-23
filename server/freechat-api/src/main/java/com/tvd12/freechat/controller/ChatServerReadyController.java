@@ -16,5 +16,4 @@ public class ChatServerReadyController
     public void handle(EzyAppContext ctx, EzyServerReadyEvent event) {
         logger.info("chat app: fire custom app ready");
     }
-
 }

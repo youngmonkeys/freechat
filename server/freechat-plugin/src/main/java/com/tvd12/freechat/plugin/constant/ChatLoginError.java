@@ -11,9 +11,8 @@ public enum ChatLoginError implements EzyILoginError {
     private final int id;
     private final String message;
 
-    private ChatLoginError(int id, String message) {
+    ChatLoginError(int id, String message) {
         this.id = id;
         this.message = message;
     }
-
 }

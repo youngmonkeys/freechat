@@ -36,5 +36,4 @@ public class AbstractMessagePerformanceTest {
         }
         return messLists;
     }
-
 }

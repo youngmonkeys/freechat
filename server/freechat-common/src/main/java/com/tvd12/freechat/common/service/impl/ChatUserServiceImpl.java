@@ -56,5 +56,4 @@ public class ChatUserServiceImpl implements ChatUserService {
     public List<ChatUser> getSuggestionUsers(Set<String> excludeUsers, int skip, int limit) {
         return userRepo.findSuggestionUsers(excludeUsers, EzyNext.fromSkipLimit(skip, limit));
     }
-
 }

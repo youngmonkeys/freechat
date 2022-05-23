@@ -32,8 +32,6 @@ public class ChatBotQuestionRepoConfig {
         if (!Files.exists(path)) {
             path = Paths.get("../freechat-entry/config/questions.txt");
         }
-        ChatBotQuestionRepo repo = new ChatBotQuestionRepoFileSystem(path);
-        return repo;
+        return new ChatBotQuestionRepoFileSystem(path);
     }
-
 }

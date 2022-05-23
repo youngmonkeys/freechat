@@ -5,5 +5,5 @@ import com.tvd12.ezyfox.database.annotation.EzyRepository;
 import com.tvd12.freechat.entity.ChatChannel;
 
 @EzyRepository("channelRepo")
-public interface ChatChannelRepo extends EzyMongoRepository<Long, ChatChannel> {
-}
+public interface ChatChannelRepo
+    extends EzyMongoRepository<Long, ChatChannel> {}

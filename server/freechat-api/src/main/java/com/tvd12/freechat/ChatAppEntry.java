@@ -33,7 +33,7 @@ public class ChatAppEntry extends EzySimpleAppEntry {
         return setting.getConfigFile();
     }
 
-    public void start() throws Exception {
+    public void start() {
         logger.info("start free chat app");
     }
 

@@ -34,5 +34,4 @@ public class Hazard extends AbstractVirtualRoomItem {
     public void destroy() {
         this.valid = false;
     }
-
 }

@@ -50,5 +50,4 @@ public class Ship extends AbstractVirtualRoomItem {
         position.y = 0;
         position.z = 1;
     }
-
 }

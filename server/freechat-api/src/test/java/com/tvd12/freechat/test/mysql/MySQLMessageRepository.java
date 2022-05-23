@@ -6,6 +6,4 @@ import com.tvd12.freechat.test.entity.ChatMessage;
 
 @EzyRepository
 public interface MySQLMessageRepository
-    extends EzyDatabaseRepository<Long, ChatMessage> {
-
-}
+    extends EzyDatabaseRepository<Long, ChatMessage> {}

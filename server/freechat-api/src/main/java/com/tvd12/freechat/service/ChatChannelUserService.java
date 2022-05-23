@@ -21,5 +21,4 @@ public interface ChatChannelUserService {
     List<ChatChannelUsers> getChannelsOfUser(List<Long> channelIds, String user);
 
     Set<String> getContactedUsers(String user, int skip, int limit);
-
 }

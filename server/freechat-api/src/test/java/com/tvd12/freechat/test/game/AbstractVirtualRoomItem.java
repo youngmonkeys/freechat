@@ -12,7 +12,6 @@ public abstract class AbstractVirtualRoomItem
     extends EzyLoggable
     implements VirtualRoomItem, EzyResettable {
 
-    private static final AtomicLong ID_GENTER = new AtomicLong();
     @EzyValue
     protected Object id = ID_GENTER.incrementAndGet();
     @EzyValue
@@ -24,24 +23,22 @@ public abstract class AbstractVirtualRoomItem
     @EzyValue
     protected boolean valid = true;
 
+    private static final AtomicLong ID_GENTER = new AtomicLong();
+
     @Override
     public void destroy() {
         this.valid = false;
     }
 
     @Override
-    public void reset() {
-    }
+    public void reset() {}
 
     @Override
     public String toString() {
-        return new StringBuilder()
-            .append("(")
-            .append("id: ").append(id).append(", ")
-            .append("position: ").append(position).append(", ")
-            .append("valid: ").append(valid)
-            .append(")")
-            .toString();
+        return "(" +
+            "id: " + id + ", " +
+            "position: " + position + ", " +
+            "valid: " + valid +
+            ")";
     }
-
 }

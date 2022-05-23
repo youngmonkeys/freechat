@@ -18,10 +18,7 @@ import com.tvd12.freechat.service.ChatChannelUserService;
 import com.tvd12.freechat.service.ChatContactService;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.tvd12.freechat.constant.ChatCommands.ADD_CONTACTS;
@@ -108,10 +105,9 @@ public class ChatAddContactsHandler
         for (ChatChannelUsers chanelUser : channelUsers) {
             responseFactory.newArrayResponse()
                 .command(ADD_CONTACTS)
-                .data(Arrays.asList(chanelUser.clone(user.getName())))
+                .data(Collections.singletonList(chanelUser.clone(user.getName())))
                 .usernames(chanelUser.getUsers())
                 .execute();
         }
     }
-
 }

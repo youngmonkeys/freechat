@@ -12,7 +12,7 @@ public enum ChatGroupType implements EzyConstant {
     @Getter
     private final int id;
 
-    private ChatGroupType(int id) {
+    ChatGroupType(int id) {
         this.id = id;
     }
 

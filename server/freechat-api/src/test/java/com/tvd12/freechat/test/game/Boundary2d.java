@@ -7,8 +7,7 @@ public class Boundary2d {
     public double zMin;
     public double zMax;
 
-    public Boundary2d() {
-    }
+    public Boundary2d() {}
 
     public Boundary2d(double xMin, double xMax, double zMin, double zMax) {
         super();
@@ -17,6 +16,4 @@ public class Boundary2d {
         this.zMin = zMin;
         this.zMax = zMax;
     }
-
-
 }

@@ -7,8 +7,7 @@ public class Rect {
     public double width;
     public double height;
 
-    public Rect() {
-    }
+    public Rect() {}
 
     public Rect(double x, double z, double width, double height) {
         this.x = x;
@@ -18,13 +17,10 @@ public class Rect {
     }
 
     public double getTopZ() {
-        double value = z + height;
-        return value;
+        return z + height;
     }
 
     public double getRightX() {
-        double value = x + width;
-        return value;
+        return x + width;
     }
-
 }

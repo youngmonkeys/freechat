@@ -16,5 +16,4 @@ public class ChatAccessAppController
     public void handle(EzyAppContext ctx, EzyUserAccessAppEvent event) {
         logger.info("chat app: fire user: {} access app", event.getUser());
     }
-
 }

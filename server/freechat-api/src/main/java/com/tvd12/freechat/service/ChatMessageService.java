@@ -5,5 +5,4 @@ import com.tvd12.freechat.entity.ChatMessage;
 public interface ChatMessageService {
 
     void save(ChatMessage message);
-
 }

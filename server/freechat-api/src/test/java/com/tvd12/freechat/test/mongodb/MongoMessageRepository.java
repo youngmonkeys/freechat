@@ -6,6 +6,4 @@ import com.tvd12.freechat.test.entity.ChatMessage;
 
 @EzyRepository
 public interface MongoMessageRepository
-    extends EzyMongoRepository<Long, ChatMessage> {
-
-}
+    extends EzyMongoRepository<Long, ChatMessage> {}

@@ -19,5 +19,4 @@ public interface ChatContactRepo
 
     @EzyQuery("{$or:[{'_id.user1st': ?0}, {'_id.user2nd': ?0}]}")
     int countContactByActor(String actor);
-
 }

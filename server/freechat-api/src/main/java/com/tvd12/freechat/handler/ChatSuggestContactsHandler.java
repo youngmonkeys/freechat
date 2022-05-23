@@ -44,5 +44,4 @@ public class ChatSuggestContactsHandler
             .session(session)
             .execute();
     }
-
 }

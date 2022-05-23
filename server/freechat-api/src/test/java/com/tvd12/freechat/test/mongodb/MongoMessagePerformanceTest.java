@@ -35,5 +35,4 @@ public class MongoMessagePerformanceTest extends AbstractMessagePerformanceTest 
             .build();
         return context.getRepository(MongoMessageRepository.class);
     }
-
 }

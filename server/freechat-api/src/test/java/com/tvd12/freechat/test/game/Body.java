@@ -7,5 +7,4 @@ public interface Body {
     double getHeight();
 
     Vec3 getPosition();
-
 }

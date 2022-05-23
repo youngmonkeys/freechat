@@ -13,5 +13,4 @@ public class ChatEntity {
     private Date lastReadDate = new Date();
     private Date lastModifiedDate = new Date();
     private int day = EzyDates.formatAsInteger(new Date());
-
 }

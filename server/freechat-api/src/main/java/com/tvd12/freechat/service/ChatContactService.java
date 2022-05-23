@@ -9,5 +9,4 @@ public interface ChatContactService {
     Set<String> addContacts(String actor, Set<String> target);
 
     Set<String> getContactNames(String actor, int skip, int limit);
-
 }

@@ -44,16 +44,15 @@ public class FreechatStartup {
     public static class DecoratedPluginEntryLoader extends ChatPluginEntryLoader {
 
         @Override
-        public EzyPluginEntry load() throws Exception {
+        public EzyPluginEntry load() {
             return new ChatPluginEntry() {
-
                 @Override
                 protected String getConfigFile(EzyPluginSetting setting) {
-                    return Paths.get(getPluginPath(setting), "config", "config.properties")
+                    return Paths.get(getPluginPath(), "config", "config.properties")
                         .toString();
                 }
 
-                private String getPluginPath(EzyPluginSetting setting) {
+                private String getPluginPath() {
                     Path pluginPath = Paths.get("freechat-plugin");
                     if (!Files.exists(pluginPath)) {
                         pluginPath = Paths.get("../freechat-plugin");
@@ -67,9 +66,8 @@ public class FreechatStartup {
     public static class DecoratedAppEntryLoader extends ChatAppEntryLoader {
 
         @Override
-        public EzyAppEntry load() throws Exception {
+        public EzyAppEntry load() {
             return new ChatAppEntry() {
-
                 @Override
                 protected String getConfigFile(EzyAppSetting setting) {
                     return Paths.get(getAppPath(), "config", "config.properties")

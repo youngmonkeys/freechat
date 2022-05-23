@@ -44,15 +44,13 @@ public class ChatChannelUserServiceImpl implements ChatChannelUserService {
     public List<Long> getChannelsIdOfUser(String user, int skip, int limit) {
         Next next = Next.fromSkipLimit(skip, limit);
         List<ChatChannelUser> list = channelUserRepo.findByUser(user, next);
-        List<Long> answer = EzyLists.newArrayList(list, i -> i.getId().getChannelId());
-        return answer;
+        return EzyLists.newArrayList(list, i -> i.getId().getChannelId());
     }
 
     @Override
     public List<ChatChannelUsers> getChannelsOfUser(String user, int skip, int limit) {
         List<Long> channelIds = getChannelsIdOfUser(user, skip, limit);
-        List<ChatChannelUsers> answer = getChannelsOfUser(channelIds, user);
-        return answer;
+        return getChannelsOfUser(channelIds, user);
     }
 
     @Override
@@ -73,7 +71,7 @@ public class ChatChannelUserServiceImpl implements ChatChannelUserService {
         contactedUsers.add(user);
         contactedUsers.addAll(
             channels.stream()
-                .map(it -> it.getUsers())
+                .map(ChatChannelUsers::getUsers)
                 .flatMap(Set::stream)
                 .collect(Collectors.toSet())
         );
@@ -87,5 +85,4 @@ public class ChatChannelUserServiceImpl implements ChatChannelUserService {
         }
         return map;
     }
-
 }

@@ -31,5 +31,4 @@ public class GameFireHandler
             .data(bullet)
             .execute();
     }
-
 }

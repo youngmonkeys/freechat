@@ -11,5 +11,4 @@ public class ChatZoneServerReadyController
     public void handle(EzyZoneContext ctx, EzyServerReadyEvent event) {
         logger.info("ChatZoneServerReadyController:: run customer server ready");
     }
-
 }

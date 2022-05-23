@@ -22,13 +22,11 @@ public class ChatChannelServiceImpl implements ChatChannelService {
 
     @Override
     public long newChannelId() {
-        long newId = maxIdService.incrementAndGet(ChatEntities.CHAT_CHANNEL);
-        return newId;
+        return maxIdService.incrementAndGet(ChatEntities.CHAT_CHANNEL);
     }
 
     @Override
     public void saveChannels(List<ChatChannel> channels) {
         channelRepo.save(channels);
     }
-
 }

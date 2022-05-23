@@ -15,5 +15,4 @@ public class ChatChannel extends ChatEntity {
     @EzyId
     private long id;
     private String creator;
-
 }

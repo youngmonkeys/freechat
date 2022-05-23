@@ -10,5 +10,4 @@ public class ChatAppEntryLoader extends EzyAbstractAppEntryLoader {
     public EzyAppEntry load() throws Exception {
         return EzyClasses.newInstance("com.tvd12.freechat.ChatAppEntry");
     }
-
 }

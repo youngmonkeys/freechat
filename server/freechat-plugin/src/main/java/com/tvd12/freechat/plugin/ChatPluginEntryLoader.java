@@ -9,5 +9,4 @@ public class ChatPluginEntryLoader extends EzyAbstractPluginEntryLoader {
     public EzyPluginEntry load() throws Exception {
         return new ChatPluginEntry();
     }
-
 }

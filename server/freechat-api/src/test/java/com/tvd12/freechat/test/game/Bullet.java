@@ -28,5 +28,4 @@ public class Bullet extends AbstractVirtualRoomItem {
             destroy();
         }
     }
-
 }

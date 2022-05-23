@@ -52,5 +52,4 @@ public class MySQLMessagePerformanceTest extends AbstractMessagePerformanceTest 
             .properties(properties, "datasource")
             .load();
     }
-
 }

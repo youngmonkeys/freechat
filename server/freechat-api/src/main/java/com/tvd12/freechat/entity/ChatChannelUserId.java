@@ -31,5 +31,4 @@ public class ChatChannelUserId {
             .append(user)
             .toHashCode();
     }
-
 }

@@ -29,6 +29,4 @@ public class ChatMessage {
     private long channelId;
     private String sender;
     private String sentClientMessageId;
-
-
 }

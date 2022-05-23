@@ -15,5 +15,4 @@ public class ChatContact extends ChatEntity {
     @EzyId
     private ChatContactId id;
     private String actor;
-
 }

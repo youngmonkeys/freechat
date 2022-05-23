@@ -33,5 +33,4 @@ public class GameJoinRoomHandler
             .data(room)
             .execute();
     }
-
 }

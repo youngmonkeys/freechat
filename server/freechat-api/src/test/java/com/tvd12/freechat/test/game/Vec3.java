@@ -84,13 +84,10 @@ public class Vec3 {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-            .append("(")
-            .append(x).append(", ")
-            .append(y).append(", ")
-            .append(z)
-            .append(")")
-            .toString();
+        return "(" +
+            x + ", " +
+            y + ", " +
+            z +
+            ")";
     }
-
 }

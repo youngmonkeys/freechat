@@ -21,9 +21,6 @@ public class ChatBotQuestionServiceImpl implements ChatBotQuestionService {
         Random random = ThreadLocalRandom.current();
         long count = chatBotQuestionRepo.count();
         int index = random.nextInt((int) count);
-        String question = chatBotQuestionRepo.findQuestionByIndex(index);
-        return question;
+        return chatBotQuestionRepo.findQuestionByIndex(index);
     }
-
-
 }

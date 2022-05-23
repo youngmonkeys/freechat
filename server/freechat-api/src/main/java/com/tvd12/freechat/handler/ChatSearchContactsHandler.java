@@ -46,10 +46,10 @@ public class ChatSearchContactsHandler
         logger.debug("search contracts user name: {}, keyword: {}, skip: {}, limit: {}", user.getName(), keyword, skip, limit);
         List<ChatChannelUsers> channels = channelUserService.getChannelsOfUser(user.getName(), skip, limit);
         List<ChatChannelUsers> answers = filterChannels(keyword, channels);
-        reponseMessage(answers);
+        responseMessage(answers);
     }
 
-    public void reponseMessage(List<ChatChannelUsers> contacts) {
+    public void responseMessage(List<ChatChannelUsers> contacts) {
         logger.debug("search contracts results: {}", contacts);
         responseFactory.newArrayResponse()
             .command(SEARCH_CONTACTS)

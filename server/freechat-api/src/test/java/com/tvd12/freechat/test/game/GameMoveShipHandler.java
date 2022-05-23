@@ -33,5 +33,4 @@ public class GameMoveShipHandler
         Ship ship = room.getShip();
         ship.move(new Vec3(x, y, z));
     }
-
 }

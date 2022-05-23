@@ -63,5 +63,4 @@ public class ChatUserMessageHandler
             .usernames(channelUsers.getUsers())
             .execute();
     }
-
 }

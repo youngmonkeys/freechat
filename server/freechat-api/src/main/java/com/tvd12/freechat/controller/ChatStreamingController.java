@@ -11,5 +11,4 @@ public class ChatStreamingController
     public void handle(EzyZoneContext ctx, EzyStreamingEvent event) {
         ctx.stream(event.getBytes(), event.getSession());
     }
-
 }

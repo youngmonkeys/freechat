@@ -17,5 +17,4 @@ public interface ChatUserService {
         Set<String> excludeUsers, String keyword, int skip, int limit);
 
     List<ChatUser> getSuggestionUsers(Set<String> excludeUsers, int skip, int limit);
-
 }

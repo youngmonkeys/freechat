@@ -12,7 +12,6 @@ public class VirtualWorld extends EzyLoggable {
     private static final VirtualWorld INSTANCE = new VirtualWorld();
     private final Object lock;
     private final Map<Object, VirtualItem> items;
-    private Thread thread;
     private volatile boolean active;
 
     private VirtualWorld() {
@@ -49,7 +48,7 @@ public class VirtualWorld extends EzyLoggable {
     }
 
     public void start() {
-        thread = new Thread(this::loop);
+        Thread thread = new Thread(this::loop);
         thread.setName("space-game-virtual-world");
         active = true;
         thread.start();
@@ -79,9 +78,7 @@ public class VirtualWorld extends EzyLoggable {
 
     private List<VirtualItem> getItemList() {
         synchronized (lock) {
-            List<VirtualItem> list = new ArrayList<>(items.values());
-            return list;
+            return new ArrayList<>(items.values());
         }
     }
-
 }

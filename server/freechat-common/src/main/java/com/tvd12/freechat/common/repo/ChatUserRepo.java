@@ -18,5 +18,4 @@ public interface ChatUserRepo extends EzyMongoRepository<Long, ChatUser> {
 
     @EzyQuery("{'username': {$nin: ?0}}")
     List<ChatUser> findSuggestionUsers(Set<String> excludeUsers, Next next);
-
 }

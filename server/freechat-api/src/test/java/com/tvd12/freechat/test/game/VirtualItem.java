@@ -9,5 +9,4 @@ public interface VirtualItem extends EzyDestroyable {
     void update();
 
     boolean isValid();
-
 }

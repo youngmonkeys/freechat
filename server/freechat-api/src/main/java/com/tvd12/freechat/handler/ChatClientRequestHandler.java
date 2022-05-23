@@ -41,5 +41,4 @@ public abstract class ChatClientRequestHandler
     protected abstract void execute() throws EzyBadRequestException;
 
     protected void postExecute() {}
-
 }

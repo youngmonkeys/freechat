@@ -60,7 +60,6 @@ public class ChatUserLoginController
         if (password.length() < 6) {
             throw new EzyLoginErrorException(EzyLoginError.INVALID_PASSWORD);
         }
-
     }
 
     private String encodePassword(String password) {

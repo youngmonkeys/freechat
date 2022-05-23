@@ -136,20 +136,18 @@ public class VirtualRoom
         }
     }
 
-    private int clearHarzards() {
+    private int clearHazards() {
         List<Hazard> list = getHazardList0();
         for (Hazard hazard : list) {
             if (!hazard.isValid()) {
                 removeHazard(hazard);
             }
         }
-        int count = getHazardCount();
-        return count;
+        return getHazardCount();
     }
 
     private int getHazardCount() {
-        int count = hazards.size();
-        return count;
+        return hazards.size();
     }
 
     @Override
@@ -193,8 +191,7 @@ public class VirtualRoom
 
     public List<Hazard> getHazardList0() {
         synchronized (lock) {
-            List<Hazard> list = new ArrayList<>(hazards.values());
-            return list;
+            return new ArrayList<>(hazards.values());
         }
     }
 
@@ -202,12 +199,11 @@ public class VirtualRoom
         extends EzyLoggable
         implements EzySafeStartable, EzyDestroyable {
 
-        private Thread thread;
         private volatile boolean active;
 
         @Override
         public void start() {
-            thread = new Thread(this::loop);
+            Thread thread = new Thread(this::loop);
             thread.start();
         }
 
@@ -248,8 +244,7 @@ public class VirtualRoom
         private final long spawnWait;
         private final int hazardCount;
         private final Vec3 spawnValues;
-        private Thread thread;
-        private Random random;
+        private final Random random;
         private volatile boolean active;
 
         public HazardRandomThread() {
@@ -261,7 +256,7 @@ public class VirtualRoom
 
         @Override
         public void start() {
-            thread = new Thread(this::loop);
+            Thread thread = new Thread(this::loop);
             thread.setName("random-hazards");
             active = true;
             thread.start();
@@ -282,7 +277,7 @@ public class VirtualRoom
                 long realWait = spawnWait + exWait;
                 Thread.sleep(realWait);
                 clearBullets();
-                int count = clearHarzards();
+                int count = clearHazards();
                 if (count >= hazardCount) {
                     return;
                 }
@@ -307,13 +302,11 @@ public class VirtualRoom
             spawnPosition.x = randomRange(-spawnValues.x, spawnValues.x);
             spawnPosition.y = spawnValues.y;
             spawnPosition.z = spawnValues.z;
-            Hazard hazard = new Hazard(spawnPosition, 5);
-            return hazard;
+            return new Hazard(spawnPosition, 5);
         }
 
         public int randomRange(int min, int max) {
-            int x = random.nextInt((max - min) + 1) + min;
-            return x;
+            return random.nextInt((max - min) + 1) + min;
         }
 
         public double randomRange(double min, double max) {

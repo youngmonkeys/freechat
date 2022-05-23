@@ -14,5 +14,4 @@ import lombok.ToString;
 public class ChatChannelUser extends ChatEntity {
     @EzyId
     private ChatChannelUserId id;
-
 }

@@ -17,8 +17,8 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <ezy.version>1.2.1</ezy.version>
-        <ezy.boot.version>1.0.2</ezy.boot.version>
+        <ezy.version>1.2.3</ezy.version>
+        <ezy.boot.version>1.0.4</ezy.boot.version>
     </properties>
 
     <dependencies>

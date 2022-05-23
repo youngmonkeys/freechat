@@ -31,5 +31,4 @@ public class ChatContactId {
             .append(user2nd)
             .toHashCode();
     }
-
 }

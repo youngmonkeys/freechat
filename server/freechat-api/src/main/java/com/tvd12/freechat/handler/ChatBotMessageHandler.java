@@ -9,7 +9,6 @@ import com.tvd12.ezyfox.core.annotation.EzyRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
 import com.tvd12.ezyfoxserver.entity.EzyUser;
 import com.tvd12.freechat.common.service.ChatMaxIdService;
-import com.tvd12.freechat.common.service.ChatUserService;
 import com.tvd12.freechat.constant.ChatEntities;
 import com.tvd12.freechat.entity.ChatMessage;
 import com.tvd12.freechat.service.ChatBotQuestionService;
@@ -31,9 +30,6 @@ public class ChatBotMessageHandler
 
     @EzyValue
     private String clientMessageId = "";
-
-    @EzyAutoBind
-    private ChatUserService userService;
 
     @EzyAutoBind
     private ChatMaxIdService maxIdService;
@@ -67,5 +63,4 @@ public class ChatBotMessageHandler
             .param("channelId", 0)
             .execute();
     }
-
 }

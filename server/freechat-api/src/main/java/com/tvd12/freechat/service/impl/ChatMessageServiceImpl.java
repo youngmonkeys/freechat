@@ -36,5 +36,4 @@ public class ChatMessageServiceImpl
         presave(message);
         messageRepo.save(message);
     }
-
 }

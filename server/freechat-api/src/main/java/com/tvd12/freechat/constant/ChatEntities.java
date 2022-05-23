@@ -8,7 +8,5 @@ public final class ChatEntities {
     public static final String CHAT_CHANNEL = "chat_channel";
     public static final String CHAT_CHANNEL_USER = "chat_channel_user";
 
-    private ChatEntities() {
-    }
-
+    private ChatEntities() {}
 }

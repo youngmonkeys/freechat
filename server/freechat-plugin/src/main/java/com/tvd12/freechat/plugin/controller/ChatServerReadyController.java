@@ -16,5 +16,4 @@ public class ChatServerReadyController
     public void handle(EzyPluginContext ctx, EzyServerReadyEvent event) {
         logger.info("freechat plugin: fire custom plugin ready");
     }
-
 }

@@ -16,9 +16,7 @@ public class BulletHit {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-            .append("hit between bullet: ").append(bullet)
-            .append(" and hazard: ").append(hazard)
-            .toString();
+        return "hit between bullet: " + bullet +
+            " and hazard: " + hazard;
     }
 }

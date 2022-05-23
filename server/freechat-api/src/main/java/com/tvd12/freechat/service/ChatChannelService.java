@@ -9,5 +9,4 @@ public interface ChatChannelService {
     long newChannelId();
 
     void saveChannels(List<ChatChannel> channels);
-
 }

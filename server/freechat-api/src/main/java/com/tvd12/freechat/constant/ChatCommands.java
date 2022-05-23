@@ -14,7 +14,5 @@ public final class ChatCommands {
     public static final String SEARCH_CONTACTS_USERS = "10";
     public static final String UPDATE_PASSWORD = "11";
 
-    private ChatCommands() {
-    }
-
+    private ChatCommands() {}
 }
