@@ -13,9 +13,6 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <javax.persistence.version>2.2</javax.persistence.version>
-        <javax.transaction.version>1.3</javax.transaction.version>
-        <hibernate.version>5.4.31.Final</hibernate.version>
         <hikaricp.version>4.0.3</hikaricp.version>
         <mysql.connector.version>8.0.24</mysql.connector.version>
     </properties>
@@ -25,50 +22,6 @@
             <groupId>com.tvd12</groupId>
             <artifactId>freechat-common</artifactId>
             <version>${project.version}</version>
-        </dependency>
-
-        <!-- for test -->
-        <dependency>
-            <groupId>com.tvd12</groupId>
-            <artifactId>ezydata-jpa</artifactId>
-            <version>${ezy.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
-            <version>${javax.persistence.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>javax.transaction-api</artifactId>
-            <version>${javax.transaction.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>${hikaricp.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.connector.version}</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
