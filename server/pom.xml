@@ -5,8 +5,8 @@
 
     <parent>
         <groupId>com.tvd12</groupId>
-        <artifactId>ezyfox-server</artifactId>
-        <version>1.0.2</version>
+        <artifactId>ezyfox</artifactId>
+        <version>1.0.4</version>
     </parent>
 
     <artifactId>freechat</artifactId>
@@ -18,7 +18,7 @@
 
     <properties>
         <ezy.version>1.2.3</ezy.version>
-        <ezy.boot.version>1.0.4</ezy.boot.version>
+        <ezy.boot.version>1.0.5</ezy.boot.version>
     </properties>
 
     <dependencies>
