@@ -7,7 +7,7 @@ import com.tvd12.ezyfox.binding.annotation.EzyObjectBinding;
 import com.tvd12.ezyfox.binding.annotation.EzyValue;
 import com.tvd12.ezyfox.core.annotation.EzyRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
-import com.tvd12.ezyfox.sercurity.EzySHA256;
+import com.tvd12.ezyfox.security.EzySHA256;
 import com.tvd12.freechat.common.entity.ChatUser;
 import com.tvd12.freechat.common.service.ChatUserService;
 import com.tvd12.freechat.constant.ChatErrors;
