@@ -16,7 +16,7 @@
     "reactstrap": "^8.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build": "react-scripts build && BUILDVERSION=$(date +%Y-%m-%d)-$(date +%T) && sed -i -- 's/%BUILDVERSION%/'$BUILDVERSION'/g' build/index.html && echo Build Version = $BUILDVERSION"

@@ -10,8 +10,8 @@ export const Command = {
     ERROR: 'err'
 }
 
-export const SOCKET_URL = "wss://ws.tvd12.com/ws";
-// export const SOCKET_URL = "ws://localhost:2208/ws";
+// export const SOCKET_URL = "wss://ws.tvd12.com/ws";
+export const SOCKET_URL = "ws://localhost:2208/ws";
 
 export const ErrorCodes = {
     WRONG_PASSWORD: 5

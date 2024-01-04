@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.tvd12</groupId>
         <artifactId>ezyfox</artifactId>
-        <version>1.0.5</version>
+        <version>1.0.6</version>
     </parent>
 
     <artifactId>freechat</artifactId>
@@ -17,15 +17,16 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <ezy.version>1.2.5</ezy.version>
-        <ezy.boot.version>1.0.7</ezy.boot.version>
+        <ezy.version>1.2.8</ezy.version>
+        <ezy.server.version>1.2.8.1</ezy.server.version>
+        <ezy.boot.version>1.1.0</ezy.boot.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.tvd12</groupId>
             <artifactId>ezyfox-server-core</artifactId>
-            <version>${ezy.version}</version>
+            <version>${ezy.server.version}</version>
         </dependency>
     </dependencies>
     <profiles>
