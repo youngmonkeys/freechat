@@ -26,7 +26,6 @@ class MessageListAdapter(
     private val inflater : LayoutInflater = LayoutInflater.from(context)
 
     companion object {
-        private const val VIEW_TYPE_MESSAGE_SEDING = 1
         private const val VIEW_TYPE_MESSAGE_SENT = 2
         private const val VIEW_TYPE_MESSAGE_RECEIVED = 3
     }

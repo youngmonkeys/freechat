@@ -15,8 +15,9 @@ Free Chat is a cross-platform socket chat application, which uses [ezyfox-server
 ## ReactJS build
  
 1. Clone source code
-2. Move to ```reactjs``` folder
-3. Run ```npm start```
+2. Move to `reactjs` folder
+3. Run `npm install`
+4. Run `npm start`
  
 ## Android build
  
@@ -50,7 +51,7 @@ Free Chat is a cross-platform socket chat application, which uses [ezyfox-server
 	db.createUser(
 	   {
 	     user:"root",
-	     pwd:"123456”,
+	     pwd:"123456",
 	     roles:[ { role: "readWrite", db: "freechat" }]
 	   }
 	)
