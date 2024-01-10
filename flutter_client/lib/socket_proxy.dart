@@ -1,10 +1,12 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:ezyfox_server_flutter_client/ezy_client.dart';
 import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
 import 'package:ezyfox_server_flutter_client/ezy_config.dart';
 import 'package:ezyfox_server_flutter_client/ezy_constants.dart';
 import 'package:ezyfox_server_flutter_client/ezy_entities.dart';
 import 'package:ezyfox_server_flutter_client/ezy_handlers.dart';
-import 'package:flutter_client/chat_menu.dart';
+import 'package:flutter_client/chat.dart';
 
 const ZONE_NAME = "freechat";
 const APP_NAME = "freechat";
@@ -19,6 +21,7 @@ class SocketProxy {
   late Function? _disconnectedCallback;
   late Function? _connectionCallback;
   late Function? _connectionFailedCallback;
+  late Function? _requestCallback;
   static final SocketProxy _INSTANCE = SocketProxy._();
 
   SocketProxy._();
@@ -42,14 +45,14 @@ class SocketProxy {
     _client.setup.addEventHandler(EzyEventType.DISCONNECTION,
         _DisconnectionHandler(_disconnectedCallback!));
     _client.setup.addEventHandler(EzyEventType.CONNECTION_SUCCESS,
-        _connectionHandler(_connectionCallback!));
+        _ConnectionHandler(_connectionCallback!));
     _client.setup.addEventHandler(EzyEventType.CONNECTION_FAILURE,
         _ConnectionFailureHandler(_connectionFailedCallback!));
     _client.setup.addDataHandler(EzyCommand.HANDSHAKE, _HandshakeHandler());
     _client.setup.addDataHandler(EzyCommand.LOGIN, _LoginSuccessHandler());
     _client.setup.addDataHandler(EzyCommand.APP_ACCESS, _AppAccessHandler());
-    _client.setup
-        .addDataHandler(EzyCommand.APP_REQUEST, _ContactsResponseHandler());
+    _client.setup.addDataHandler(
+        EzyCommand.APP_REQUEST, _RequestHandler(_requestCallback!));
     var appSetup = _client.setup.setupApp(APP_NAME);
     appSetup.addDataHandler("greet", _GreetResponseHandler((message) {
       _greetCallback!(message);
@@ -87,6 +90,18 @@ class SocketProxy {
 
   void onConnectionFailed(Function callback) {
     _connectionFailedCallback = callback;
+  }
+
+  void onContacts(Function callback) {
+    _connectionFailedCallback = callback;
+  }
+
+  void onData(Function callback) {
+    _requestCallback = callback;
+  }
+
+  void onData2(Function callback) {
+    _requestCallback = callback;
   }
 }
 
@@ -171,10 +186,10 @@ class _ConnectionFailureHandler extends EzyConnectionFailureHandler {
   }
 }
 
-class _connectionHandler extends EzyConnectionSuccessHandler {
+class _ConnectionHandler extends EzyConnectionSuccessHandler {
   late Function _callback;
 
-  _connectionHandler(Function callback) {
+  _ConnectionHandler(Function callback) {
     _callback = callback;
   }
 
@@ -186,12 +201,27 @@ class _connectionHandler extends EzyConnectionSuccessHandler {
   }
 }
 
-class _ContactsResponseHandler extends EzyAbstractDataHandler {
+class _RequestHandler extends EzyAbstractDataHandler {
+  late Function _callback;
+
+  _RequestHandler(Function callback) {
+    _callback = callback;
+  }
+
   @override
   handle(List data) {
-    array = array + data[1][1];
-    print(array);
-    print(array.length);
-    print('-----------------');
+    if (data[1][0] == '5') {
+      contacts = data[1][1] + contacts;
+    }
+    if (data[1][0] == '2') {
+      contacts = data[1][1] + contacts;
+    }
+    if (data[1][0] == '6') {
+      messages = messages +
+          [
+            {'user': '2', 'message': data[1][1]['message']}
+          ];
+    }
+    _callback();
   }
 }
