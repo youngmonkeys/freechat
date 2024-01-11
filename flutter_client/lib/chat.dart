@@ -109,12 +109,40 @@ class _ChatState extends State<Chat> {
                         return ListView.builder(
                           itemCount: messages.length,
                           itemBuilder: (context, index) {
-                            return ListTile(
-                                title: Text(
-                                    messages[index]['message'].toString()));
+                            return Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: (messages[index]['from'] == 'user')
+                                      ? Colors.black12
+                                      : Colors.lightBlueAccent,
+                                ),
+                                child: ((messages[index]['from'] == user) ||
+                                        (messages[index]['to'] == user))
+                                    ? ListTile(
+                                        title: Container(
+                                        alignment:
+                                            (messages[index]['from'] == 'user')
+                                                ? Alignment.centerRight
+                                                : Alignment.centerLeft,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                2 /
+                                                3,
+                                        child: Text(messages[index]['message']
+                                            .toString()),
+                                      ))
+                                    : null,
+                              ),
+                            );
                           },
                         );
                       }),
+                    ),
+                    const Divider(
+                      color: Colors.transparent,
+                      height: 5,
                     ),
                     Row(
                       children: [
@@ -153,7 +181,8 @@ class _ChatState extends State<Chat> {
                                 var data_messages = [];
                                 data_messages = [
                                   {
-                                    'user': '1',
+                                    'from': 'user',
+                                    'to': user,
                                     'message': controller.text.toString()
                                   }
                                 ];

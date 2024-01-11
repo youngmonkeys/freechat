@@ -219,7 +219,7 @@ class _RequestHandler extends EzyAbstractDataHandler {
     if (data[1][0] == '6') {
       messages = messages +
           [
-            {'user': '2', 'message': data[1][1]['message']}
+            {'from': data[1][1]['from'], 'message': data[1][1]['message']}
           ];
     }
     _callback();
