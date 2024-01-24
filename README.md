@@ -34,6 +34,20 @@ Free Chat is a cross-platform socket chat application, which uses [ezyfox-server
 3. Import project to ```Android studio```
 4. Build and done
 
+## Flutter build
+
+ Required environment:
+
+ ```
+ - Visual Studio Code 1.85
+ - Flutter SDK
+ ```
+
+1. Follow instruction for EzyFox Flutter Client SDK - ```https://youngmonkeys.org/ezyfox-server/guides/ezyfox-flutter-client-sdk``` 
+2. Place 3 files (chat.dart, socket_proxy.dart, main.dart) from flutter_client directory to your project
+3. File main.dart is register/login page you can ommit and navigate directly to chat.dart passing ```username``` and ```password``` from your auth screen.
+4. Build and done
+
 ## iOS build
 
 1. Clone source code
