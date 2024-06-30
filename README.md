@@ -1,7 +1,7 @@
 # freechat
 Free Chat is a cross-platform socket chat application, which uses [ezyfox-server](https://github.com/youngmonkeys/ezyfox-server) and it's client SDKs
 
-> Official site: [https://youngmonkeys.org/freechat/](https://youngmonkeys.org/asset/freechat/)
+> Official site: [https://youngmonkeys.org/freechat/]
 
 # Supports
 
@@ -24,9 +24,10 @@ Free Chat is a cross-platform socket chat application, which uses [ezyfox-server
  Required environment:
  
  ```
- - Android studio: 3.5
- - Gradle: 3.5.0 or 5.4.1
- - Android sdk: 26
+ - Android studio : Flamingo | 2022.2.1 Patch 2 May 24, 2023 [download - `https://developer.android.com/studio/archive?hl=en`]
+ - Android gradle plugin : 7.2.0
+ - Gradle version : 7.3.3
+ - Android sdk : 28
  ```
  
 1. Clone source code
@@ -39,8 +40,10 @@ Free Chat is a cross-platform socket chat application, which uses [ezyfox-server
  Required environment:
 
  ```
- - Visual Studio Code 1.85
- - Flutter SDK
+ - Visual Studio Code
+ - Flutter : 3.22.2
+ - Important : Flutter uses Android studios gradle to generate apk, so all the requirements from ```Android Build``` above, must be installed.
+			   Not tested with iOs build yet.
  ```
 
 1. Follow instruction for EzyFox Flutter Client SDK - ```https://youngmonkeys.org/ezyfox-server/guides/ezyfox-flutter-client-sdk``` 
@@ -57,8 +60,13 @@ Free Chat is a cross-platform socket chat application, which uses [ezyfox-server
 
 ## Server-side build and run
 
+ Required environment:
+ ```
+ - Java JDK version : 11 [ ```OpenJDK11U-jdk_x64_windows_hotspot_11.0.23_9.msi```]
+ ```
+
 1. Install mongodb ([Tutorial](https://docs.mongodb.com/manual/administration/install-community/))
-2. Create `freechat` db in mongodb ([Tutorial](https://www.mongodb.com/basics/create-database))
+2. Create `freechat` db with collection `freechat` in mongodb ([Tutorial](https://www.mongodb.com/basics/create-database))
 3. Create `root` user using mongo shell:
 ```
 	use freechat
@@ -72,8 +80,9 @@ Free Chat is a cross-platform socket chat application, which uses [ezyfox-server
 ```
 > Update `server/freechat-plugin/config/config.properties` file to use another password
 4. Clone source code
-5. Import ```server``` folder into an IDE (Eclipse, Intellij, Netbean)
-6. Run file [FreechatStartup](https://github.com/youngmonkeys/freechat/blob/master/server/freechat-startup/src/main/java/com/tvd12/freechat/FreechatStartup.java)
+5. Import ```server``` folder into an IDE (Eclipse, Intellij, Netbean, Visual Studio Code)
+7. Server requires ```OpenJDK11U-jdk_x64_windows_hotspot_11.0.23_9.msi``` to run, otherwise it will refuse to work with database (it will discover db but won't read/write)
+8. Run file [FreechatStartup](https://github.com/youngmonkeys/freechat/blob/master/server/freechat-startup/src/main/java/com/tvd12/freechat/FreechatStartup.java)
 > The server opens a websocket at `ws://localhost:2208/ws`
 
 # References
