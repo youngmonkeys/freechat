@@ -43,7 +43,7 @@ Free Chat is a cross-platform socket chat application, which uses [ezyfox-server
  - Visual Studio Code
  - Flutter : 3.22.2
  - Important : Flutter uses Android studios gradle to generate apk, so all the requirements from ```Android Build``` above, must be installed.
-			   Not tested with iOs build yet.
+			         Not tested with iOs build yet.
  ```
 
 1. Follow instruction for EzyFox Flutter Client SDK - ```https://youngmonkeys.org/ezyfox-server/guides/ezyfox-flutter-client-sdk``` 
