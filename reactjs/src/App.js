@@ -10,10 +10,9 @@ import './css/main.css';
 import './css/main-nav.css';
 import './css/main-container.css';
 import './css/footer-container.css';
-import './css/login.css';
 import './css/add-contact.css';
 import './css/message-view.css';
-import './App.css';
+import './scss/main.scss';
 
 import Mvc from 'mvc-es6'
 import SocketProxy from './socket/SocketProxy'

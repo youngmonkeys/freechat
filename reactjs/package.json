@@ -3,16 +3,12 @@
   "version": "0.1.1",
   "private": true,
   "dependencies": {
-    "bootstrap": "^4.6.0",
-    "create-react-class": "^15.6.3",
     "ezyfox-es6-client": "^1.2.1",
     "jquery": "^3.6.0",
     "mvc-es6": "^1.1.1",
     "popper.js": "^1.16.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.24.1",
-    "react-scripts": "^5.0.1",
     "reactstrap": "^9.2.2"
   },
   "scripts": {
@@ -20,6 +16,10 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build": "react-scripts build && BUILDVERSION=$(date +%Y-%m-%d)-$(date +%T) && sed -i -- 's/%BUILDVERSION%/'$BUILDVERSION'/g' build/index.html && echo Build Version = $BUILDVERSION"
+  },
+  "devDependencies": {
+    "react-scripts": "^5.0.1",
+    "sass": "^1.77.6"
   },
   "browserslist": {
     "production": [
