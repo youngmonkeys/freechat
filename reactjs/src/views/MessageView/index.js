@@ -1,3 +1,3 @@
-import MessageView from './MessageView'
+import MessageView from "./MessageView"
 
 export default MessageView;

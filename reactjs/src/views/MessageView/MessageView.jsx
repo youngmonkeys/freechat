@@ -1,9 +1,8 @@
-import * as React from 'react';
-import $ from 'jquery'
-import Mvc from 'mvc-es6';
-import AddContactView from './AddContactView';
-import SocketProxy from '../../socket/SocketProxy';
-import SocketRequest from '../../socket/SocketRequest';
+import * as React from "react";
+import Mvc from "mvc-es6";
+import AddContactView from "./AddContactView";
+import SocketProxy from "../../socket/SocketProxy";
+import SocketRequest from "../../socket/SocketRequest";
 import UpdatePasswordView from "./UpdatePasswordView";
 import ToastView from "../components/ToastView";
 
@@ -37,10 +36,7 @@ class MessageItemView extends React.Component {
 class MessageListView extends React.Component {
     constructor(props) {
         super(props);
-    }
-
-    componentWillUpdate(nextProps) {
-        // check scroll logic
+        this.messagesEndRef = React.createRef();
     }
 
     componentDidUpdate() {
@@ -48,20 +44,19 @@ class MessageListView extends React.Component {
     }
 
     scrollToBottom() {
-        const messages = document.querySelector("#messageListDiv")
-        const height = messages.scrollHeight;
-        $(messages).animate({scrollTop: height}, "fast");
+        this.messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
 
     render()  {
         const {messages} = this.props;
         return (
-            <div className="messages" id="messageListDiv">
+            <div className="messages">
                 <ul id="messageListUl">
                     {
                         messages.map((msg, i) => <MessageItemView key={i} data={msg} />)
                     }
                 </ul>
+                <div ref={this.messagesEndRef} />
             </div>
         );
     }

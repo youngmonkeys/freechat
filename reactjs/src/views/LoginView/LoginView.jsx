@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Mvc from 'mvc-es6';
 import SocketProxy from '../../socket/SocketProxy'
-import Component from '../components'
 
 class LoginView extends React.Component {
     constructor(props) {
@@ -52,24 +51,21 @@ class LoginView extends React.Component {
         return (
             <div className="login-form-wrapper">
                 <div className="login-form">
-                    <Component.ToastView />
-                    <div className="login-title">
-                        <h1 className="text-light">Login to your account </h1>
-                    </div>
-                    <div>
+                    <h1 className="login-form-title">Login to your account </h1>
+                    <div className="login-form-body">
                         <div className="input-group mb-3">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon-username"><i className="icon-user"></i></span>
-                            </div>
-                            <input type="text" className="form-control" placeholder="username" aria-label="username" aria-describedby="basic-addon-username"
-                                value={username} onChange={this.onUsernameChange} onKeyDown={this.onKeyDown} />
+                            <span className="input-group-text">
+                                <i className="icon-user"></i>
+                            </span>
+                            <input type="text" className="form-control" placeholder="username"
+                                   value={username} onChange={this.onUsernameChange} onKeyDown={this.onKeyDown} />
                         </div>
                         <div className="input-group mb-3">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon-password"><i className="icon-key"></i></span>
-                            </div>
-                            <input type="password" className="form-control" placeholder="password" aria-label="password" aria-describedby="basic-addon-password"
-                                value={password} onChange={this.onPasswordChange} onKeyDown={this.onKeyDown} />
+                            <span className="input-group-text">
+                                <i className="icon-key"></i>
+                            </span>
+                            <input type="password" className="form-control" placeholder="password"
+                                   value={password} onChange={this.onPasswordChange} onKeyDown={this.onKeyDown} />
                         </div>
                         <div className="login-options">
                             <div className="checkbox">
