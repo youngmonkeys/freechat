@@ -7,6 +7,15 @@
     --bs-tertiary-bg: #f8f9fa;
 }
 
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.avatar {
+    border-radius: 50%;
+}
+
 .btn {
     display: inline-block;
     font-weight: 400;
@@ -36,6 +45,12 @@
     color: #fff;
     background-color: #17a2b8;
     border-color: #17a2b8;
+}
+
+.btn-send {
+    color: #fff;
+    background-color: #000;
+    border-color: #000;
 }
 
 .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {

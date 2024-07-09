@@ -1,15 +1,5 @@
 import Ezy from "ezyfox-es6-client";
 import React, { Component } from "react";
-import "./css/font-awesome-4.7.0/css/font-awesome.min.css";
-import "./css/animate.css";
-import "./css/custom.css";
-import "./css/common.css";
-import "./css/main.css";
-import "./css/main-nav.css";
-import "./css/main-container.css";
-import "./css/footer-container.css";
-import "./css/add-contact.css";
-import "./css/message-view.css";
 import "./scss/main.scss";
 
 import Mvc from 'mvc-es6'
@@ -45,7 +35,7 @@ class App extends Component {
     this.socketProxy.setup();
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let routerController = this.mvc.getController("router");
     routerController.addDefaultView("change", viewURI => {
       this.setState({currentViewURI : viewURI});
@@ -75,10 +65,10 @@ class App extends Component {
     };
     window.history.pushState('', '', currentViewURI);
     return (
-        <div>
+        <React.Fragment>
             <ToastView />
             {view}
-        </div>
+        </React.Fragment>
 
     );
   }

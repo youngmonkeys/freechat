@@ -1,0 +1,10 @@
+.main-nav {
+    height: $main-nav-height;
+    display: flex;
+    align-items: center;
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+}

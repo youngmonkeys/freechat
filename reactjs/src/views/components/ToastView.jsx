@@ -55,7 +55,7 @@ class ToastView extends React.Component {
                     </span>
                 </div>
             </div>
-        ) : (<div></div>);
+        ) : null;
     }
 }
 

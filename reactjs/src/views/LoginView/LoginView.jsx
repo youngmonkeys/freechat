@@ -49,34 +49,36 @@ class LoginView extends React.Component {
     render() {
         const {username, password} = this.state;
         return (
-            <div className="login-form-wrapper">
-                <div className="login-form">
-                    <h1 className="login-form-title">Login to your account </h1>
-                    <div className="login-form-body">
-                        <div className="input-group mb-3">
-                            <span className="input-group-text">
-                                <i className="icon-user"></i>
-                            </span>
-                            <input type="text" className="form-control" placeholder="username"
-                                   value={username} onChange={this.onUsernameChange} onKeyDown={this.onKeyDown} />
-                        </div>
-                        <div className="input-group mb-3">
-                            <span className="input-group-text">
-                                <i className="icon-key"></i>
-                            </span>
-                            <input type="password" className="form-control" placeholder="password"
-                                   value={password} onChange={this.onPasswordChange} onKeyDown={this.onKeyDown} />
-                        </div>
-                        <div className="login-options">
-                            <div className="checkbox">
-                                <label>
-                                    <input type="checkbox" className="styled" defaultChecked="checked" /> Remember me
-                                </label>
+            <div className="page-login">
+                <div className="login-form-wrapper">
+                    <div className="login-form">
+                        <h1 className="login-form-title">Login to your account </h1>
+                        <div className="login-form-body">
+                            <div className="input-group mb-3">
+                                <span className="input-group-text">
+                                    <i className="fa-solid fa-user"></i>
+                                </span>
+                                <input type="text" className="form-control" placeholder="username"
+                                    value={username} onChange={this.onUsernameChange} onKeyDown={this.onKeyDown} />
                             </div>
-                        </div>
-                        <button className="btn btn-info btn-block" onClick={this.onLogin}>Login</button>
-                        <div className="text-small">
-                            Just login, register automatically!
+                            <div className="input-group mb-3">
+                                <span className="input-group-text">
+                                    <i className="fa-solid fa-lock"></i>
+                                </span>
+                                <input type="password" className="form-control" placeholder="password"
+                                    value={password} onChange={this.onPasswordChange} onKeyDown={this.onKeyDown} />
+                            </div>
+                            <div className="login-options">
+                                <div className="checkbox">
+                                    <label>
+                                        <input type="checkbox" className="styled" defaultChecked="checked" /> Remember me
+                                    </label>
+                                </div>
+                            </div>
+                            <button className="btn btn-info btn-block" onClick={this.onLogin}>Login</button>
+                            <div className="text-small">
+                                Just login, register automatically!
+                            </div>
                         </div>
                     </div>
                 </div>

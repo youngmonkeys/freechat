@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, ModalBody, ModalFooter} from 'reactstrap';
+import {Modal, ModalBody} from 'reactstrap';
 import Mvc from 'mvc-es6';
 import SocketRequest from '../../socket/SocketRequest'
 
