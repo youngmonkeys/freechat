@@ -41,6 +41,12 @@ body {
     width: 100%;
 }
 
+.btn-icon {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
 .btn-info {
     color: #fff;
     background-color: #17a2b8;

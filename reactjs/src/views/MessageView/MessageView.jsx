@@ -205,7 +205,7 @@ class MessageView extends React.Component {
                                 <MyShortProfileView parent={this} />
                                 <ContactListView contacts={contacts} />
                                 <div id="contact-actions">
-                                    <button className="btn " id="addcontact"
+                                    <button className="btn btn-icon" id="addcontact"
                                         onClick={this.onAddContactClick.bind(this)}>
                                         <i className="fa-solid fa-user-plus"></i>
                                         <span>Add contact</span>

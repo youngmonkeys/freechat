@@ -22,6 +22,7 @@
         max-width: 30%;
         height: 100%;
         padding-right: 15px;
+        border-right: 1px solid #afafaf;
         
         .sidepanel {
           display: flex;
@@ -78,9 +79,10 @@
           display: flex;
           align-items: center;
           gap: 10px;
+          padding-bottom: 20px;
+          border-bottom: 1px solid #F1F1F1;
         }
         .messages {
-            margin-top: 20px;
             margin-bottom: 20px;
             overflow-y: scroll;
             overflow-x: hidden;
@@ -99,13 +101,14 @@
                 width: 50%;
 
                 .message {
-                  border-radius: 8px;
+                  border-radius: 10px;
                   padding: 10px 15px 10px 15px;
                 }
 
                 &.sent {
                   justify-content: flex-end;
                   margin-left: auto;
+
                   .message {
                     color: #fff;
                     background-color: #F37021;
@@ -114,6 +117,10 @@
                 &.reply {
                   justify-content: flex-start;
                   margin-right: auto;
+
+                  .message {
+                    background-color: #F1F1F1;
+                  }
                 }
               }
             }
