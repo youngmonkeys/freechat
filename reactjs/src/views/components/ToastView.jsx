@@ -7,8 +7,7 @@ class ToastView extends React.Component {
         super(props);
         this.message = "";
         this.state = {
-            visible: false,
-            isError: true
+            visible: false
         };
         const mvc = Mvc.getInstance();
         this.loginController = mvc.getController("login");
@@ -37,7 +36,6 @@ class ToastView extends React.Component {
     }
 
     showToast = (isError) => {
-        this.setState({ isError });
         this.setState({ visible: true }, () => {
             window.setTimeout(() => {
                 this.setState({ visible: false })
