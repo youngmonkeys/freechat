@@ -50,8 +50,8 @@ class LoginView extends React.Component {
     render() {
         const {username, password} = this.state;
         return (
-            <div className="login-div-wrap">
-                <div className="login-div">
+            <div className="login-form-wrapper">
+                <div className="login-form">
                     <Component.ToastView />
                     <div className="login-title">
                         <h1 className="text-light">Login to your account </h1>
