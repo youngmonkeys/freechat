@@ -4,9 +4,7 @@
   "private": true,
   "dependencies": {
     "ezyfox-es6-client": "^1.2.1",
-    "jquery": "^3.6.0",
     "mvc-es6": "^1.1.1",
-    "popper.js": "^1.16.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "reactstrap": "^9.2.2"

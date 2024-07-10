@@ -1,35 +1,37 @@
-.login-form-wrapper {
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.page-login {
+    background-image: url('../../images/bg/login.jpg');
 
-    .login-form {
-        width: 90%;
-
-        .login-title {
-            text-align: center;
-            
-            .text-light {
+    .login-form-wrapper {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        .login-form {
+            width: 90%;
+    
+            .login-form-title {
+                text-align: center;
                 font-size: 24px;
                 margin-bottom: 25px;
                 font-weight: 700;
+                color: #ffffff;
             }
-        }
-
-        .login-options {
-            .checkbox {
-                label {
-                    color: white;
+    
+            .login-options {
+                .checkbox {
+                    label {
+                        color: white;
+                    }
                 }
             }
         }
-    }
-
-    @media (min-width: 768px) {
-        .login-form {
-            width: 400px;
+    
+        @media (min-width: 768px) {
+            .login-form {
+                width: 400px;
+            }
         }
     }
 }

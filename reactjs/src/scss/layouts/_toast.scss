@@ -1,0 +1,23 @@
+@keyframes slideUp {
+    from {
+        bottom: -100px;
+        opacity: 0;
+    }
+    to {
+        bottom: 20%;
+        opacity: 1;
+    }
+}
+
+.toast {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #ffffff;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+    opacity: 0;
+    animation: slideUp 0.5s forwards;
+}

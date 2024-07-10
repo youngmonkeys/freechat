@@ -1,0 +1,135 @@
+.page-messages {
+  background-image: url('../../images/bg/city.jpg');
+  background-repeat:no-repeat;
+  background-size:cover;
+  padding: $messages-page-padding;
+  height: calc(100vh - 2*$messages-page-padding);
+  
+  .messages-wrapper {
+    overflow: hidden;
+    display: flex;
+    flex-flow: column;
+    background-color: #fff;
+    padding-left: $main-nav-padding-x;
+    padding-right: $main-nav-padding-x;
+   
+    .main-container {
+      height: calc(100vh - $main-footer-height - $main-nav-height - 2 * $messages-page-padding);
+      display: flex;
+
+      .sidepanel-wrapper {
+        flex: 0 0 30%;
+        max-width: 30%;
+        height: 100%;
+        padding-right: 15px;
+        border-right: 1px solid #afafaf;
+        
+        .sidepanel {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          
+          .profile-wrapper {
+            .profile {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+            }
+          }
+
+          .contact-search {
+            padding-top: 20px;
+          }
+
+          .contacts-wrapper {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+
+            .contacts {
+              .contact-list {
+                list-style: none;
+                padding: 0px;
+                margin: 0px;
+                display: flex;
+                flex-flow: column;
+                gap: 10px;
+
+                .contact {
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                }
+              }
+
+              &::-webkit-scrollbar-thumb {
+                background-color: #dde3e3;
+              }
+            }
+          }
+        }
+      }
+
+      .content-wrapper {
+        flex: 0 0 70%;
+        max-width: calc(70% - 30px);
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+        padding-left: 15px;
+
+        .current-contact {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding-bottom: 20px;
+          border-bottom: 1px solid #F1F1F1;
+        }
+        .messages {
+            margin-bottom: 20px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            &>ul {
+              padding: 0;
+              margin: 0;
+              list-style: none;
+              display: flex;
+              flex-direction: column;
+              gap: 20px;
+
+              li {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 50%;
+
+                .message {
+                  border-radius: 10px;
+                  padding: 10px 15px 10px 15px;
+                }
+
+                &.sent {
+                  justify-content: flex-end;
+                  margin-left: auto;
+
+                  .message {
+                    color: #fff;
+                    background-color: #F37021;
+                  }
+                }
+                &.reply {
+                  justify-content: flex-start;
+                  margin-right: auto;
+
+                  .message {
+                    background-color: #F1F1F1;
+                  }
+                }
+              }
+            }
+        }
+      }
+    }
+  }
+}

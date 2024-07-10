@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Mvc from 'mvc-es6';
 import SocketProxy from '../../socket/SocketProxy'
-import Component from '../components'
 
 class LoginView extends React.Component {
     constructor(props) {
@@ -50,37 +49,36 @@ class LoginView extends React.Component {
     render() {
         const {username, password} = this.state;
         return (
-            <div className="login-form-wrapper">
-                <div className="login-form">
-                    <Component.ToastView />
-                    <div className="login-title">
-                        <h1 className="text-light">Login to your account </h1>
-                    </div>
-                    <div>
-                        <div className="input-group mb-3">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon-username"><i className="icon-user"></i></span>
+            <div className="page-login">
+                <div className="login-form-wrapper">
+                    <div className="login-form">
+                        <h1 className="login-form-title">Login to your account </h1>
+                        <div className="login-form-body">
+                            <div className="input-group mb-3">
+                                <span className="input-group-text">
+                                    <i className="fa-solid fa-user"></i>
+                                </span>
+                                <input type="text" className="form-control" placeholder="username"
+                                    value={username} onChange={this.onUsernameChange} onKeyDown={this.onKeyDown} />
                             </div>
-                            <input type="text" className="form-control" placeholder="username" aria-label="username" aria-describedby="basic-addon-username"
-                                value={username} onChange={this.onUsernameChange} onKeyDown={this.onKeyDown} />
-                        </div>
-                        <div className="input-group mb-3">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon-password"><i className="icon-key"></i></span>
+                            <div className="input-group mb-3">
+                                <span className="input-group-text">
+                                    <i className="fa-solid fa-lock"></i>
+                                </span>
+                                <input type="password" className="form-control" placeholder="password"
+                                    value={password} onChange={this.onPasswordChange} onKeyDown={this.onKeyDown} />
                             </div>
-                            <input type="password" className="form-control" placeholder="password" aria-label="password" aria-describedby="basic-addon-password"
-                                value={password} onChange={this.onPasswordChange} onKeyDown={this.onKeyDown} />
-                        </div>
-                        <div className="login-options">
-                            <div className="checkbox">
-                                <label>
-                                    <input type="checkbox" className="styled" defaultChecked="checked" /> Remember me
-                                </label>
+                            <div className="login-options">
+                                <div className="checkbox">
+                                    <label>
+                                        <input type="checkbox" className="styled" defaultChecked="checked" /> Remember me
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                        <button className="btn btn-info btn-block" onClick={this.onLogin}>Login</button>
-                        <div className="text-small">
-                            Just login, register automatically!
+                            <button className="btn btn-info btn-block" onClick={this.onLogin}>Login</button>
+                            <div className="text-small">
+                                Just login, register automatically!
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import {Modal, ModalBody, ModalFooter} from 'reactstrap';
 import Mvc from 'mvc-es6';
 import SocketRequest from '../../socket/SocketRequest'
 
@@ -88,7 +87,7 @@ class SuggestedContactListView extends React.Component {
     constructor(props) {
         super(props);
         this.parent = props.parent;
-        let mvc = Mvc.getInstance();
+        const mvc = Mvc.getInstance();
         this.contactController = mvc.getController("contact");
         this.state = {suggestedContacts: []};
     }
@@ -136,8 +135,20 @@ class AddContactView extends React.Component {
         this.toggle = this.toggle.bind(this);
         this.onDone = this.onDone.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
-        this.parent.toggleAddContactView = this.toggle;
+        const mvc = Mvc.getInstance();
+        this.contactController = mvc.getController("contact");
     }
+
+    componentDidMount() {
+        this.contactController.addDefaultView("showAddContactsModal", () => {
+            this.toggle();
+        });
+    }
+
+    componentWillUnmount() {
+        this.contactController.removeDefaultView("showAddContactsModal");
+    }
+
 
     toggle() {
         const willShow = !this.state.show;
@@ -170,40 +181,35 @@ class AddContactView extends React.Component {
     }
 
     render() {
-        const {show} = this.state;
-        return (
-            <Modal isOpen={show} toggle={this.toggle} id="addContactsModel">
-                <div className="modal-header">
-                    <button type="button" className="mclose" onClick={this.toggle}>&times;</button>
-                    <h4 className="modal-title">Search contact</h4>
-                    <button
-                        className="btn btn-primary done"
-                        onClick={this.onDone}>
-                        Done
-                    </button>
-                </div>
-                <ModalBody>
-                    <div className="row no-gutters">
-                        <div className="col">
-                            <input className="form-control border-secondary border-right-0 border-left-0 rounded-0"
-                                   type="search" placeholder="Search" id="example-search-input4"
-                                   onChange={this.onSearchChange}/>
-                        </div>
-                        <div className="col-auto">
-                            <button
-                                className="btn btn-outline-secondary border-left-0 border-right-0 rounded-0 rounded-right"
-                                type="button">
-                                <i className="fa fa-search"></i>
+        const {show, keyword} = this.state;
+        return show ? (
+            <div className="modal fade show add-contacts-modal">
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="btn-close" onClick={this.toggle}>&times;</button>
+                            <h4 className="modal-title">Search contact</h4>
+                            <button className="btn btn-primary done" onClick={this.onDone}>
+                                Done
                             </button>
                         </div>
+                        <div className="input-group contact-search">
+                            <span className="input-group-text">
+                                <i className="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text" id="search-user-keyword"
+                                className="form-control" value={keyword} 
+                                onChange={this.onSearchChange.bind(this)}
+                                placeholder="Search contacts..." />
+                        </div>
+                        <div>
+                            <SeachedContactListView parent={this}/>
+                            <SuggestedContactListView parent={this}/>
+                        </div>
                     </div>
-                </ModalBody>
-                <ModalFooter>
-                    <SeachedContactListView parent={this}/>
-                    <SuggestedContactListView parent={this}/>
-                </ModalFooter>
-            </Modal>
-        );
+                </div>
+            </div>
+        ) : null;
     }
 }
 
