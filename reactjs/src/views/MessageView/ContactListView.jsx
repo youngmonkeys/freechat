@@ -25,7 +25,7 @@ class ContactListView extends React.Component {
         const {contacts} = this.props;
         const {keyword} = this.state;
         return (
-            <div className="contacts-wrapper">
+            <React.Fragment>
                 <div className="input-group contact-search">
                     <span className="input-group-text">
                         <i className="fa-solid fa-magnifying-glass"></i>
@@ -35,16 +35,18 @@ class ContactListView extends React.Component {
                         onChange={this.onSearchChange.bind(this)}
                         placeholder="Search contacts..." />
                 </div>
-                <div className="contacts" id="contacts">
-                    <ul className="contact-list">
-                    {
-                        contacts.map((contact, i) => (
-                            <ContactView key={i} data={contact} />
-                        ))
-                    }
-                    </ul>
+                <div className="contacts-wrapper">
+                    <div className="contacts" id="contacts">
+                        <ul className="contact-list">
+                        {
+                            contacts.map((contact, i) => (
+                                <ContactView key={i} data={contact} />
+                            ))
+                        }
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 }

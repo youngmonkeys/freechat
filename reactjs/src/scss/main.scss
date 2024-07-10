@@ -1,7 +1,9 @@
 @import "helper/variables";
 @import "helper/common";
+@import "helper/modal";
 @import "layouts/toast";
 @import "layouts/main-nav";
 @import "layouts/main-footer";
+@import "layouts/add-contacts-modal";
 @import "pages/login";
 @import "pages/messages";

@@ -37,20 +37,24 @@
             }
           }
 
+          .contact-search {
+            padding-top: 20px;
+          }
+
           .contacts-wrapper {
-            height: 100%;
             padding-top: 20px;
             padding-bottom: 20px;
-
-            .contact-search {
-              margin-bottom: 20px;
-            }
+            overflow-y: scroll;
+            overflow-x: hidden;
 
             .contacts {
               .contact-list {
                 list-style: none;
                 padding: 0px;
                 margin: 0px;
+                display: flex;
+                flex-flow: column;
+                gap: 10px;
 
                 .contact {
                   display: flex;

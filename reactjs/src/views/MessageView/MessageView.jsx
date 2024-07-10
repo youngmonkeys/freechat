@@ -7,7 +7,6 @@ import ContactListView from "./ContactListView";
 import CurrentContactView from "./CurrentContactView";
 import MessageListView from "./MessageListView";
 import AddContactView from "./AddContactView";
-import UpdatePasswordView from "./UpdatePasswordView";
 import LogoSvg from "../../images/logo.svg";
 
 class MessageView extends React.Component {
@@ -171,7 +170,7 @@ class MessageView extends React.Component {
     }
 
     onAddContactClick(e) {
-        this.toggleAddContactView();
+        this.contactController.updateViews("showAddContactsModal");
     }
 
     onUpdatePasswordClick(e) {
@@ -205,7 +204,7 @@ class MessageView extends React.Component {
                                 <MyShortProfileView parent={this} />
                                 <ContactListView contacts={contacts} />
                                 <div id="contact-actions">
-                                    <button className="btn btn-icon" id="addcontact"
+                                    <button className="btn btn-icon"
                                         onClick={this.onAddContactClick.bind(this)}>
                                         <i className="fa-solid fa-user-plus"></i>
                                         <span>Add contact</span>
@@ -239,6 +238,7 @@ class MessageView extends React.Component {
                             <div className="label label-info">Version: 1.3.0</div>
                         </div>
                     </footer>
+                    <AddContactView />
                 </div>
             </div>
         );

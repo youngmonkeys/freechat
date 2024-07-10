@@ -1,0 +1,33 @@
+.add-contacts-modal {
+    .btn-close {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .contact-search {
+        padding-top: 20px;
+    }
+
+    .suggested-contacts {
+        padding-left: 1rem;
+        padding-right: 1rem;
+
+        .items {
+            .suggested-contact {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                
+                .avatar {
+                    width: 32px;
+                }
+
+                .left-side {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+            }
+        }
+    }
+}
