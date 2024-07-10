@@ -1,12 +1,12 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:app/globals.dart';
 import 'package:ezyfox_server_flutter_client/ezy_client.dart';
 import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
 import 'package:ezyfox_server_flutter_client/ezy_config.dart';
 import 'package:ezyfox_server_flutter_client/ezy_constants.dart';
 import 'package:ezyfox_server_flutter_client/ezy_entities.dart';
 import 'package:ezyfox_server_flutter_client/ezy_handlers.dart';
-import 'package:flutter_client/chat.dart';
 
 const ZONE_NAME = "freechat";
 const APP_NAME = "freechat";
@@ -22,6 +22,7 @@ class SocketProxy {
   late Function? _connectionCallback;
   late Function? _connectionFailedCallback;
   late Function? _requestCallback;
+  late Function? _loginErrorCallback;
   static final SocketProxy _INSTANCE = SocketProxy._();
 
   SocketProxy._();
@@ -53,6 +54,8 @@ class SocketProxy {
     _client.setup.addDataHandler(EzyCommand.APP_ACCESS, _AppAccessHandler());
     _client.setup.addDataHandler(
         EzyCommand.APP_REQUEST, _RequestHandler(_requestCallback!));
+    _client.setup.addDataHandler(
+        EzyCommand.LOGIN_ERROR, _LoginErrorHandler(_loginErrorCallback!));
     var appSetup = _client.setup.setupApp(APP_NAME);
     appSetup.addDataHandler("greet", _GreetResponseHandler((message) {
       _greetCallback!(message);
@@ -71,6 +74,10 @@ class SocketProxy {
     this.password = password;
     _client.connect("10.0.2.2", 3005);
   } // Android emulator localhost-10.0.2.2 for ios it may be 127.0.0.1
+
+  void disconnect() {
+    _client.disconnect();
+  }
 
   void onGreet(Function(String) callback) {
     _greetCallback = callback;
@@ -100,8 +107,8 @@ class SocketProxy {
     _requestCallback = callback;
   }
 
-  void onData2(Function callback) {
-    _requestCallback = callback;
+  void onLoginError(Function callback) {
+    _loginErrorCallback = callback;
   }
 }
 
@@ -201,6 +208,20 @@ class _ConnectionHandler extends EzyConnectionSuccessHandler {
   }
 }
 
+class _LoginErrorHandler extends EzyAbstractDataHandler {
+  late Function _callback;
+
+  _LoginErrorHandler(Function callback) {
+    _callback = callback;
+  }
+
+  @override
+  void handle(List data) {
+    client.disconnect();
+    _callback();
+  }
+}
+
 class _RequestHandler extends EzyAbstractDataHandler {
   late Function _callback;
 
@@ -210,17 +231,35 @@ class _RequestHandler extends EzyAbstractDataHandler {
 
   @override
   handle(List data) {
+    // Handle requests
     if (data[1][0] == '5') {
+      // Get contacts
       contacts = data[1][1] + contacts;
     }
     if (data[1][0] == '2') {
+      // Add contact
       contacts = data[1][1] + contacts;
     }
     if (data[1][0] == '6') {
+      // User message
       messages = messages +
           [
             {'from': data[1][1]['from'], 'message': data[1][1]['message']}
           ];
+    }
+    if (data[1][0] == '1') {
+      // Suggest Contacts
+      suggestions = [];
+      for (var element in data[1][1]['users']) {
+        suggestions = suggestions + [element['username'].toString()];
+      }
+    }
+    if (data[1][0] == '10') {
+      // Suggest Contacts
+      suggestions = [];
+      for (var element in data[1][1]['users']) {
+        suggestions = suggestions + [element['username'].toString()];
+      }
     }
     _callback();
   }
