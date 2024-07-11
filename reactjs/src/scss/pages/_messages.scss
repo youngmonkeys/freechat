@@ -44,6 +44,7 @@
           .contacts-wrapper {
             padding-top: 20px;
             padding-bottom: 20px;
+            flex: 1 1 auto;
             overflow-y: scroll;
             overflow-x: hidden;
 
@@ -60,6 +61,20 @@
                   display: flex;
                   align-items: center;
                   gap: 10px;
+
+                  .meta {
+                    display: flex;
+                    flex-flow: column;
+                    gap: 5px;
+
+                    .preview {
+                      display: -webkit-box;
+                      -webkit-box-orient: vertical;
+                      -webkit-line-clamp: 1;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    }
+                  }
                 }
               }
 

@@ -9,7 +9,7 @@
 
     <artifactId>freechat-common</artifactId>
     <name>freechat-common</name>
-    <url>http://maven.apache.org</url>
+    <url>https://github.com/youngmonkeys/freechat</url>
 
     <dependencies>
         <dependency>

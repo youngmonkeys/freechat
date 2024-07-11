@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
 
     <name>freechat</name>
-    <url>http://maven.apache.org</url>
+    <url>https://github.com/youngmonkeys/freechat</url>
 
     <properties>
         <ezy.version>1.2.8</ezy.version>
@@ -57,10 +57,10 @@
         </profile>
     </profiles>
     <modules>
-        <module>freechat-plugin</module>
-        <module>freechat-api</module>
-        <module>freechat-entry</module>
         <module>freechat-common</module>
+        <module>freechat-plugin</module>
+        <module>freechat-app-api</module>
+        <module>freechat-app-entry</module>
         <module>freechat-startup</module>
     </modules>
 </project>

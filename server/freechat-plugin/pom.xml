@@ -10,7 +10,7 @@
 
     <artifactId>freechat-plugin</artifactId>
     <name>freechat-plugin</name>
-    <url>http://maven.apache.org</url>
+    <url>https://github.com/youngmonkeys/freechat</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

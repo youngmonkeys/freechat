@@ -10,17 +10,17 @@
     </parent>
     <artifactId>freechat-startup</artifactId>
     <name>freechat-startup</name>
-    <url>http://maven.apache.org</url>
+    <url>https://github.com/youngmonkeys/freechat</url>
 
     <dependencies>
         <dependency>
             <groupId>com.tvd12</groupId>
-            <artifactId>freechat-api</artifactId>
+            <artifactId>freechat-app-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.tvd12</groupId>
-            <artifactId>freechat-entry</artifactId>
+            <artifactId>freechat-app-entry</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -35,4 +35,19 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>ezyfox-deploy</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>logback.xml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
 </project>
