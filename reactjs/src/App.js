@@ -5,9 +5,7 @@ import "./scss/main.scss";
 import Mvc from 'mvc-es6'
 import SocketProxy from './socket/SocketProxy'
 
-import { ToastView } from './views/components';
-import LoginView from './views/LoginView'
-import MessageView from './views/MessageView'
+import { LoginView, MessageView, ToastView } from './views';
 
 class App extends Component {
   constructor() {

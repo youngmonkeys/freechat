@@ -34,8 +34,9 @@ class LoginView extends React.Component {
     }
 
     onKeyDown(e) {
-        if (e.key === 'Enter')
+        if (e.key === 'Enter') {
             this.onLogin();
+        }
     }
 
     onUsernameChange(e) {
