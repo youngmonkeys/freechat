@@ -1,5 +1,2 @@
 mvn clean install
-mvn -pl freechat-api -Pexport clean install
-mvn -pl freechat-common -Pexport clean install
-mvn -pl freechat-entry -Pexport clean install
-mvn -pl freechat-plugin -Pexport clean install
+mvn -pl freechat-startup -Denv.EZYFOX_SERVER_HOME=deploy -Pezyfox-deploy clean install

@@ -39,8 +39,8 @@ class ContactView extends React.Component {
             <li className={"contact " + activeClass} onClick={this.onClick}>
                 <img className="avatar" src={require('../../images/70x70.png')} alt="avatar" />
                 <div className="meta">
-                    <p className="name">{data.channel.users[0]}</p>
-                    <p className="preview">{data.lastMessage}</p>
+                    <span className="name">{data.channel.users[0]}</span>
+                    <span className="preview">{data.lastMessage}</span>
                 </div>
             </li>
         );

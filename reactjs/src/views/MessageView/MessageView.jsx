@@ -203,7 +203,7 @@ class MessageView extends React.Component {
                             <div className="sidepanel">
                                 <MyShortProfileView parent={this} />
                                 <ContactListView contacts={contacts} />
-                                <div id="contact-actions">
+                                <div className="contact-actions">
                                     <button className="btn btn-icon"
                                         onClick={this.onAddContactClick.bind(this)}>
                                         <i className="fa-solid fa-user-plus"></i>
