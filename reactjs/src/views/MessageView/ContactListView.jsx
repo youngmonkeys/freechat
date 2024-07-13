@@ -22,6 +22,7 @@ class ContactListView extends React.Component {
 
         this.mvc.models.contacts = contacts;
         this.mvc.models.contactDict = this.contactDict;
+        this.firstRender = true;
     }
 
     componentDidMount() {
@@ -34,8 +35,6 @@ class ContactListView extends React.Component {
             console.log("view add rev search contacts now");
             this.searchContacts(contacts);
         });
-
-        SocketRequest.requestGetContacts(0, 50);
     }
 
     onMessageChange(e) {
@@ -44,7 +43,6 @@ class ContactListView extends React.Component {
 
     componentWillUnmount() {
         this.contactController.removeDefaultView("newContacts");
-        this.mvc.models.chat.currentContactView = null;
     }
 
     addContacts(newContacts) {
@@ -66,7 +64,6 @@ class ContactListView extends React.Component {
     }
 
     searchContacts(contacts) {
-        const {messagess} = this.state;
         const contactMap = this.contactDict;
         var searchContacts = [{channel: {channelId: 0, users: ["Bot"]}, lastMessage: ""}];
         contacts.forEach(function(contactSearched) {
@@ -92,6 +89,10 @@ class ContactListView extends React.Component {
     }
 
     render() {
+        if (this.firstRender) {
+            this.firstRender = false;
+            SocketRequest.requestGetContacts(0, 50);
+        }
         const {keyword, contacts} = this.state;
         return (
             <React.Fragment>

@@ -82,7 +82,11 @@ class MessageView extends React.Component {
 
     addSentMessage(msg) {
         const { messagess, targetContact } = this.state;
-        const messages = messagess[targetContact] || [];
+        var messages = messagess[targetContact];
+        if (!messages) {
+            messages = [];
+            messagess[targetContact] = messages;
+        }
         messages.push(msg);
         this.setState({ messagess: messagess });
     }
@@ -97,9 +101,8 @@ class MessageView extends React.Component {
     }
 
     addReceivedUserMessage(msg) {
-        console.log("addReceivedUserMessage");
         var client = SocketProxy.getInstance().getClient();
-        if (client.me.name == msg.sender) {
+        if (client.me.name == msg.from) {
             return;
         }
         const { messagess } = this.state;

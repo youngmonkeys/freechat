@@ -5,11 +5,15 @@ class ContactView extends React.Component {
     constructor(props) {
         super(props);
         this.parent = props.parent;
-        this.state = {selected : false};
         this.data = props.data;
         this.onClick = this.onClick.bind(this);
         this.mvc = Mvc.getInstance();
         this.chatController = this.mvc.getController("chat");
+        this.chatModel = this.mvc.models.chat;
+        if (!this.data.channel.channelId) {
+            this.chatModel.currentContactView = this;
+        }
+        this.state = {selected :  this.chatModel.currentContactView == this};
     }
 
     unselect() {
@@ -17,15 +21,15 @@ class ContactView extends React.Component {
     }
 
     onClick() {
-        let chatModel = this.mvc.models.chat;
-        var currentContactView = chatModel.currentContactView;
+        const currentContactView = this.chatModel.currentContactView;
+        console.log(currentContactView);
         if(currentContactView == this) {
             return;
         }
         if(currentContactView != null) {
             currentContactView.unselect();
         }
-        chatModel.currentContactView = this;
+        this.chatModel.currentContactView = this;
         let channelId = this.data.channel.channelId;
         let {selected} = this.state;
         let newSelected = !selected;
@@ -36,9 +40,8 @@ class ContactView extends React.Component {
     render() {
         const {data} = this.props;
         const {selected} = this.state;
-        const activeClass = selected ? "active" : "";
         return (
-            <li className={"contact " + activeClass} onClick={this.onClick}>
+            <li className={"contact" + (selected ? " active" : "")} onClick={this.onClick}>
                 <img className="avatar" src={require('../../images/70x70.png')} alt="avatar" />
                 <div className="meta">
                     <span className="name">{data.channel.users[0]}</span>
