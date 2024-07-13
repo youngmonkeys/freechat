@@ -10,18 +10,12 @@ import lombok.ToString;
 @Getter
 @ToString
 @EzyCollection
-public class ChatUser extends ChatEntity {
-
+public class ChatUser {
     @EzyId
-    private Long id;
+    private long id;
     private String username;
     private String password;
-    private String firstName = "";
-    private String lastName = "";
-    private String avatarUrl = "";
-    private boolean online;
-
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
+    private String fullName;
+    private long createdAt;
+    private long updatedAt;
 }

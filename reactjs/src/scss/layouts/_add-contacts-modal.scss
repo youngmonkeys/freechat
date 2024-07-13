@@ -11,8 +11,13 @@
     .suggested-contacts {
         padding-left: 1rem;
         padding-right: 1rem;
+        padding-bottom: 1rem;
 
         .items {
+            display: flex;
+            flex-flow: column;
+            gap: 15px;
+
             .suggested-contact {
                 display: flex;
                 align-items: center;
@@ -26,6 +31,11 @@
                     display: flex;
                     align-items: center;
                     gap: 10px;
+
+                    .info {
+                        display: flex;
+                        flex-flow: column;
+                    }
                 }
             }
         }

@@ -8,14 +8,14 @@ import com.tvd12.ezyfox.binding.annotation.EzyValue;
 import com.tvd12.ezyfox.core.annotation.EzyRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
 import com.tvd12.ezyfoxserver.entity.EzyUser;
-import com.tvd12.freechat.common.service.ChatMaxIdService;
-import com.tvd12.freechat.app.constant.ChatEntities;
-import com.tvd12.freechat.app.entity.ChatMessage;
+import com.tvd12.freechat.common.entity.ChatMessageStatus;
+import com.tvd12.freechat.common.model.ChatSaveMessageModel;
 import com.tvd12.freechat.app.service.ChatBotQuestionService;
-import com.tvd12.freechat.app.service.ChatMessageService;
+import com.tvd12.freechat.common.service.ChatMessageService;
 import lombok.Setter;
 
 import static com.tvd12.freechat.app.constant.ChatCommands.CHAT_SYSTEM_MESSAGE;
+import static com.tvd12.freechat.app.util.EzyUsers.getDbUserId;
 
 @Setter
 @EzyPrototype
@@ -32,9 +32,6 @@ public class ChatBotMessageHandler
     private String clientMessageId = "";
 
     @EzyAutoBind
-    private ChatMaxIdService maxIdService;
-
-    @EzyAutoBind
     private ChatMessageService messageService;
 
     @EzyAutoBind
@@ -43,15 +40,30 @@ public class ChatBotMessageHandler
     @Override
     protected void execute() throws EzyBadRequestException {
         String answer = chatBotQuestionService.randomQuestion();
-        messageService.save(new ChatMessage(
-            maxIdService.incrementAndGet(ChatEntities.CHAT_MESSAGE),
-            true, message, 0L, user.getName(), clientMessageId
-        ));
-        messageService.save(new ChatMessage(
-            maxIdService.incrementAndGet(ChatEntities.CHAT_MESSAGE),
-            true, answer, 0L, "Bot", ""
-        ));
+        saveMessages(answer);
         response(user, answer);
+    }
+
+    private void saveMessages(String answer) {
+        messageService.save(
+            ChatSaveMessageModel.builder()
+                .message(message)
+                .channelId(0L)
+                .senderId(getDbUserId(user))
+                .clientMessageId(clientMessageId)
+                .status(ChatMessageStatus.READ)
+                .readAt(System.currentTimeMillis())
+                .build()
+        );
+        messageService.save(
+            ChatSaveMessageModel.builder()
+                .message(answer)
+                .channelId(0L)
+                .senderId(0L)
+                .clientMessageId("")
+                .status(ChatMessageStatus.READ)
+                .build()
+        );
     }
 
     private void response(EzyUser user, String answer) {

@@ -22,8 +22,8 @@ class SuggestedContactItemView extends React.Component {
                 <div className="left-side">
                     <img src={require('../../images/avatar001.png')} alt="Avatar" className="avatar"/>
                     <div className="info">
-                        <p>{data.username}</p>
-                        <p>{data.fullName}</p>
+                        <span>{data.username}</span>
+                        <span>{data.fullName}</span>
                     </div>
                 </div>
                 <div className="right-side">

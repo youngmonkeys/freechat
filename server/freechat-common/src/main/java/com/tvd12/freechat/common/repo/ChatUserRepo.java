@@ -6,16 +6,34 @@ import com.tvd12.ezyfox.database.annotation.EzyRepository;
 import com.tvd12.ezyfox.util.Next;
 import com.tvd12.freechat.common.entity.ChatUser;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
-@EzyRepository("userRepo")
+@EzyRepository
 public interface ChatUserRepo extends EzyMongoRepository<Long, ChatUser> {
 
-    @EzyQuery("{$and: [{'username': {$nin: ?0}}, {'username': {$regex : ?1}}]}")
-    List<ChatUser> findByUsernameRegex(
-        Set<String> excludeUsers, String keyword, Next next);
+    List<ChatUser> findByUsernameIn(
+        Collection<String> usernames
+    );
 
-    @EzyQuery("{'username': {$nin: ?0}}")
-    List<ChatUser> findSuggestionUsers(Set<String> excludeUsers, Next next);
+    @EzyQuery(
+        "{$and: [{'_id': {$ne: ?0}}, {'_id': {$gt : ?1}}]}"
+    )
+    List<ChatUser> findByIdNeAndIdGt(
+        long exclusiveUserId,
+        long userIdGt,
+        Next next
+    );
+
+    @EzyQuery(
+        "{$and: [{'_id': {$ne: ?0}}, " +
+            "{'_id': {$gt : ?1}}, " +
+            "{'username': {$regex : ?2}}]}"
+    )
+    List<ChatUser> findByIdNeAndIdGtAndRegex(
+        long exclusiveUserId,
+        long userIdGt,
+        String regex,
+        Next next
+    );
 }

@@ -16,13 +16,15 @@ class ContactView extends React.Component {
         this.setState({selected : false});
     }
 
-    onClick(e) {
+    onClick() {
         let chatModel = this.mvc.models.chat;
         var currentContactView = chatModel.currentContactView;
-        if(currentContactView == this)
+        if(currentContactView == this) {
             return;
-        if(currentContactView != null)
+        }
+        if(currentContactView != null) {
             currentContactView.unselect();
+        }
         chatModel.currentContactView = this;
         let channelId = this.data.channel.channelId;
         let {selected} = this.state;

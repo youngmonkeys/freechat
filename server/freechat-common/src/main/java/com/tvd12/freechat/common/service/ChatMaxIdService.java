@@ -1,8 +1,16 @@
 package com.tvd12.freechat.common.service;
 
-import com.tvd12.ezyfox.database.service.EzyMaxIdService;
+import com.tvd12.ezydata.database.repository.EzyMaxIdRepository;
+import com.tvd12.ezyfox.bean.annotation.EzySingleton;
+import lombok.AllArgsConstructor;
 
-public interface ChatMaxIdService extends EzyMaxIdService {
-    @Override
-    default void loadAll() {}
+@EzySingleton
+@AllArgsConstructor
+public class ChatMaxIdService {
+
+    private final EzyMaxIdRepository maxIdRepository;
+
+    public Long incrementAndGet(String key) {
+        return maxIdRepository.incrementAndGet(key);
+    }
 }

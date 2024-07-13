@@ -5,17 +5,17 @@ import com.tvd12.ezyfox.bean.annotation.EzyPrototype;
 import com.tvd12.ezyfox.binding.EzyDataBinding;
 import com.tvd12.ezyfox.core.annotation.EzyRequestListener;
 import com.tvd12.ezyfox.core.exception.EzyBadRequestException;
-import com.tvd12.ezyfox.io.EzyLists;
-import com.tvd12.freechat.common.entity.ChatUser;
+import com.tvd12.freechat.app.converter.ChatAppModelToResponseConverter;
+import com.tvd12.freechat.common.model.ChatUserModel;
 import com.tvd12.freechat.common.service.ChatUserService;
-import com.tvd12.freechat.app.data.ChatContactUser;
-import com.tvd12.freechat.app.service.ChatChannelUserService;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Set;
 
+import static com.tvd12.ezyfox.io.EzyLists.newArrayList;
 import static com.tvd12.freechat.app.constant.ChatCommands.SUGGEST_CONTACTS;
+import static com.tvd12.freechat.app.util.EzyUsers.getDbUserId;
+import static com.tvd12.freechat.common.constant.ChatConstants.MAX_SUGGEST_CONTACT;
 
 @Setter
 @EzyPrototype
@@ -24,23 +24,36 @@ public class ChatSuggestContactsHandler
     extends ChatClientRequestHandler
     implements EzyDataBinding {
 
+    private long userIdGt;
+
     @EzyAutoBind
     private ChatUserService userService;
 
     @EzyAutoBind
-    private ChatChannelUserService channelUserService;
+    private ChatAppModelToResponseConverter modelToResponseConverter;
 
     @Override
     protected void execute() throws EzyBadRequestException {
-        Set<String> excludeUsers = channelUserService.getContactedUsers(user.getName(), 0, 30);
-        List<ChatUser> users = userService.getSuggestionUsers(excludeUsers, 0, 30);
+        long dbUserId = getDbUserId(user);
+        List<ChatUserModel> users = userService
+            .getSuggestionUsers(
+                dbUserId,
+                userIdGt,
+                MAX_SUGGEST_CONTACT
+            );
         response(users);
     }
 
-    private void response(List<ChatUser> users) {
+    private void response(List<ChatUserModel> users) {
         responseFactory.newObjectResponse()
             .command(SUGGEST_CONTACTS)
-            .param("users", EzyLists.newArrayList(users, ChatContactUser::new))
+            .param(
+                "users",
+                newArrayList(
+                    users,
+                    modelToResponseConverter::toChatContactUserResponse
+                )
+            )
             .session(session)
             .execute();
     }

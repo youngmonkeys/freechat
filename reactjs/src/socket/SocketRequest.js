@@ -56,20 +56,20 @@ class SocketRequestClass {
     }
 
     getClient() {
-        let clients = Ezy.Clients.getInstance();
-        let client = clients.getDefaultClient();
+        const clients = Ezy.Clients.getInstance();
+        const client = clients.getDefaultClient();
         return client;
     }
 
     getApp() {
-        let zone = this.getClient().zone;
-        let appManager = zone.appManager;
-        let app = appManager.getApp();
+        const zone = this.getClient().zone;
+        const appManager = zone.appManager;
+        const app = appManager.getApp();
         return app;
     }
 
 }
 
-var SocketRequest = SocketRequest || new SocketRequestClass();
+const SocketRequest = new SocketRequestClass();
 
 export default SocketRequest;
