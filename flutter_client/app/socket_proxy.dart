@@ -1,12 +1,13 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:app/globals.dart';
 import 'package:ezyfox_server_flutter_client/ezy_client.dart';
 import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
 import 'package:ezyfox_server_flutter_client/ezy_config.dart';
 import 'package:ezyfox_server_flutter_client/ezy_constants.dart';
 import 'package:ezyfox_server_flutter_client/ezy_entities.dart';
 import 'package:ezyfox_server_flutter_client/ezy_handlers.dart';
+
+import 'globals.dart';
 
 const ZONE_NAME = "freechat";
 const APP_NAME = "freechat";
@@ -231,17 +232,21 @@ class _RequestHandler extends EzyAbstractDataHandler {
 
   @override
   handle(List data) {
+    print('du lieu tra ve la: $data');
     // Handle requests
     if (data[1][0] == '5') {
       // Get contacts
+      print('Processing get contacts');
       contacts = data[1][1] + contacts;
     }
     if (data[1][0] == '2') {
       // Add contact
+      print('Processing add contacts');
       contacts = data[1][1] + contacts;
     }
     if (data[1][0] == '6') {
       // User message
+      print('Processing user message');
       messages = messages +
           [
             {'from': data[1][1]['from'], 'message': data[1][1]['message']}
@@ -249,6 +254,7 @@ class _RequestHandler extends EzyAbstractDataHandler {
     }
     if (data[1][0] == '1') {
       // Suggest Contacts
+      print('Processing suggest contacts 1');
       suggestions = [];
       for (var element in data[1][1]['users']) {
         suggestions = suggestions + [element['username'].toString()];
@@ -256,6 +262,8 @@ class _RequestHandler extends EzyAbstractDataHandler {
     }
     if (data[1][0] == '10') {
       // Suggest Contacts
+      print('Processing suggest contacts 10');
+
       suggestions = [];
       for (var element in data[1][1]['users']) {
         suggestions = suggestions + [element['username'].toString()];
