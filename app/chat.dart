@@ -1,6 +1,5 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names, duplicate_ignore
 
-import "package:ezyfox_server_flutter_client/ezy_client.dart";
 import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
 import "package:flutter/material.dart";
 
@@ -20,6 +19,7 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
+  // ignore: non_constant_identifier_names
   var screen_selector = true;
   // true - list screen
   // false - user screen
@@ -55,11 +55,7 @@ class _ChatState extends State<Chat> {
     setup();
     connect();
     super.initState();
-
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -171,6 +167,42 @@ class _ChatState extends State<Chat> {
                                     onPressed: () {
                                       setState(() {
                                         screen_selector = false;
+                                        // user = contacts[index]['users'][0]
+                                        //     .toString();
+                                        // channel = contacts[index]['channelId'];
+                                        user = 'Chat Bot';
+                                        channel = 1;
+                                      });
+                                    },
+                                    child: const ListTile(
+                                      title: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          // Text(contacts[index]['users'][0]
+                                          //     .toString()),
+                                          Text('Chat Bot'),
+                                          Icon(
+                                            Icons.message_outlined,
+                                            color: Colors.lightBlueAccent,
+                                          )
+                                        ],
+                                      ),
+                                    )),
+                                const Divider(
+                                  color: Colors.lightBlueAccent,
+                                  thickness: 1,
+                                ),
+                                ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor: WidgetStateProperty.all(
+                                          Colors.transparent),
+                                      shadowColor: WidgetStateProperty.all(
+                                          Colors.transparent),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        screen_selector = false;
                                         user = contacts[index]['users'][0]
                                             .toString();
                                         channel = contacts[index]['channelId'];
@@ -193,7 +225,7 @@ class _ChatState extends State<Chat> {
                                 const Divider(
                                   color: Colors.lightBlueAccent,
                                   thickness: 1,
-                                )
+                                ),
                               ],
                             ),
                           );
@@ -340,6 +372,10 @@ class _ChatState extends State<Chat> {
                                   ];
                                   messages = messages + data_messages;
                                   controller.text = '';
+                                  //phan hoi tu chat bot
+                                  if (user == 'Chat Bot') {
+                                    _generateChatbotResponse();
+                                  }
                                   setState(() {
                                     app?.send("6", data);
                                   });
@@ -359,5 +395,37 @@ class _ChatState extends State<Chat> {
               ),
             ),
           );
+  }
+
+  void _generateChatbotResponse() {
+    List<String> questions = [
+      "Bạn có thích mùa hè không?",
+      "Hôm nay bạn đã làm gì?",
+      "Bạn thích món ăn nào nhất?",
+      "Bạn có thú cưng không?",
+      "Bạn thích đọc sách gì?",
+      "Bạn có thích đi du lịch không?",
+      "Bạn thích nghe nhạc gì?",
+      "Bạn có chơi thể thao không?",
+      "Bạn có sở thích gì?",
+      "Bạn có xem phim không? Phim nào là phim yêu thích của bạn?"
+    ];
+
+    // Chọn ngẫu nhiên một câu hỏi từ danh sách
+    String randomQuestion = questions[DateTime.now().second % questions.length];
+
+    var data_messages = [
+      {
+        'from': user,
+        'to': 'user',
+        'message': randomQuestion,
+      }
+    ];
+
+    // Thêm câu hỏi vào danh sách tin nhắn
+    messages = messages + data_messages;
+
+    // Cập nhật giao diện
+    setState(() {});
   }
 }

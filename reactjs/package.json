@@ -1,0 +1,34 @@
+{
+  "name": "freechat-web-client",
+  "version": "0.1.1",
+  "private": true,
+  "dependencies": {
+    "ezyfox-es6-client": "^1.2.1",
+    "mvc-es6": "^1.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "reactstrap": "^9.2.2"
+  },
+  "scripts": {
+    "start": "react-scripts --openssl-legacy-provider start",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "build": "react-scripts build && BUILDVERSION=$(date +%Y-%m-%d)-$(date +%T) && sed -i -- 's/%BUILDVERSION%/'$BUILDVERSION'/g' build/index.html && echo Build Version = $BUILDVERSION"
+  },
+  "devDependencies": {
+    "react-scripts": "^5.0.1",
+    "sass": "^1.77.6"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -24,6 +24,8 @@ class SocketProxy {
   late Function? _connectionFailedCallback;
   late Function? _requestCallback;
   late Function? _loginErrorCallback;
+  late Function(String)? _chatBotResponseCallback; // Thêm callback cho ChatBot
+
   static final SocketProxy _INSTANCE = SocketProxy._();
 
   SocketProxy._();
@@ -47,14 +49,15 @@ class SocketProxy {
     _client.setup.addEventHandler(EzyEventType.DISCONNECTION,
         _DisconnectionHandler(_disconnectedCallback!));
     _client.setup.addEventHandler(EzyEventType.CONNECTION_SUCCESS,
-        _ConnectionHandler(_connectionCallback!));
+        _ConnectionHandler(_connectionCallback!, _client));
     _client.setup.addEventHandler(EzyEventType.CONNECTION_FAILURE,
-        _ConnectionFailureHandler(_connectionFailedCallback!));
+        _ConnectionFailureHandler(_connectionFailedCallback!, _client));
     _client.setup.addDataHandler(EzyCommand.HANDSHAKE, _HandshakeHandler());
     _client.setup.addDataHandler(EzyCommand.LOGIN, _LoginSuccessHandler());
-    _client.setup.addDataHandler(EzyCommand.APP_ACCESS, _AppAccessHandler());
+    _client.setup
+        .addDataHandler(EzyCommand.APP_ACCESS, _AppAccessHandler(_client));
     _client.setup.addDataHandler(
-        EzyCommand.APP_REQUEST, _RequestHandler(_requestCallback!));
+        EzyCommand.APP_REQUEST, _RequestHandler(_requestCallback!, _client));
     _client.setup.addDataHandler(
         EzyCommand.LOGIN_ERROR, _LoginErrorHandler(_loginErrorCallback!));
     var appSetup = _client.setup.setupApp(APP_NAME);
@@ -64,6 +67,10 @@ class SocketProxy {
     appSetup.addDataHandler("secureChat", _SecureChatResponseHandler((message) {
       _secureChatCallback!(message);
     }));
+    appSetup.addDataHandler("chatBotResponse",
+        _ChatBotResponseHandler((message) {
+      _chatBotResponseCallback!(message);
+    })); // Thêm xử lý dữ liệu cho ChatBot
   }
 
   void connectToServer(String username, String password) {
@@ -111,6 +118,25 @@ class SocketProxy {
   void onLoginError(Function callback) {
     _loginErrorCallback = callback;
   }
+
+  void onChatBotResponse(Function(String) callback) {
+    _chatBotResponseCallback = callback;
+  } // Thêm callback cho ChatBot
+}
+
+class _ChatBotResponseHandler extends EzyAppDataHandler<Map> {
+  late Function(String) _callback;
+
+  _ChatBotResponseHandler(Function(String) callback) {
+    _callback = callback;
+  }
+
+  @override
+  void handle(EzyApp app, Map data) {
+    // Lấy câu hỏi từ dữ liệu máy chủ
+    String question = data["question"] ?? "Không có câu hỏi nào từ máy chủ.";
+    _callback(question);
+  }
 }
 
 class _HandshakeHandler extends EzyHandshakeHandler {
@@ -133,6 +159,13 @@ class _LoginSuccessHandler extends EzyLoginSuccessHandler {
 }
 
 class _AppAccessHandler extends EzyAppAccessHandler {
+  late EzyClient _client; // Khai báo _client
+
+  _AppAccessHandler(EzyClient client) {
+    // Thêm _client vào constructor
+    _client = client;
+  }
+
   @override
   void postHandle(EzyApp app, List data) {
     var _data = {};
@@ -175,6 +208,7 @@ class _DisconnectionHandler extends EzyDisconnectionHandler {
   _DisconnectionHandler(Function callback) {
     _callback = callback;
   }
+
   @override
   void postHandle(Map event) {
     _callback();
@@ -183,9 +217,12 @@ class _DisconnectionHandler extends EzyDisconnectionHandler {
 
 class _ConnectionFailureHandler extends EzyConnectionFailureHandler {
   late Function _callback;
+  late EzyClient _client; // Khai báo _client
 
-  _ConnectionFailureHandler(Function callback) {
+  _ConnectionFailureHandler(Function callback, EzyClient client) {
+    // Thêm _client vào constructor
     _callback = callback;
+    _client = client;
   }
 
   @override
@@ -196,9 +233,12 @@ class _ConnectionFailureHandler extends EzyConnectionFailureHandler {
 
 class _ConnectionHandler extends EzyConnectionSuccessHandler {
   late Function _callback;
+  late EzyClient _client; // Khai báo _client
 
-  _ConnectionHandler(Function callback) {
+  _ConnectionHandler(Function callback, EzyClient client) {
+    // Thêm _client vào constructor
     _callback = callback;
+    _client = client;
   }
 
   @override
@@ -225,9 +265,12 @@ class _LoginErrorHandler extends EzyAbstractDataHandler {
 
 class _RequestHandler extends EzyAbstractDataHandler {
   late Function _callback;
+  late EzyClient _client; // Khai báo _client
 
-  _RequestHandler(Function callback) {
+  _RequestHandler(Function callback, EzyClient client) {
+    // Thêm _client vào constructor
     _callback = callback;
+    _client = client;
   }
 
   @override
@@ -251,6 +294,8 @@ class _RequestHandler extends EzyAbstractDataHandler {
           [
             {'from': data[1][1]['from'], 'message': data[1][1]['message']}
           ];
+      EzyApp? app = _client.getApp(); // Sử dụng getApp để lấy ứng dụng
+      app?.send("getChatBotQuestion", {"message": data[1][1]['message']});
     }
     if (data[1][0] == '1') {
       // Suggest Contacts

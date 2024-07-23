@@ -7,7 +7,7 @@
         {
             "name": ".NET Core Attach",
             "type": "coreclr",
-            "request": "attach"
+            "request": "attach",
         },
         {
             "name": ".NET Core Attach",
@@ -17,7 +17,8 @@
         {
             "name": "freechat_client",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "app/main.dart"
         },
         {
             "name": "freechat_client (profile mode)",
@@ -29,47 +30,54 @@
             "name": "freechat_client (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "program": "app/main.dart"
         },
         {
             "name": "ezyfox-server-flutter-client",
             "cwd": "ezyfox-server-flutter-client",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "app/main.dart"
         },
         {
             "name": "ezyfox-server-flutter-client (profile mode)",
             "cwd": "ezyfox-server-flutter-client",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "program": "app/main.dart"
         },
         {
             "name": "ezyfox-server-flutter-client (release mode)",
             "cwd": "ezyfox-server-flutter-client",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "program": "app/main.dart"
         },
         {
             "name": "example",
             "cwd": "ezyfox-server-flutter-client\\example",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "app/main.dart"
         },
         {
             "name": "example (profile mode)",
             "cwd": "ezyfox-server-flutter-client\\example",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "program": "app/main.dart"
         },
         {
             "name": "example (release mode)",
             "cwd": "ezyfox-server-flutter-client\\example",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "program": "app/main.dart"
         }
     ]
 }
