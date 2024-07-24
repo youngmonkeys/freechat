@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ViewModel extends GetxController {
@@ -6,7 +6,6 @@ class ViewModel extends GetxController {
   final formKey = GlobalKey<FormState>();
   final showPassword = false.obs;
   final isLoading = false.obs;
-
   void toggleObscureText() {
     isObscured.value = !isObscured.value;
   }

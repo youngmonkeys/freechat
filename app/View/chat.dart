@@ -1,11 +1,13 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
 
-import 'globals.dart';
-import 'main.dart';
-import 'search_contacts.dart';
-import 'socket_proxy.dart';
+import '../common_widget/globals.dart';
+import '../main.dart';
+import '../common_widget/search_contacts.dart';
+import '../Model/socket_proxy.dart';
 
 class Chat extends StatefulWidget {
   const Chat({super.key, this.username, this.password});
@@ -65,7 +67,6 @@ class _ChatState extends State<Chat> {
     });
 
     socketProxy.onChatBotResponse((question) {
-      print('Received ChatBot Response: $question');
       setState(() {
         messages.add({
           'from': 'Chat Bot',
@@ -410,7 +411,6 @@ class _ChatState extends State<Chat> {
                               });
                               controller.text = '';
                             });
-                            print('Sending message: $message');
 
                             // Gửi tin nhắn đến chatbot nếu người dùng đang chat với chatbot
                             if (user == 'Chat Bot') {

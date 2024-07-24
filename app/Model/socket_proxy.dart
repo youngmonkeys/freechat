@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, unused_field, unnecessary_null_comparison, non_constant_identifier_names, no_leading_underscores_for_local_identifiers, unused_element
 
 import 'package:ezyfox_server_flutter_client/ezy_client.dart';
 import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
@@ -7,7 +7,7 @@ import 'package:ezyfox_server_flutter_client/ezy_constants.dart';
 import 'package:ezyfox_server_flutter_client/ezy_entities.dart';
 import 'package:ezyfox_server_flutter_client/ezy_handlers.dart';
 
-import 'globals.dart';
+import '../common_widget/globals.dart';
 
 const ZONE_NAME = "freechat";
 const APP_NAME = "freechat";
@@ -40,7 +40,6 @@ class SocketProxy {
     if (client != null && client.zone != null) {
       var app = client.zone!.appManager.getAppByName("freechat");
       if (app != null) {
-        print('Sending message to chatbot: $message');
         app.send("6", message);
       }
     }
@@ -148,7 +147,6 @@ class _ChatBotQuestionHandler extends EzyAppDataHandler<Map> {
 
   @override
   void handle(EzyApp app, Map data) {
-    print('Received ChatBot Question Data: $data');
     String question = data["question"] ?? "Không có câu hỏi nào từ máy chủ.";
     _callback(question);
   }
@@ -286,7 +284,6 @@ class _RequestHandler extends EzyAbstractDataHandler {
 
   @override
   handle(List data) {
-    print('du lieu tra ve la: $data');
     // Handle requests
     if (data[1][0] == '4') {
       // Get contacts
@@ -296,15 +293,12 @@ class _RequestHandler extends EzyAbstractDataHandler {
           ];
     } else if (data[1][0] == '5') {
       // Get contacts
-      print('Processing get contacts');
       contacts = data[1][1] + contacts;
     } else if (data[1][0] == '2') {
       // Add contact
-      print('Processing add contacts');
       contacts = data[1][1] + contacts;
     } else if (data[1][0] == '6') {
       // User message
-      print('Processing user message');
       messages = messages +
           [
             {'from': data[1][1]['from'], 'message': data[1][1]['message']}
@@ -313,14 +307,12 @@ class _RequestHandler extends EzyAbstractDataHandler {
       app?.send("getChatBotQuestion", {"message": data[1][1]['message']});
     } else if (data[1][0] == '1') {
       // Suggest Contacts
-      print('Processing suggest contacts 1');
       suggestions = [];
       for (var element in data[1][1]['users']) {
         suggestions = suggestions + [element['username'].toString()];
       }
     } else if (data[1][0] == '10') {
       // Suggest Contacts
-      print('Processing suggest contacts 10');
 
       suggestions = [];
       for (var element in data[1][1]['users']) {

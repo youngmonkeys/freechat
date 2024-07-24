@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'View/login_view.dart';
+import 'View/logoapp_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: const LogoappView(),
     );
   }
 }
