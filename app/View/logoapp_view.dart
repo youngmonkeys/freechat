@@ -21,7 +21,7 @@ class _LogoappViewState extends State<LogoappView> {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     controller = Get.put(LogoappViewModel());
-    controller.loadView(context);
+    controller.loadView();
   }
 
   @override

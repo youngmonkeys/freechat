@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../ViewModel/login_view_model.dart';
-import 'chat.dart';
+import '../images/images_extention.dart';
+import 'chat_view.dart';
 import '../common/color_extentions.dart';
 import '../common_widget/globals.dart';
 
@@ -41,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(height: 50),
+              const SizedBox(height: 80),
               //login text
               _textLogin(),
               const SizedBox(height: 120),
@@ -49,8 +50,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 () => _formUsernameAndPassword(
                     loginController), //Returns a form that includes two input fields for username and password
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               _elevatedButtonLogin(loginController, context), // button login
+              const SizedBox(
+                height: 80,
+              ),
+              _textOrContinueWith(),
+              const SizedBox(
+                height: 20,
+              ),
+              _logoAppleAndGoogle(),
               alert_dialog
                   ? const Text(
                       "Invalid credentials.",
@@ -60,6 +69,54 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Row _logoAppleAndGoogle() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(
+          ImagesAssset.logoApple,
+          height: 100,
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        Image.asset(
+          ImagesAssset.logoGG,
+          height: 90,
+        ),
+      ],
+    );
+  }
+
+  Padding _textOrContinueWith() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Divider(
+              thickness: 0.5,
+              color: Colors.grey[400],
+            ),
+          ),
+          const Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Text(
+              'Or continue with',
+              style: TextStyle(color: Color(0xFF616161)),
+            ),
+          ),
+          Expanded(
+            child: Divider(
+              thickness: 0.5,
+              color: Colors.grey[400],
+            ),
+          ),
+        ],
       ),
     );
   }
