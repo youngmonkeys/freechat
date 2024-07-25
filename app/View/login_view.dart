@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../ViewModel/login_view_model.dart';
 import '../images/images_extention.dart';
+import '../test.dart';
 import 'chat_view.dart';
 import '../common/color_extentions.dart';
 import '../common_widget/globals.dart';
+import 'main_screen_view.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -53,11 +55,11 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 40),
               _elevatedButtonLogin(loginController, context), // button login
               const SizedBox(
-                height: 80,
+                height: 60,
               ),
               _textOrContinueWith(),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               _logoAppleAndGoogle(),
               alert_dialog
@@ -148,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Chat(
+              builder: (context) => MainScreenView(
                 username: username.text,
                 password: password.text,
               ),
