@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../ViewModel/login_view_model.dart';
-import '../images/images_extention.dart';
-import '../test.dart';
-import 'chat_view.dart';
+import '../common_widget/loginWidget/loginbutton.dart';
+import '../common_widget/loginWidget/logo.dart';
+import '../common_widget/loginWidget/text_or_continue_with.dart';
 import '../common/color_extentions.dart';
-import '../common_widget/globals.dart';
-import 'main_screen_view.dart';
+import '../common_widget/chatWidget/globals.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -36,7 +35,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final loginController = Get.put(ViewModel());
-
     return Scaffold(
       backgroundColor: TColor.bg,
       body: SafeArea(
@@ -45,15 +43,24 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(height: 80),
-              //login text
-              _textLogin(),
+              _textLogin(), //login text
               const SizedBox(height: 120),
               Obx(
                 () => _formUsernameAndPassword(
                     loginController), //Returns a form that includes two input fields for username and password
               ),
               const SizedBox(height: 40),
-              _elevatedButtonLogin(loginController, context), // button login
+              // button login
+              LoginButton(
+                  loginController: loginController,
+                  context: context,
+                  usernameController: username,
+                  passwordController: password,
+                  onInvalidCredentials: () {
+                    setState(() {
+                      alert_dialog = true;
+                    });
+                  }),
               const SizedBox(
                 height: 60,
               ),
@@ -75,52 +82,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Row _logoAppleAndGoogle() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(
-          ImagesAssset.logoApple,
-          height: 100,
-        ),
-        const SizedBox(
-          width: 20,
-        ),
-        Image.asset(
-          ImagesAssset.logoGG,
-          height: 90,
-        ),
-      ],
-    );
+  Logo _logoAppleAndGoogle() {
+    return Logo();
   }
 
-  Padding _textOrContinueWith() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: Divider(
-              thickness: 0.5,
-              color: Colors.grey[400],
-            ),
-          ),
-          const Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Text(
-              'Or continue with',
-              style: TextStyle(color: Color(0xFF616161)),
-            ),
-          ),
-          Expanded(
-            child: Divider(
-              thickness: 0.5,
-              color: Colors.grey[400],
-            ),
-          ),
-        ],
-      ),
-    );
+  OrContinueWith _textOrContinueWith() {
+    return OrContinueWith();
   }
 
   //form input fields for username and password
@@ -136,48 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
             _formPassword(loginController),
           ],
         ),
-      ),
-    );
-  }
-
-  //button login
-  ElevatedButton _elevatedButtonLogin(
-      ViewModel loginController, BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        alert_dialog = false;
-        if (loginController.formKey.currentState!.validate()) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MainScreenView(
-                username: username.text,
-                password: password.text,
-              ),
-            ),
-          );
-        } else {
-          // Show error dialog
-          setState(() {
-            alert_dialog = true;
-          });
-        }
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: TColor.darkGray, // Đặt màu nền cho nút
-        elevation: 2, // Đặt độ cao cho nút
-        shadowColor: Colors.black, // Đặt màu bóng cho nút
-        padding: const EdgeInsets.symmetric(
-          horizontal: 40,
-          vertical: 10,
-        ), // Đặt kích thước padding cho nút
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30), // Đặt bo góc cho nút
-        ),
-      ),
-      child: const Icon(
-        Icons.door_front_door_outlined,
-        color: Colors.lightBlueAccent,
       ),
     );
   }

@@ -7,7 +7,7 @@ import 'package:ezyfox_server_flutter_client/ezy_constants.dart';
 import 'package:ezyfox_server_flutter_client/ezy_entities.dart';
 import 'package:ezyfox_server_flutter_client/ezy_handlers.dart';
 
-import '../common_widget/globals.dart';
+import '../common_widget/chatWidget/globals.dart';
 
 const ZONE_NAME = "freechat";
 const APP_NAME = "freechat";
@@ -49,7 +49,7 @@ class SocketProxy {
     EzyConfig config = EzyConfig();
     config.clientName = ZONE_NAME;
     config.enableSSL =
-    false; // SSL is not active by default using freechat server
+        false; // SSL is not active by default using freechat server
     config.ping.maxLostPingCount = 3;
     config.ping.pingPeriod = 1000;
     config.reconnect.maxReconnectCount = 3;
@@ -73,10 +73,9 @@ class SocketProxy {
     var appSetup = _client.setup.setupApp(APP_NAME);
 
     // Xử lý dữ liệu cho câu hỏi chatbot
-    appSetup.addDataHandler("4",
-        _ChatBotQuestionHandler((question) {
-          _chatBotResponseCallback!(question);
-        }));
+    appSetup.addDataHandler("4", _ChatBotQuestionHandler((question) {
+      _chatBotResponseCallback!(question);
+    }));
   }
 
   void connectToServer(String username, String password) {
@@ -128,11 +127,16 @@ class SocketProxy {
 
   void sendMessageToChatBot(String message) {
     // Đảm bảo bạn có một ứng dụng và có thể gửi tin nhắn
-    var app = EzyClients.getInstance().getDefaultClient().zone?.appManager.getAppByName("freechat");
+    var app = EzyClients.getInstance()
+        .getDefaultClient()
+        .zone
+        ?.appManager
+        .getAppByName("freechat");
     if (app != null) {
       app.send("4", {"message": message});
     }
   }
+
   void onChatBotResponse(Function(String) callback) {
     _chatBotResponseCallback = callback;
   }
@@ -284,6 +288,7 @@ class _RequestHandler extends EzyAbstractDataHandler {
 
   @override
   handle(List data) {
+    print('data sucess `${data}`');
     // Handle requests
     if (data[1][0] == '4') {
       // Get contacts

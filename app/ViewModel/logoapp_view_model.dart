@@ -8,6 +8,6 @@ class LogoappViewModel extends GetxController {
 
   void loadView() async {
     await Future.delayed(const Duration(seconds: 3));
-    Get.to(const MyHomePage());
+    Get.to(() => const MyHomePage());
   }
 }
