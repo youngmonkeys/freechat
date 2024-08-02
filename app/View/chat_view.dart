@@ -3,7 +3,7 @@ import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
 import '../common/color_extentions.dart';
-import '../common_widget/chatWidget/globals.dart';
+import '../globals.dart';
 import '../images/images_extention.dart';
 import '../main.dart';
 import '../common_widget/chatWidget/search_contacts.dart';
@@ -355,39 +355,36 @@ class _ChatState extends State<Chat> {
         ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Builder(builder: (context) {
-                return ListView.builder(
-                  itemCount: contacts.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        _screenChatBot(),
-                        const Divider(
-                          color: Colors.lightBlueAccent,
-                          thickness: 1,
-                        ),
-                        _screenChatGPT(),
-                        const Divider(
-                          color: Colors.lightBlueAccent,
-                          thickness: 1,
-                        ),
-                        _screenUser(index),
-                        const Divider(
-                          color: Colors.lightBlueAccent,
-                          thickness: 1,
-                        ),
-                      ],
-                    );
-                  },
-                );
-              }),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Expanded(
+            child: ListView(
+              children: [
+                _screenChatBot(),
+                const Divider(
+                  color: Colors.lightBlueAccent,
+                  thickness: 1,
+                ),
+                _screenChatGPT(),
+                const Divider(
+                  color: Colors.lightBlueAccent,
+                  thickness: 1,
+                ),
+                // Danh sách người dùng
+                ...List.generate(contacts.length, (index) {
+                  return Column(
+                    children: [
+                      _screenUser(index),
+                      const Divider(
+                        color: Colors.lightBlueAccent,
+                        thickness: 1,
+                      ),
+                    ],
+                  );
+                }),
+              ],
             ),
-          ],
-        ),
+          ),
+        ]),
       ),
     );
   }

@@ -6,7 +6,7 @@ import '../common_widget/loginWidget/loginbutton.dart';
 import '../common_widget/loginWidget/logo.dart';
 import '../common_widget/loginWidget/text_or_continue_with.dart';
 import '../common/color_extentions.dart';
-import '../common_widget/chatWidget/globals.dart';
+import '../globals.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
