@@ -47,7 +47,6 @@ String getUserImage(String? user) {
   } else if (user == 'Chat GPT') {
     return ImagesAssset.chatbot;
   } else {
-    // Cần thay thế giá trị path đến ảnh của user thật
     return ImagesAssset.user;
   }
 }

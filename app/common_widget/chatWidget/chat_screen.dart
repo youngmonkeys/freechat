@@ -4,6 +4,9 @@ import '../../Model/socket_proxy.dart';
 import '../../common/color_extentions.dart';
 import '../../globals.dart';
 import '../../images/images_extention.dart';
+import 'container_chatbot.dart';
+import 'container_user.dart';
+import 'message_input.dart';
 
 class ChatScreen extends StatefulWidget {
   final String user;
@@ -73,9 +76,11 @@ class _ChatScreenState extends State<ChatScreen> {
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     if (widget.user == 'Chat Bot') {
-                      return _contaimerChatBot(index);
+                      // return _contaimerChatBot(index);
+                      return ContainerChatbot(index: index, user: widget.user);
                     } else {
-                      return _containerUser(index);
+                      // return _containerUser(index);
+                      return ContainerUser(index: index, user: widget.user);
                     }
                   },
                 );
@@ -85,56 +90,36 @@ class _ChatScreenState extends State<ChatScreen> {
               color: Colors.transparent,
               height: 5,
             ),
-            Row(
-              children: [
-                _formInputMessage(),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.lightBlueAccent,
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          if (controller.text.isNotEmpty) {
-                            var message = controller.text.toString();
-                            setState(() {
-                              messages.add({
-                                'from': 'user',
-                                'to': widget.user,
-                                'message': message,
-                              });
-                              controller.text = '';
-                            });
+            MessageInput(
+              controller: controller,
+              onSendPressed: () {
+                if (controller.text.isNotEmpty) {
+                  var message = controller.text.toString();
+                  setState(() {
+                    messages.add({
+                      'from': 'user',
+                      'to': widget.user,
+                      'message': message,
+                    });
+                    controller.text = '';
+                  });
 
-                            if (widget.user == 'Chat Bot') {
-                              SocketProxy.getInstance()
-                                  .sendMessageToChatBot(message);
-                            } else {
-                              var app = EzyClients.getInstance()
-                                  .getDefaultClient()
-                                  .zone!
-                                  .appManager
-                                  .getAppByName("freechat");
-                              var data = {
-                                "channelId": widget.channel,
-                                "message": message,
-                              };
-                              app?.send("6", data);
-                            }
-                          }
-                        },
-                        icon: const Icon(
-                          Icons.send,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                  if (widget.user == 'Chat Bot') {
+                    SocketProxy.getInstance().sendMessageToChatBot(message);
+                  } else {
+                    var app = EzyClients.getInstance()
+                        .getDefaultClient()
+                        .zone!
+                        .appManager
+                        .getAppByName("freechat");
+                    var data = {
+                      "channelId": widget.channel,
+                      "message": message,
+                    };
+                    app?.send("6", data);
+                  }
+                }
+              },
             ),
             const SizedBox(
               height: 20,
@@ -142,117 +127,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Expanded _formInputMessage() {
-    return Expanded(
-      flex: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: Colors.lightBlueAccent),
-            color: Colors.white,
-          ),
-          child: TextField(
-            controller: controller,
-            keyboardType: TextInputType.multiline,
-            maxLines: 3,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Container _containerUser(int index) {
-    return Container(
-      child: ((messages[index]['from'] == widget.user) ||
-              (messages[index]['to'] == widget.user))
-          ? ListTile(
-              title: Container(
-                width: 100,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: (messages[index]['from'] == 'user')
-                        ? Colors.white
-                        : Colors.lightBlueAccent,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                  color: (messages[index]['from'] == 'user')
-                      ? Colors.lightBlueAccent
-                      : Colors.white,
-                ),
-                alignment: (messages[index]['from'] == 'user')
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 8.0,
-                    top: 8.0,
-                    right: 8.0,
-                    bottom: 16.0,
-                  ),
-                  child: Text(
-                    messages[index]['message'].toString(),
-                    style: TextStyle(
-                      color: (messages[index]['from'] == 'user')
-                          ? Colors.white
-                          : Colors.black87,
-                    ),
-                  ),
-                ),
-              ),
-            )
-          : null,
-    );
-  }
-
-  Container _contaimerChatBot(int index) {
-    return Container(
-      child: ((messages[index]['from'] == widget.user) ||
-              (messages[index]['from'] == 'Bot') ||
-              (messages[index]['to'] == widget.user))
-          ? ListTile(
-              title: Container(
-                width: 100,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: (messages[index]['from'] == 'user')
-                        ? Colors.white
-                        : Colors.lightBlueAccent,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                  color: (messages[index]['from'] == 'user')
-                      ? Colors.lightBlueAccent
-                      : Colors.white,
-                ),
-                alignment: (messages[index]['from'] == 'user')
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 8.0,
-                    top: 8.0,
-                    right: 8.0,
-                    bottom: 16.0,
-                  ),
-                  child: Text(
-                    messages[index]['message'].toString(),
-                    style: TextStyle(
-                      color: (messages[index]['from'] == 'user')
-                          ? Colors.white
-                          : Colors.black87,
-                    ),
-                  ),
-                ),
-              ),
-            )
-          : null,
     );
   }
 }
