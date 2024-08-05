@@ -41,6 +41,10 @@ dependencies:
   http: ^1.2.2
   googleapis: ^13.2.0
   googleapis_auth: ^1.6.0
+  speech_to_text: ^6.6.2
+  flutter_sound: ^9.8.1
+  path_provider: ^2.1.4
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:

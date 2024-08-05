@@ -12,11 +12,15 @@ class ChatScreen extends StatefulWidget {
   final String user;
   final int channel;
   final VoidCallback onBackPressed;
+  final VoidCallback onRecordPressed;
+  final TextEditingController controller;
   const ChatScreen({
     super.key,
     required this.user,
     required this.channel,
     required this.onBackPressed,
+    required this.onRecordPressed,
+    required this.controller,
   });
 
   @override
@@ -25,8 +29,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final TextEditingController controller = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,17 +93,17 @@ class _ChatScreenState extends State<ChatScreen> {
               height: 5,
             ),
             MessageInput(
-              controller: controller,
+              controller: widget.controller,
               onSendPressed: () {
-                if (controller.text.isNotEmpty) {
-                  var message = controller.text.toString();
+                if (widget.controller.text.isNotEmpty) {
+                  var message = widget.controller.text.toString();
                   setState(() {
                     messages.add({
                       'from': 'user',
                       'to': widget.user,
                       'message': message,
                     });
-                    controller.text = '';
+                    widget.controller.text = '';
                   });
 
                   if (widget.user == 'Chat Bot') {
@@ -120,6 +122,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   }
                 }
               },
+              onRecordPressed: widget.onRecordPressed,
             ),
             const SizedBox(
               height: 20,

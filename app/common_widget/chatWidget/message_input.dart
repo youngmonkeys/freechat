@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 class MessageInput extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onSendPressed;
+  final VoidCallback onRecordPressed;
   const MessageInput(
-      {super.key, required this.controller, required this.onSendPressed});
+      {super.key,
+      required this.controller,
+      required this.onSendPressed,
+      required this.onRecordPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +33,14 @@ class MessageInput extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+        ),
+        IconButton(
+          onPressed: onRecordPressed,
+          icon: const Icon(
+            Icons.mic,
+            size: 40,
+            color: Colors.blue,
           ),
         ),
         Expanded(
