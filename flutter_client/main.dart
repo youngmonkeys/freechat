@@ -1,7 +1,8 @@
-import 'package:app/globals.dart';
 import 'package:flutter/material.dart';
 import 'chat.dart';
 import 'package:flutter/services.dart';
+
+import 'globals.dart';
 
 void main() {
   runApp(const MyApp());

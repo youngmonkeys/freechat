@@ -1,14 +1,10 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
-import "dart:io";
-
-import "package:app/globals.dart";
-import "package:app/main.dart";
-import "package:app/search_contacts.dart";
-import "package:ezyfox_server_flutter_client/ezy_client.dart";
 import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
+import "globals.dart";
+import "main.dart";
+import "search_contacts.dart";
 import "socket_proxy.dart";
 import 'package:flutter_exit_app/flutter_exit_app.dart';
 

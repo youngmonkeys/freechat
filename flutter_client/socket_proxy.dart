@@ -1,12 +1,12 @@
 // ignore_for_file: constant_identifier_names
-
-import 'package:app/globals.dart';
 import 'package:ezyfox_server_flutter_client/ezy_client.dart';
 import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
 import 'package:ezyfox_server_flutter_client/ezy_config.dart';
 import 'package:ezyfox_server_flutter_client/ezy_constants.dart';
 import 'package:ezyfox_server_flutter_client/ezy_entities.dart';
 import 'package:ezyfox_server_flutter_client/ezy_handlers.dart';
+
+import 'globals.dart';
 
 const ZONE_NAME = "freechat";
 const APP_NAME = "freechat";
