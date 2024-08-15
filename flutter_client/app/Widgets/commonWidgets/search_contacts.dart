@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
 
-import 'globals.dart';
+import '../../globals.dart';
 
 class SearchContacts extends StatefulWidget {
   const SearchContacts({super.key});

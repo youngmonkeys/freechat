@@ -4,10 +4,10 @@ import "package:ezyfox_server_flutter_client/ezy_client.dart";
 import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
 import "package:flutter/material.dart";
 
-import "globals.dart";
-import "main.dart";
-import "search_contacts.dart";
-import "socket_proxy.dart";
+import "../globals.dart";
+import "../main.dart";
+import "../Widgets/commonWidgets/search_contacts.dart";
+import "../Model/socket_proxy.dart";
 import 'package:flutter_exit_app/flutter_exit_app.dart';
 
 class Chat extends StatefulWidget {
