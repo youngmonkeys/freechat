@@ -11,7 +11,6 @@ import 'package:flutter_test/flutter_test.dart';
 import '../app/main.dart';
 // import 'package:freechat_client/main.dart';
 
-
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
