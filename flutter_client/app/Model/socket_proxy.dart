@@ -49,7 +49,7 @@ class SocketProxy {
     EzyConfig config = EzyConfig();
     config.clientName = ZONE_NAME;
     config.enableSSL =
-    false; // SSL is not active by default using freechat server
+        false; // SSL is not active by default using freechat server
     config.ping.maxLostPingCount = 3;
     config.ping.pingPeriod = 1000;
     config.reconnect.maxReconnectCount = 3;
@@ -85,10 +85,10 @@ class SocketProxy {
     }
     this.username = username;
     this.password = password;
-    _client.connect("10.0.2.2",
-        3005); // Android emulator localhost-10.0.2.2 for ios it may be 127.0.0.1
-    // _client.connect(
-    //     "192.168.31.86", 3005); // computer is server and use your real phone
+    // _client.connect("10.0.2.2",
+    //     3005); // Android emulator localhost-10.0.2.2 for ios it may be 127.0.0.1
+    _client.connect(
+        "192.168.31.88", 3005); // computer is server and use your real phone
   }
 
   void disconnect() {

@@ -3,10 +3,17 @@ import 'package:flutter/material.dart';
 class MessageInput extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onSendPressed;
+  final VoidCallback startListening;
+  final VoidCallback stopListening;
+  final bool isListening;
+
   const MessageInput({
     super.key,
     required this.controller,
     required this.onSendPressed,
+    required this.startListening,
+    required this.stopListening,
+    required this.isListening,
   });
 
   @override
@@ -35,11 +42,11 @@ class MessageInput extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.mic,
+          onPressed: isListening ? stopListening : startListening,
+          icon: Icon(
+            isListening ? Icons.mic_off : Icons.mic,
             size: 40,
-            color: Colors.blue,
+            color: isListening ? Colors.red : Colors.blue,
           ),
         ),
         Expanded(

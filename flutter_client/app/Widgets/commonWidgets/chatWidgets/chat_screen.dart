@@ -6,13 +6,14 @@ import '../../common/color_extention.dart';
 import '../../common/images_extention.dart';
 import 'container_chatbot.dart';
 import 'container_user.dart';
-import 'message_input.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class ChatScreen extends StatefulWidget {
   final String user;
   final int channel;
   final VoidCallback onBackPressed;
   final TextEditingController controller;
+
   const ChatScreen({
     super.key,
     required this.user,
@@ -22,11 +23,69 @@ class ChatScreen extends StatefulWidget {
   });
 
   @override
-  // ignore: library_private_types_in_public_api
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final stt.SpeechToText _speechToText = stt.SpeechToText();
+  bool _isListening = false;
+  bool _speechToTextAvailable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initSpeechToText();
+  }
+
+  void _initSpeechToText() async {
+    _speechToTextAvailable = await _speechToText.initialize(
+      onError: (error) => print('Lỗi khi khởi tạo SpeechToText: $error'),
+    );
+    if (_speechToTextAvailable) {
+      print('SpeechToText đã được khởi tạo thành công.');
+    } else {
+      print('SpeechToText không khả dụng.');
+    }
+  }
+
+  void _startListening() async {
+    if (!_isListening && _speechToTextAvailable) {
+      setState(() {
+        _isListening = true;
+      });
+
+      print('Bắt đầu ghi âm...');
+      await _speechToText.listen(
+        onResult: (result) {
+          if (result.recognizedWords.isNotEmpty) {
+            setState(() {
+              widget.controller.text = result.recognizedWords;
+            });
+            print('Văn bản nhận diện: ${result.recognizedWords}');
+          } else {
+            print('Không có văn bản nhận diện được');
+          }
+        },
+      ).catchError((error) {
+        print('Lỗi khi ghi âm: $error');
+        setState(() {
+          _isListening = false;
+        });
+      });
+    } else if (!_speechToTextAvailable) {
+      print('SpeechToText chưa sẵn sàng.');
+    }
+  }
+
+  void _stopListening() {
+    _speechToText.stop();
+    setState(() {
+      _isListening = false;
+      widget.controller.clear();
+    });
+    print('Dừng và xóa bản ghi chuyển giọng nói thành văn bản');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,9 +116,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 Icons.arrow_back,
                 color: Colors.white,
               ),
-              onPressed: () {
-                widget.onBackPressed();
-              },
+              onPressed: widget.onBackPressed,
               tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             );
           },
@@ -71,20 +128,14 @@ class _ChatScreenState extends State<ChatScreen> {
           children: [
             Expanded(
               flex: 5,
-              child: Builder(builder: (context) {
-                return ListView.builder(
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    if (widget.user == 'Chat Bot') {
-                      // return _contaimerChatBot(index);
-                      return ContainerChatbot(index: index, user: widget.user);
-                    } else {
-                      // return _containerUser(index);
-                      return ContainerUser(index: index, user: widget.user);
-                    }
-                  },
-                );
-              }),
+              child: ListView.builder(
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  return (widget.user == 'Chat Bot')
+                      ? ContainerChatbot(index: index, user: widget.user)
+                      : ContainerUser(index: index, user: widget.user);
+                },
+              ),
             ),
             const Divider(
               color: Colors.transparent,
@@ -94,14 +145,13 @@ class _ChatScreenState extends State<ChatScreen> {
               controller: widget.controller,
               onSendPressed: () {
                 if (widget.controller.text.isNotEmpty) {
-                  var message = widget.controller.text.toString().trim();
+                  var message = widget.controller.text.trim();
                   setState(() {
                     messages.add({
                       'from': 'user',
                       'to': widget.user,
                       'message': message,
                     });
-                    // widget.controller.text = '';
                     widget.controller.clear();
                   });
 
@@ -121,13 +171,92 @@ class _ChatScreenState extends State<ChatScreen> {
                   }
                 }
               },
+              startListening: _startListening,
+              stopListening: _stopListening,
+              isListening: _isListening,
             ),
-            const SizedBox(
-              height: 20,
-            )
+            const SizedBox(height: 20),
           ],
         ),
       ),
+    );
+  }
+}
+
+class MessageInput extends StatelessWidget {
+  final TextEditingController controller;
+  final VoidCallback onSendPressed;
+  final VoidCallback startListening;
+  final VoidCallback stopListening;
+  final bool isListening;
+
+  const MessageInput({
+    super.key,
+    required this.controller,
+    required this.onSendPressed,
+    required this.startListening,
+    required this.stopListening,
+    required this.isListening,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 4,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: Colors.lightBlueAccent),
+                color: Colors.white,
+              ),
+              child: TextField(
+                controller: controller,
+                keyboardType: TextInputType.multiline,
+                maxLines: 3,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            if (isListening) {
+              stopListening();
+            } else {
+              startListening();
+            }
+          },
+          icon: Icon(
+            isListening ? Icons.mic_off : Icons.mic,
+            size: 40,
+            color: isListening ? Colors.red : Colors.blue,
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.lightBlueAccent,
+              ),
+              child: IconButton(
+                onPressed: onSendPressed,
+                icon: const Icon(
+                  Icons.send,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

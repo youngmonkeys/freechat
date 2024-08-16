@@ -35,7 +35,6 @@ class _ChatState extends State<Chat> {
     navigateToContactScreen();
   }
 
-
   void _startListening() async {
     print('da vao den chuyen doi ghi am thanh van ban');
     if (!_isListening) {
@@ -147,13 +146,13 @@ class _ChatState extends State<Chat> {
   Widget build(BuildContext context) {
     return screenSelector
         ? ContactScreen(
-      onUserSelected: navigateToChatScreen,
-    )
+            onUserSelected: navigateToChatScreen,
+          )
         : ChatScreen(
-      user: user ?? " ",
-      channel: channel ?? 0,
-      onBackPressed: navigateToContactScreen,
-      controller: controller,
-    );
+            user: user ?? " ",
+            channel: channel ?? 0,
+            onBackPressed: navigateToContactScreen,
+            controller: controller,
+          );
   }
 }
