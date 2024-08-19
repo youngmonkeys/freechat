@@ -42,7 +42,13 @@ class MessageInput extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: isListening ? stopListening : startListening,
+          onPressed: () {
+            if (isListening) {
+              stopListening();
+            } else {
+              startListening();
+            }
+          },
           icon: Icon(
             isListening ? Icons.mic_off : Icons.mic,
             size: 40,

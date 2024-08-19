@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, avoid_print
+
 import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
 import 'package:flutter/material.dart';
 import '../../../Model/socket_proxy.dart';
@@ -7,6 +9,8 @@ import '../../common/images_extention.dart';
 import 'container_chatbot.dart';
 import 'container_user.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+
+import 'message_input.dart';
 
 class ChatScreen extends StatefulWidget {
   final String user;
@@ -179,84 +183,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class MessageInput extends StatelessWidget {
-  final TextEditingController controller;
-  final VoidCallback onSendPressed;
-  final VoidCallback startListening;
-  final VoidCallback stopListening;
-  final bool isListening;
-
-  const MessageInput({
-    super.key,
-    required this.controller,
-    required this.onSendPressed,
-    required this.startListening,
-    required this.stopListening,
-    required this.isListening,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 4,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: Colors.lightBlueAccent),
-                color: Colors.white,
-              ),
-              child: TextField(
-                controller: controller,
-                keyboardType: TextInputType.multiline,
-                maxLines: 3,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ),
-        ),
-        IconButton(
-          onPressed: () {
-            if (isListening) {
-              stopListening();
-            } else {
-              startListening();
-            }
-          },
-          icon: Icon(
-            isListening ? Icons.mic_off : Icons.mic,
-            size: 40,
-            color: isListening ? Colors.red : Colors.blue,
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.lightBlueAccent,
-              ),
-              child: IconButton(
-                onPressed: onSendPressed,
-                icon: const Icon(
-                  Icons.send,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

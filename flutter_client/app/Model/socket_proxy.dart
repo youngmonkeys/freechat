@@ -25,6 +25,10 @@ class SocketProxy {
   late Function? _requestCallback;
   late Function? _loginErrorCallback;
   late Function(String)? _chatBotResponseCallback; // Callback cho ChatBot
+  late Function(List<String>)?
+      _userListCallback; //callback cho danh sách người dùng
+  late Function(Map)?
+      _connectUserCallback; // Callback cho phản hồi kết nối đến người dùng khác
 
   static final SocketProxy _INSTANCE = SocketProxy._();
 
@@ -32,6 +36,17 @@ class SocketProxy {
 
   static SocketProxy getInstance() {
     return _INSTANCE;
+  }
+
+  void addContact(String username) {
+    var app = EzyClients.getInstance()
+        .getDefaultClient()
+        .zone
+        ?.appManager
+        .getAppByName("freechat");
+    if (app != null) {
+      app.send("addContact", {"username": username});
+    }
   }
 
   void sendMessage(Map<String, dynamic> message) {
@@ -76,6 +91,42 @@ class SocketProxy {
     appSetup.addDataHandler("4", _ChatBotQuestionHandler((question) {
       _chatBotResponseCallback!(question);
     }));
+
+    //
+    appSetup.addDataHandler("1", _UserListHandler((users) {
+      // Cập nhật danh sách người dùng trong UI hoặc lưu lại
+      contacts = users;
+    }));
+  }
+
+  void getUsersList() {
+    var app = EzyClients.getInstance()
+        .getDefaultClient()
+        .zone
+        ?.appManager
+        .getAppByName("freechat");
+    if (app != null) {
+      app.send("1", {});
+    }
+  }
+
+  void connectToUser(String username) {
+    var app = EzyClients.getInstance()
+        .getDefaultClient()
+        .zone
+        ?.appManager
+        .getAppByName("freechat");
+    if (app != null) {
+      app.send("5", {"username": username});
+    }
+  }
+
+  void onUserList(Function(List<String>) callback) {
+    _userListCallback = callback;
+  }
+
+  void onConnectUserResponse(Function(Map) callback) {
+    _connectUserCallback = callback;
   }
 
   void connectToServer(String username, String password) {
@@ -85,10 +136,10 @@ class SocketProxy {
     }
     this.username = username;
     this.password = password;
-    // _client.connect("10.0.2.2",
-    //     3005); // Android emulator localhost-10.0.2.2 for ios it may be 127.0.0.1
-    _client.connect(
-        "192.168.31.88", 3005); // computer is server and use your real phone
+    _client.connect("10.0.2.2",
+        3005); // Android emulator localhost-10.0.2.2 for ios it may be 127.0.0.1
+    // _client.connect(
+    //     "192.168.31.88", 3005); // computer is server and use your real phone
   }
 
   void disconnect() {
@@ -276,6 +327,36 @@ class _LoginErrorHandler extends EzyAbstractDataHandler {
   void handle(List data) {
     client.disconnect();
     _callback();
+  }
+}
+
+class _UserListHandler extends EzyAppDataHandler<Map> {
+  late Function(List<String>) _callback;
+
+  _UserListHandler(Function(List<String>) callback) {
+    _callback = callback;
+  }
+
+  @override
+  void handle(EzyApp app, Map data) {
+    List<String> users = [];
+    for (var user in data["users"]) {
+      users.add(user["username"].toString());
+    }
+    _callback(users);
+  }
+}
+
+class _ConnectUserHandler extends EzyAppDataHandler<Map> {
+  late Function(Map) _callback;
+
+  _ConnectUserHandler(Function(Map) callback) {
+    _callback = callback;
+  }
+
+  @override
+  void handle(EzyApp app, Map data) {
+    _callback(data);
   }
 }
 

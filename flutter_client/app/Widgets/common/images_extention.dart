@@ -14,4 +14,7 @@ class ImagesAssset {
   static String user = '$baseImagePath/user.png';
   //chatbot
   static String chatbot = '$baseImagePath/chatbot.png';
+
+  //contact
+  static String add = '$baseImagePath/add.png';
 }

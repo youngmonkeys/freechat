@@ -1,8 +1,10 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../globals.dart';
 import '../../common/color_extention.dart';
-import 'chatGPT.dart';
+import '../../common/images_extention.dart';
+import 'addConttacts.dart';
 import 'chatbot_widget.dart';
 import 'iconButtonLogin_widget.dart';
 import 'iconPushSearchConttact.dart';
@@ -35,6 +37,15 @@ class _ContactScreenState extends State<ContactScreen> {
         backgroundColor: TColor.bg,
         actions: [
           iconPushSearchContact(context),
+          IconButton(
+              onPressed: () {
+                Get.to(() => UserListScreen());
+              },
+              icon: Image.asset(
+                ImagesAssset.add,
+                height: 24,
+                width: 24,
+              )),
           iconCancelQuitLogout(context),
         ],
       ),
@@ -44,11 +55,6 @@ class _ContactScreenState extends State<ContactScreen> {
             child: ListView(
               children: [
                 chatbotWidget(widget.onUserSelected),
-                const Divider(
-                  color: Colors.lightBlueAccent,
-                  thickness: 1,
-                ),
-                chatGPTWidget(widget.onUserSelected),
                 const Divider(
                   color: Colors.lightBlueAccent,
                   thickness: 1,
