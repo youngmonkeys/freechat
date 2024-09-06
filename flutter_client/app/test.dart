@@ -25,6 +25,14 @@
 //   late Function? _requestCallback;
 //   late Function? _loginErrorCallback;
 //   late Function(String)? _chatBotResponseCallback; // Callback cho ChatBot
+//   late Function(List<String>)?
+//       _userListCallback; //callback cho danh sách người dùng
+//   late Function(Map)?
+//       _connectUserCallback; // Callback cho phản hồi kết nối đến người dùng khác
+//   late Function(List<String>)?
+//       _suggestionsCallback; // Callback cho gợi ý người dùng
+//   late Function(String)?
+//       _addContactCallback; // Callback cho thêm người dùng vào danh sách liên hệ
 
 //   static final SocketProxy _INSTANCE = SocketProxy._();
 
@@ -32,6 +40,24 @@
 
 //   static SocketProxy getInstance() {
 //     return _INSTANCE;
+//   }
+
+//   void addContact(String username) {
+//     var app = EzyClients.getInstance()
+//         .getDefaultClient()
+//         .zone
+//         ?.appManager
+//         .getAppByName("freechat");
+//     if (app != null) {
+//       app.send("2", {"username": username}); // Gửi yêu cầu thêm người dùng
+//     }
+//   }
+
+//   void printAllUsers() {
+//     print("Danh sách tất cả người dùng:");
+//     for (var user in contacts) {
+//       print(user);
+//     }
 //   }
 
 //   void sendMessage(Map<String, dynamic> message) {
@@ -66,33 +92,74 @@
 //     _client.setup.addDataHandler(EzyCommand.LOGIN, _LoginSuccessHandler());
 //     _client.setup
 //         .addDataHandler(EzyCommand.APP_ACCESS, _AppAccessHandler(_client));
-//     _client.setup.addDataHandler(
-//         EzyCommand.APP_REQUEST, _RequestHandler(_requestCallback!, _client));
+//     // _client.setup.addDataHandler(
+//     //     EzyCommand.APP_REQUEST, _RequestHandler(_requestCallback!, _client));
 //     _client.setup.addDataHandler(
 //         EzyCommand.LOGIN_ERROR, _LoginErrorHandler(_loginErrorCallback!));
 //     var appSetup = _client.setup.setupApp(APP_NAME);
 
 //     // Xử lý dữ liệu cho câu hỏi chatbot
 //     appSetup.addDataHandler("4", _ChatBotQuestionHandler((question) {
+//       print(' cau hoi: $question');
 //       _chatBotResponseCallback!(question);
 //     }));
 
-//     //
-//     appSetup.addDataHandler("getUsers", _UserListHandler((users) {
-//       // Cập nhật danh sách người dùng trong UI hoặc lưu lại
-//       contacts = users;
+//     // Xử lý dữ liệu cho danh sách người dùng
+//     appSetup.addDataHandler("1", _UsersListHandler((users) {
+//       print('data ${users}');
+//       _userListCallback!.call(users);
+//     }));
+
+//     // Xử lý dữ liệu cho gợi ý người dùng
+//     appSetup.addDataHandler("10", _SuggestionsHandler((suggestions) {
+//       _suggestionsCallback!(suggestions);
+//     }));
+
+//     // Xử lý dữ liệu cho thêm người dùng vào danh sách liên hệ
+//     appSetup.addDataHandler("2", _AddContactHandler((message) {
+//       _addContactCallback!(message);
 //     }));
 //   }
 
-//   void getUsersList() {
+//   void fetchSuggestions() {
 //     var app = EzyClients.getInstance()
 //         .getDefaultClient()
 //         .zone
 //         ?.appManager
 //         .getAppByName("freechat");
 //     if (app != null) {
-//       app.send("getUsers", {});
+//       app.send("10", {}); // Gửi yêu cầu lấy danh sách gợi ý
 //     }
+//   }
+
+//   void fetchUsersList() {
+//     var app = EzyClients.getInstance()
+//         .getDefaultClient()
+//         .zone
+//         ?.appManager
+//         .getAppByName("freechat");
+//     if (app != null) {
+//       app.send("1", {}); // Gửi yêu cầu lấy danh sách người dùng
+//     }
+//   }
+
+//   void connectToUser(String username) {
+//     var app = EzyClients.getInstance()
+//         .getDefaultClient()
+//         .zone
+//         ?.appManager
+//         .getAppByName("freechat");
+//     if (app != null) {
+//       app.send("5", {"username": username});
+//     }
+//   }
+
+//   void onUserList(Function(List<String>) callback) {
+//     _userListCallback = callback;
+//   }
+
+//   void onConnectUserResponse(Function(Map) callback) {
+//     _connectUserCallback = callback;
 //   }
 
 //   void connectToServer(String username, String password) {
@@ -162,18 +229,48 @@
 // }
 
 // class _ChatBotQuestionHandler extends EzyAppDataHandler<Map> {
-//   late Function(String) _callback;
+//   late final Function(String) _callback;
 
-//   _ChatBotQuestionHandler(Function(String) callback) {
-//     _callback = callback;
-//   }
+//   _ChatBotQuestionHandler(this._callback);
 
 //   @override
 //   void handle(EzyApp app, Map data) {
-//     String question = data["question"] ?? "Không có câu hỏi nào từ máy chủ.";
+//     // Giả sử bạn đã kiểm tra mã ở nơi khác
+//     // và giờ chỉ cần lấy dữ liệu và xử lý
+
+//     // Lấy dữ liệu từ 'message' trong dữ liệu trả về
+//     var messageData = data[1][1];
+//     String question = messageData['message'];
+
+//     // Cập nhật danh sách tin nhắn
+//     messages
+//         .add({'from': data[1][1]['from'], 'message': data[1][1]['message']});
+
+//     // Gọi callback với câu hỏi
 //     _callback(question);
 //   }
 // }
+
+// // class _ChatBotQuestionHandler extends EzyAppDataHandler<Map> {
+// //   late Function(String) _callback;
+
+// //   _ChatBotQuestionHandler(Function(String) callback) {
+// //     _callback = callback;
+// //   }
+
+// //   @override
+// //   void handle(EzyApp app, Map data) {
+// //     if (data[1][0] == '4') {
+// //       // Get contacts
+// //       messages = messages +
+// //           [
+// //             {'from': data[1][1]['from'], 'message': data[1][1]['message']}
+// //           ];
+// //     }
+// //     String question = data["question"] ?? "Không có câu hỏi nào từ máy chủ.";
+// //     _callback(question);
+// //   }
+// // }
 
 // class _HandshakeHandler extends EzyHandshakeHandler {
 //   @override
@@ -313,6 +410,69 @@
 //   }
 // }
 
+// class _ConnectUserHandler extends EzyAppDataHandler<Map> {
+//   late Function(Map) _callback;
+
+//   _ConnectUserHandler(Function(Map) callback) {
+//     _callback = callback;
+//   }
+
+//   @override
+//   void handle(EzyApp app, Map data) {
+//     _callback(data);
+//   }
+// }
+
+// class _UsersListHandler extends EzyAppDataHandler<Map> {
+//   late Function(List<String>) _callback;
+
+//   _UsersListHandler(Function(List<String>) callback) {
+//     _callback = callback;
+//   }
+
+//   @override
+//   void handle(EzyApp app, Map data) {
+//     List<String> users = [];
+//     print('cac user tu sever: $users');
+//     for (var user in data["users"]) {
+//       print('cac username" $user');
+//       users.add(user["username"].toString());
+//     }
+//     _callback(users);
+//   }
+// }
+
+// class _SuggestionsHandler extends EzyAppDataHandler<Map> {
+//   late Function(List<String>) _callback;
+
+//   _SuggestionsHandler(Function(List<String>) callback) {
+//     _callback = callback;
+//   }
+
+//   @override
+//   void handle(EzyApp app, Map data) {
+//     List<String> suggestions = [];
+//     for (var element in data["users"]) {
+//       suggestions.add(element["username"].toString());
+//     }
+//     _callback(suggestions);
+//   }
+// }
+
+// class _AddContactHandler extends EzyAppDataHandler<Map> {
+//   late Function(String) _callback;
+
+//   _AddContactHandler(Function(String) callback) {
+//     _callback = callback;
+//   }
+
+//   @override
+//   void handle(EzyApp app, Map data) {
+//     String message = data["message"] ?? "Không thể thêm liên hệ.";
+//     _callback(message);
+//   }
+// }
+
 // class _RequestHandler extends EzyAbstractDataHandler {
 //   late Function _callback;
 //   late EzyClient _client;
@@ -327,7 +487,6 @@
 //     print('data sucess `${data}`');
 //     // Handle requests
 //     if (data[1][0] == '4') {
-//       // Get contacts
 //       messages = messages +
 //           [
 //             {'from': data[1][1]['from'], 'message': data[1][1]['message']}
@@ -346,13 +505,15 @@
 //           ];
 //       EzyApp? app = _client.getApp(); // Sử dụng getApp để lấy ứng dụng
 //       app?.send("getChatBotQuestion", {"message": data[1][1]['message']});
-//     } else if (data[1][0] == '1') {
-//       // Suggest Contacts
-//       suggestions = [];
-//       for (var element in data[1][1]['users']) {
-//         suggestions = suggestions + [element['username'].toString()];
-//       }
-//     } else if (data[1][0] == '10') {
+//     }
+//     // else if (data[1][0] == '1') {
+//     //   // Suggest Contacts
+//     //   suggestions = [];
+//     //   for (var element in data[1][1]['users']) {
+//     //     suggestions = suggestions + [element['username'].toString()];
+//     //   }
+//     // }
+//     else if (data[1][0] == '10') {
 //       // Suggest Contacts
 
 //       suggestions = [];

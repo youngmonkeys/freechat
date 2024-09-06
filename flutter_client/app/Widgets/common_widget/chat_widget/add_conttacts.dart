@@ -1,10 +1,7 @@
-// ignore_for_file: library_private_types_in_public_api
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
 import '../../../model/socket_proxy.dart';
 import '../../../globals.dart';
-// Đảm bảo bạn đã khai báo danh sách contacts ở đây
 
 class UserListScreen extends StatefulWidget {
   const UserListScreen({super.key});
@@ -15,17 +12,47 @@ class UserListScreen extends StatefulWidget {
 
 class _UserListScreenState extends State<UserListScreen> {
   final SocketProxy _socketProxy = SocketProxy.getInstance();
+  List<String> _suggestedUsers = [];
 
   @override
   void initState() {
     super.initState();
-    // Lấy danh sách người dùng từ server khi màn hình được tạo
+
     _socketProxy.onUserList((users) {
+      setState(() {});
+    });
+
+    _socketProxy.onConnectUserResponse((response) {
+      if (response['status'] == 'success') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Connected to ${response['username']}')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('Failed to connect to ${response['username']}')),
+        );
+      }
+    });
+
+    _socketProxy.onContacts(() {
       setState(() {
-        contacts = users; // Cập nhật danh sách người dùng toàn cục
+        // Ensure that suggestions contains only strings
+        if (suggestions.every((item) => item is String)) {
+          _suggestedUsers = List<String>.from(suggestions);
+        }
       });
     });
-    _socketProxy.getUsersList(); // Gửi yêu cầu lấy danh sách người dùng
+
+    _socketProxy.fetchUsersList();
+  }
+
+  void _addContact(String username) {
+    _socketProxy.addContact(username);
+  }
+
+  void _connectToUser(String username) {
+    _socketProxy.connectToUser(username);
   }
 
   @override
@@ -33,23 +60,69 @@ class _UserListScreenState extends State<UserListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('User List'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              _socketProxy.fetchUsersList();
+            },
+          ),
+        ],
       ),
       body: contacts.isEmpty
           ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: contacts.length,
-              itemBuilder: (context, index) {
-                final username = contacts[index];
-                return ListTile(
-                  title: Text(username),
-                  onTap: () {
-                    // Xử lý sự kiện khi nhấn vào một người dùng, ví dụ:
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Selected: $username')),
-                    );
-                  },
-                );
-              },
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: contacts.length,
+                    itemBuilder: (context, index) {
+                      final username = contacts[index];
+                      return ListTile(
+                        title: Text(username),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.message),
+                          onPressed: () {
+                            _connectToUser(username);
+                          },
+                        ),
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Selected: $username')),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+                if (_suggestedUsers.isNotEmpty)
+                  Container(
+                    color: Colors.grey[200],
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Suggested Contacts',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        const SizedBox(height: 8),
+                        ..._suggestedUsers.map((suggestedUser) {
+                          return ListTile(
+                            title: Text(suggestedUser),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                _addContact(suggestedUser);
+                              },
+                            ),
+                          );
+                        }).toList(),
+                      ],
+                    ),
+                  ),
+              ],
             ),
     );
   }

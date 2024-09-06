@@ -39,6 +39,7 @@ class _ContactScreenState extends State<ContactScreen> {
           iconPushSearchContact(context),
           IconButton(
               onPressed: () {
+                print('chuyen den man addUser');
                 Get.to(() => const UserListScreen());
               },
               icon: Image.asset(

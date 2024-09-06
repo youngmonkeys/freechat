@@ -2,5 +2,5 @@
 
 List contacts = [];
 List messages = [];
-List suggestions = [];
+List<String> suggestions = [];
 bool alert_dialog = false;
