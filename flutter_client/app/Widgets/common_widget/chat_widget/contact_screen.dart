@@ -40,7 +40,7 @@ class _ContactScreenState extends State<ContactScreen> {
           IconButton(
               onPressed: () {
                 print('chuyen den man addUser');
-                Get.to(() => const UserListScreen());
+                Get.to(() =>  UserListScreen());
               },
               icon: Image.asset(
                 ImagesAssset.add,
@@ -53,18 +53,22 @@ class _ContactScreenState extends State<ContactScreen> {
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Expanded(
-            child: ListView(
-              children: [
-                chatbotWidget(widget.onUserSelected),
-                const Divider(
-                  color: Colors.lightBlueAccent,
-                  thickness: 1,
-                ),
-                ...List.generate(contacts.length, (index) {
-                  return userWidget(index, widget.onUserSelected);
-                }),
-              ],
-            ),
+            child: Obx(() {
+              // UI sẽ tự động cập nhật khi contacts thay đổi
+              return ListView(
+                children: [
+                  chatbotWidget(widget.onUserSelected),
+                  const Divider(
+                    color: Colors.lightBlueAccent,
+                    thickness: 1,
+                  ),
+                  ...List.generate(contacts.length, (index) {
+                    print('thong tin conttacts $contacts');
+                    return userWidget(index, widget.onUserSelected);
+                  }),
+                ],
+              );
+            }),
           ),
         ]),
       ),
