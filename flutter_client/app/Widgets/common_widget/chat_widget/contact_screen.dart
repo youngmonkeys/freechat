@@ -62,8 +62,8 @@ class _ContactScreenState extends State<ContactScreen> {
                     color: Colors.lightBlueAccent,
                     thickness: 1,
                   ),
-                  ...List.generate(contacts.length, (index) {
-                    print('thong tin conttacts $contacts');
+                  ...List.generate(connectContacts.length, (index) { //1
+                    print('thong tin conttacts $connectContacts');
                     return userWidget(index, widget.onUserSelected);
                   }),
                 ],

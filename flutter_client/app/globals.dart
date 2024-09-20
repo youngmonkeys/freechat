@@ -2,6 +2,7 @@
 
 import 'package:get/get.dart';
 
+List connectContacts = [].obs;
 List contacts = [].obs;
 List messages = [];
 List<String> suggestions = [];

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import '../../../model/socket_proxy.dart';
 import '../../../globals.dart';
+import '../../common/color_extention.dart';
 
 class UserListScreen extends StatefulWidget {
   const UserListScreen({super.key});
@@ -47,8 +48,11 @@ class _UserListScreenState extends State<UserListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: TColor.bg,
       appBar: AppBar(
-        title: const Text('User List'),
+        backgroundColor: TColor.bg,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text('User List', style: TextStyle(color: Colors.white),),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -60,6 +64,7 @@ class _UserListScreenState extends State<UserListScreen> {
         ],
       ),
       body: Column(
+
         children: [
           // Hiển thị danh sách người dùng từ contacts
           Expanded(
@@ -69,19 +74,32 @@ class _UserListScreenState extends State<UserListScreen> {
                 itemBuilder: (context, index) {
                   final username = contacts[index]; // Assuming contacts[index] is a Map
                   return ListTile(
-                    title: Text(username),
+                    title: Text(username, style: TextStyle(color: TColor.primaryText80),),
                     trailing: IconButton(
-                      icon: const Icon(Icons.message),
+                      icon:  Icon(Icons.add, color: TColor.lightGray,),
                       onPressed: () {
-                        // _connectToUser(username);
+                        if (!connectContacts.contains(username)) {
+                          connectContacts.add(username);
+                          print('Added user: $username to connectContacts');
+                        } else {
+                          print('User $username already in connectContacts');
+                        }
                       },
                     ),
                     onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Selected: $username')),
-                      );
+                      if (!connectContacts.contains(username)) {
+                        connectContacts.add(username);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Đã chọn và thêm: $username')),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('$username đã được thêm')),
+                        );
+                      }
                     },
                   );
+
                 },
               );
             })

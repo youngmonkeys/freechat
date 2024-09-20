@@ -91,19 +91,27 @@ class SocketProxy {
 
     appSetup.addDataHandler("1", _UsersListHandler((users) {
       print('Danh sách người dùng: $users');
+      print('Kiểu dữ liệu danh sách người dùng: ${users.runtimeType}');
 
+      // Chỉ kiểm tra và cập nhật danh sách contacts nếu contacts đã có dữ liệu
+      if (contacts.isNotEmpty) {
+        for (var user in users) {
+          // Giả sử user['username'] là kiểu String, và bạn đang so sánh với contact['username']
+          if (!contacts.any((contact) => contact['username'] == user)) {
+            contacts.add(user);
+          }
+        }
+      } else {
+        // Nếu contacts rỗng, thêm tất cả users vào contacts
+        contacts.addAll(users);
+      }
 
-      // // Chuyển đổi danh sách người dùng thành danh sách tên người dùng
-      // List<String> usernames = users.map((user) => user['username'] as String).toList();
-
-      // Cập nhật danh sách contacts
-      contacts.addAll(users);
-      contacts.toSet().toList();
       // In ra danh sách contacts
       print('Updated contacts: $contacts');
 
       _userListCallback?.call(users);
     }));
+
 
     appSetup.addDataHandler("10", _SuggestionsHandler((suggestions) {
       _suggestionsCallback?.call(suggestions);
