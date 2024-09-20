@@ -1,6 +1,7 @@
 # freechat_client
 
 A new Flutter project.
+update project flutter
 
 ## Getting Started
 

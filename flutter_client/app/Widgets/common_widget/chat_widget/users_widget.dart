@@ -19,8 +19,10 @@ Widget userWidget(int index, Function(String, int) onUserSelected) {
           ),
         ),
         onPressed: () {
-          onUserSelected(contacts[index]['users'][0].toString(),
-              contacts[index]['channelId']);
+          onUserSelected(connectContacts[index], //2
+              1 );
+              // int.parse(contacts[index]) );
+
         },
         child: ListTile(
           title: Row(
@@ -43,7 +45,8 @@ Widget userWidget(int index, Function(String, int) onUserSelected) {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        contacts[index]['users'][0].toString(),
+                        connectContacts[index].toString(),
+                        // contacts[index].toString(), //3
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

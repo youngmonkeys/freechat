@@ -1,12 +1,13 @@
-// ignore_for_file: unnecessary_null_comparison, avoid_print
+// ignore_for_file: unnecessary_null_comparison, avoid_print, unused_element
 
 import 'package:flutter/material.dart';
-import '../Widgets/commonWidgets/chatWidgets/chat_screen.dart';
-import '../Widgets/commonWidgets/chatWidgets/contact_screen.dart';
 import '../globals.dart';
 import '../main.dart';
 import '../Model/socket_proxy.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+
+import '../widgets/common_widget/chat_widget/chat_screen.dart';
+import '../widgets/common_widget/chat_widget/contact_screen.dart';
 
 class Chat extends StatefulWidget {
   const Chat({super.key, this.username, this.password});

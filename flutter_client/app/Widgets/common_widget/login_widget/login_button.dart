@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../View/chat.dart';
-import '../../../ViewModel/login_viewModel.dart';
+import '../../../view_model/login_view_model.dart';
 import '../../common/color_extention.dart';
 
 class LoginButton extends StatelessWidget {

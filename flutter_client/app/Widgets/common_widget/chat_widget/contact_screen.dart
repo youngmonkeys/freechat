@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import '../../../globals.dart';
 import '../../common/color_extention.dart';
 import '../../common/images_extention.dart';
-import 'addConttacts.dart';
+import 'add_conttacts.dart';
 import 'chatbot_widget.dart';
-import 'iconButtonLogin_widget.dart';
-import 'iconPushSearchConttact.dart';
+import 'icon_button_login_widget.dart';
+import 'icon_push_search_contacts.dart';
 import 'users_widget.dart';
 
 class ContactScreen extends StatefulWidget {
@@ -39,7 +39,8 @@ class _ContactScreenState extends State<ContactScreen> {
           iconPushSearchContact(context),
           IconButton(
               onPressed: () {
-                Get.to(() => UserListScreen());
+                print('chuyen den man addUser');
+                Get.to(() =>  UserListScreen());
               },
               icon: Image.asset(
                 ImagesAssset.add,
@@ -52,18 +53,22 @@ class _ContactScreenState extends State<ContactScreen> {
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Expanded(
-            child: ListView(
-              children: [
-                chatbotWidget(widget.onUserSelected),
-                const Divider(
-                  color: Colors.lightBlueAccent,
-                  thickness: 1,
-                ),
-                ...List.generate(contacts.length, (index) {
-                  return userWidget(index, widget.onUserSelected);
-                }),
-              ],
-            ),
+            child: Obx(() {
+              // UI sẽ tự động cập nhật khi contacts thay đổi
+              return ListView(
+                children: [
+                  chatbotWidget(widget.onUserSelected),
+                  const Divider(
+                    color: Colors.lightBlueAccent,
+                    thickness: 1,
+                  ),
+                  ...List.generate(connectContacts.length, (index) { //1
+                    print('thong tin conttacts $connectContacts');
+                    return userWidget(index, widget.onUserSelected);
+                  }),
+                ],
+              );
+            }),
           ),
         ]),
       ),
