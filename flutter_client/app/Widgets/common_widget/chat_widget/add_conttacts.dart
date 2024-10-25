@@ -42,7 +42,9 @@ class _UserListScreenState extends State<UserListScreen> {
 
     // Fetch danh sách người dùng và gợi ý từ server khi khởi tạo
     _socketProxy.fetchUsersList();
+    _socketProxy.fetchConnectedUsers();
     _socketProxy.fetchSuggestions();
+    _socketProxy.fetchMessage();
   }
 
   @override
@@ -58,6 +60,7 @@ class _UserListScreenState extends State<UserListScreen> {
             icon: const Icon(Icons.refresh),
             onPressed: () {
               _socketProxy.fetchUsersList();
+              _socketProxy.fetchConnectedUsers();
               _socketProxy.fetchSuggestions();
             },
           ),

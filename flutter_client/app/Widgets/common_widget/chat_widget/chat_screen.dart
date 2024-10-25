@@ -2,6 +2,7 @@
 
 import 'package:ezyfox_server_flutter_client/ezy_clients.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../Model/socket_proxy.dart';
 import '../../../globals.dart';
 import '../../common/color_extention.dart';
@@ -92,95 +93,96 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: TColor.bg,
-      appBar: AppBar(
+    return Obx(() => Scaffold(
         backgroundColor: TColor.bg,
-        title: Row(
-          children: [
-            (widget.user == 'Chat Bot' || widget.user == 'Chat GPT')
-                ? Image.asset(
-                    ImagesAssset.chatbot,
-                    height: 40,
-                  )
-                : Image.asset(
-                    ImagesAssset.user,
-                    height: 40,
-                  ),
-            Text(
-              widget.user,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ],
-        ),
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
+        appBar: AppBar(
+          backgroundColor: TColor.bg,
+          title: Row(
+            children: [
+              (widget.user == 'Chat Bot' || widget.user == 'Chat GPT')
+                  ? Image.asset(
+                      ImagesAssset.chatbot,
+                      height: 40,
+                    )
+                  : Image.asset(
+                      ImagesAssset.user,
+                      height: 40,
+                    ),
+              Text(
+                widget.user,
+                style: const TextStyle(color: Colors.white),
               ),
-              onPressed: widget.onBackPressed,
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            );
-          },
+            ],
+          ),
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                ),
+                onPressed: widget.onBackPressed,
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              );
+            },
+          ),
         ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 5,
-              child: ListView.builder(
-                itemCount: messages.length,
-                itemBuilder: (context, index) {
-                  return (widget.user == 'Chat Bot')
-                      ? ContainerChatbot(index: index, user: widget.user)
-                      : ContainerUser(index: index, user: widget.user);
-                },
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 5,
+                child: ListView.builder(
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    return (widget.user == 'Chat Bot')
+                        ? ContainerChatbot(index: index, user: widget.user)
+                        : ContainerUser(index: index, user: widget.user);
+                  },
+                ),
               ),
-            ),
-            const Divider(
-              color: Colors.transparent,
-              height: 5,
-            ),
-            MessageInput(
-              controller: widget.controller,
-              onSendPressed: () {
-                if (widget.controller.text.isNotEmpty) {
-                  var message = widget.controller.text.trim();
-                  setState(() {
-                    messages.add({
-                      'from': 'user',
-                      'to': widget.user,
-                      'message': message,
+              const Divider(
+                color: Colors.transparent,
+                height: 5,
+              ),
+              MessageInput(
+                controller: widget.controller,
+                onSendPressed: () {
+                  if (widget.controller.text.isNotEmpty) {
+                    var message = widget.controller.text.trim();
+                    setState(() {
+                      messages.add({
+                        'from': 'user',
+                        'to': widget.user,
+                        'message': message,
+                      });
+                      widget.controller.clear();
                     });
-                    widget.controller.clear();
-                  });
 
-                  if (widget.user == 'Chat Bot') {
-                    SocketProxy.getInstance().sendMessageToChatBot(message);
-                  } else {
-                    var app = EzyClients.getInstance()
-                        .getDefaultClient()
-                        .zone!
-                        .appManager
-                        .getAppByName("freechat");
-                    var data = {
-                      "channelId": widget.channel,
-                      "message": message,
-                    };
-                    app?.send("6", data);
+                    if (widget.user == 'Chat Bot') {
+                      SocketProxy.getInstance().sendMessageToChatBot(message);
+                    } else {
+                      var app = EzyClients.getInstance()
+                          .getDefaultClient()
+                          .zone!
+                          .appManager
+                          .getAppByName("freechat");
+                      var data = {
+                        "channelId": widget.channel,
+                        "message": message,
+                      };
+                      app?.send("6", data);
+                    }
                   }
-                }
-              },
-              startListening: _startListening,
-              stopListening: _stopListening,
-              isListening: _isListening,
-            ),
-            const SizedBox(height: 20),
-          ],
+                },
+                startListening: _startListening,
+                stopListening: _stopListening,
+                isListening: _isListening,
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

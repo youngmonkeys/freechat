@@ -39,6 +39,7 @@ dependencies:
   flutter_exit_app: ^1.1.3
   get: ^4.6.6
   speech_to_text: ^6.6.2
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
