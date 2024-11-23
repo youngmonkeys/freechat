@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import '../ViewModel/login_viewModel.dart';
 import '../Widgets/common/color_extention.dart';
-import '../Widgets/commonWidgets/loginWidgets/loginbutton.dart';
-import '../Widgets/commonWidgets/loginWidgets/logo.dart';
-import '../Widgets/commonWidgets/loginWidgets/text_or_continue_with.dart';
 import '../globals.dart';
+import '../view_model/login_view_model.dart';
+import '../widgets/common_widget/login_widget/login_button.dart';
+import '../widgets/common_widget/login_widget/logo.dart';
+import '../widgets/common_widget/login_widget/text_or_continue_with.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});

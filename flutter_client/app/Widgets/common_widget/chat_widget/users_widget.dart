@@ -7,6 +7,18 @@ import '../../common/color_extention.dart';
 import '../../common/images_extention.dart';
 
 Widget userWidget(int index, Function(String, int) onUserSelected) {
+  // Lấy dữ liệu người dùng từ connectContacts2 dựa trên index
+  var userMap = connectContacts2[index];
+  var users = userMap['users'];
+  var channelId = userMap['channelId'];
+
+  // Kiểm tra nếu danh sách users có dữ liệu
+  if (users == null || users.isEmpty) {
+    return SizedBox(); // Trả về widget rỗng nếu không có dữ liệu người dùng
+  }
+
+  var userName = users[0].toString(); // Lấy tên người dùng đầu tiên từ danh sách
+
   return Column(
     children: [
       ElevatedButton(
@@ -19,8 +31,8 @@ Widget userWidget(int index, Function(String, int) onUserSelected) {
           ),
         ),
         onPressed: () {
-          onUserSelected(contacts[index]['users'][0].toString(),
-              contacts[index]['channelId']);
+          // Gọi hàm onUserSelected với tên người dùng và channelId
+          onUserSelected(userName, channelId);
         },
         child: ListTile(
           title: Row(
@@ -43,16 +55,19 @@ Widget userWidget(int index, Function(String, int) onUserSelected) {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        contacts[index]['users'][0].toString(),
+                        userName,
                         style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: TColor.primaryText60),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: TColor.primaryText60,
+                        ),
                       ),
                       Text(
-                        'Hi, I using FreeChat',
+                        'Hi, I am using FreeChat',
                         style: TextStyle(
-                            fontSize: 16, color: TColor.primaryText28),
+                          fontSize: 16,
+                          color: TColor.primaryText28,
+                        ),
                       ),
                     ],
                   ),
