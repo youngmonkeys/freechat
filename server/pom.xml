@@ -17,9 +17,9 @@
     <url>https://github.com/youngmonkeys/freechat</url>
 
     <properties>
-        <ezy.version>1.2.8</ezy.version>
-        <ezy.server.version>1.2.8.1</ezy.server.version>
-        <ezy.boot.version>1.1.0</ezy.boot.version>
+        <ezy.version>1.2.9</ezy.version>
+        <ezy.server.version>1.2.9</ezy.server.version>
+        <ezy.boot.version>1.1.1</ezy.boot.version>
     </properties>
 
     <dependencies>
